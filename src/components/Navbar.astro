@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import logo from "../assets/logo-cyan.svg";
 
 const links = [
-  { href: "/blog", label: "Blog" },
+  { href: "/web-site/blog", label: "Blog" },
   { href: "#sobre-mi", label: "Sobre mí" },
   { href: "#experiencia", label: "Experiencia" },
   { href: "#educacion", label: "Educación" },
@@ -20,7 +20,7 @@ const links = [
       class="mt-4 flex items-center justify-between gap-6 border border-white/10 bg-white/[0.02] px-4 py-2.5 transition-all duration-300 md:px-6 md:py-3.5"
       aria-label="Principal"
     >
-      <a href="/" class="flex min-w-0 items-center gap-4 text-white" aria-label="Ir al inicio">
+      <a href="/web-site" class="flex min-w-0 items-center gap-4 text-white" aria-label="Ir al inicio">
         <Image
           src={logo}
           alt="Rafael López Plana"
