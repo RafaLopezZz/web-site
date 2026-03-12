@@ -1,0 +1,45 @@
+---
+import type { TimelineItemExperience } from "../data/types";
+
+interface Props {
+  id: string;
+  title: string;
+  items: TimelineItemExperience[];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-28 border-t border-white/10 pt-14 md:pt-16" aria-labelledby={`${id}-title`}>
+  <div class="mb-10 flex items-end justify-between gap-4">
+    <h2 id={`${id}-title`} class="font-display text-3xl font-bold md:text-5xl">{title}</h2>
+  </div>
+
+  <div class="timeline">
+    {
+      items.map((item) => (
+        <article class="timeline-item">
+          <span class="timeline-dot" aria-hidden="true" />
+          <p class="timeline-period">{item.period}</p>
+          <div class="space-y-2">
+            <h3 class="font-display text-2xl font-bold">{item.role}</h3>
+            <p class="text-sm text-accent">{item.company}</p>
+            <p class="max-w-3xl text-sm leading-relaxed text-white/80 whitespace-pre-line">{item.description}</p>
+            {item.p && <p class="max-w-3xl text-sm leading-relaxed text-white/80">{item.p}</p>}
+            {item.webs && item.webs.length > 0 && (
+              <ul class="mt-2 flex flex-wrap gap-2">
+                {item.webs.map((web) => (
+                  <li>
+                    <a href={web} target="_blank" rel="noopener noreferrer" class="text-sm text-accent underline">
+                      {web}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

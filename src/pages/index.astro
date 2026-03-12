@@ -1,11 +1,213 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Navbar from "../components/Navbar.astro";
+import SkillsPanel from "../components/SkillsPanel.astro";
+import TechBadge from "../components/TechBadge.astro";
+import TimelineEducation from "../components/TimelineEducation.astro";
+import TimelineExperience from "../components/TimelineExperience.astro";
+import profileImage from "../assets/foto-perfil.jpg";
+import cosechaEnCopeCover from "../assets/projects/portada.png";
+import importadorDBCover from "../assets/projects/importador-db.png";
+import gleaNexoCover from "../assets/projects/glea-nexo.png";
+import { experience } from "../data/experience";
+import { education } from "../data/education";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const projectImages = {
+  "cosecha-en-cope": cosechaEnCopeCover,
+  "importador-db": importadorDBCover,
+  "glea-nexo": gleaNexoCover,
+};
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <Navbar />
+  <main id="main-content" class="editorial-container py-10 md:py-14">
+    <section
+      id="top"
+      class="border-b border-white/10 pb-12 pt-8 md:pb-16 md:pt-12"
+    >
+      <p class="mb-6 text-xs uppercase tracking-[0.28em] text-accent">
+        Fullstack junior/mid Developer · PHP / Bootstrap · Java / Angular
+      </p>
+      <h1
+        class="max-w-5xl font-display text-4xl font-extrabold leading-[0.95] md:text-6xl lg:text-7xl"
+      >
+        Rafael López
+      </h1>
+    </section>
+
+    <section
+      id="sobre-mi"
+      class="scroll-mt-28 border-b border-white/10 py-14 md:py-20"
+      aria-labelledby="sobre-mi-title"
+    >
+      <div
+        class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16"
+      >
+        <div class="max-w-md">
+          <Image
+            src={profileImage}
+            alt="Rafael López Plana"
+            width={900}
+            height={1200}
+            class="aspect-[3/4] w-full border object-cover saturate-95 transition duration-300 hover:saturate-125"
+            style="border-color: var(--border);"
+          />
+        </div>
+
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/50">
+              Sobre mí
+            </p>
+            <h2
+              id="sobre-mi-title"
+              class="max-w-3xl font-display text-3xl font-bold leading-tight md:text-5xl"
+            >
+              Historia de una transición profesional. La ventaja de empezar
+              tarde.
+            </h2>
+            <p
+              class="max-w-3xl text-lg leading-relaxed text-white/80 md:text-xl"
+            >
+              Años lidiando con la presión del mundo real en restauración me
+              enseñaron a entender el negocio antes que el código, a comunicarme
+              con claridad y a mantener la calma cuando los sistemas fallan.
+            </p>
+            <p
+              class="max-w-3xl text-lg leading-relaxed text-white/80 md:text-xl"
+            >
+              Ahora combino esa visión con mi pasión por la tecnología
+              construyendo aplicaciones robustas que ayuden a otros a resolver
+              problemas reales.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <TimelineExperience
+        id="experiencia"
+        title="Experiencia"
+        items={experience}
+      />
+
+      <TimelineEducation id="educacion" title="Educación" items={education} />
+
+      <section
+        id="proyectos"
+        class="scroll-mt-28 py-14 md:py-16"
+        aria-labelledby="proyectos-title"
+      >
+        <div class="mb-8 flex items-end justify-between gap-4">
+          <h2
+            id="proyectos-title"
+            class="font-display text-3xl font-bold md:text-5xl"
+          >
+            Proyectos
+          </h2>
+          <span class="text-xs uppercase tracking-[0.2em] text-white/60">
+            {projects.length} publicados
+          </span>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          {
+            projects.map((project) => {
+              const projectImage =
+                projectImages[
+                  project.data.image as keyof typeof projectImages
+                ] ?? cosechaEnCopeCover;
+
+              return (
+                <article class="group border border-white/15 bg-white/[0.02] transition hover:border-accent/70">
+                  <Image
+                    src={projectImage}
+                    alt={project.data.title}
+                    width={1200}
+                    height={720}
+                    class="h-52 w-full object-cover opacity-80 saturate-75 transition duration-300 group-hover:opacity-100 group-hover:saturate-100"
+                  />
+
+                  <div class="space-y-4 p-6">
+                    <div class="flex items-center justify-between gap-4">
+                      <h3 class="font-display text-2xl font-bold">
+                        {project.data.title}
+                      </h3>
+                      <time class="text-xs uppercase tracking-[0.18em] text-white/60">
+                        {project.data.date.toLocaleDateString("es-ES", {
+                          year: "numeric",
+                          month: "short",
+                        })}
+                      </time>
+                    </div>
+
+                    <p class="text-sm leading-relaxed text-white/80">
+                      {project.data.description}
+                    </p>
+
+                    <ul class="flex flex-wrap gap-2">
+                      {project.data.techStack.map((tech) => (
+                        <li class="text-xs text-accent">{tech}</li>
+                      ))}
+                    </ul>
+
+                    <a
+                      href={project.data.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-block text-sm uppercase tracking-[0.16em] text-white transition group-hover:text-accent"
+                    >
+                      Ver en GitHub
+                    </a>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </section>
+
+      <SkillsPanel />
+
+      <section
+        id="cv"
+        class="scroll-mt-28 border-t border-white/10 py-14 md:py-16"
+        aria-labelledby="cv-title"
+      >
+        <div
+          class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+        >
+          <div class="space-y-3">
+            <h2
+              id="cv-title"
+              class="font-display text-3xl font-bold md:text-5xl"
+            >
+              Currículum Vitae
+            </h2>
+            <p class="text-base leading-relaxed text-white/80">
+              Descarga mi CV actualizado en PDF.
+            </p>
+          </div>
+
+          <a
+            href="/cv/López Plana, Rafael - 2026 - Fullstack.pdf"
+            download
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent"
+          >
+            Descargar CV
+          </a>
+        </div>
+      </section>
+
+      <ContactForm />
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,10 @@
+---
+interface Props {
+  icon: string;
+}
+
+const { icon } = Astro.props;
+const iconUrl = `url('https://cdn.simpleicons.org/${icon}/00E5FF')`;
+---
+
+<span class="skill-icon" style={`--icon-url: ${iconUrl};`} aria-hidden="true"></span>

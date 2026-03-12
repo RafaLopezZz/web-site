@@ -1,0 +1,90 @@
+---
+import { certificates } from "../data/certificates";
+import { skillCategories } from "../data/skills";
+import SkillIcon from "./SkillIcon.astro";
+
+const toId = (value: string) => value.toLowerCase().replaceAll("/", "-").replaceAll(" ", "-");
+---
+
+<section id="habilidades" class="scroll-mt-28 border-t border-white/10 pt-14 md:pt-16" aria-labelledby="habilidades-title">
+  <div class="space-y-12">
+    <div>
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <h2 id="habilidades-title" class="font-display text-3xl font-bold md:text-5xl">Habilidades</h2>
+      </div>
+
+      <div class="space-y-8">
+        {
+          skillCategories.map((category) => (
+            <section aria-labelledby={`skills-${toId(category.title)}`} class="space-y-4">
+              <div class="flex items-center justify-between gap-4">
+                <h3 id={`skills-${toId(category.title)}`} class="text-xs uppercase tracking-[0.24em] text-white/60">
+                  {category.title}
+                </h3>
+                <span class="text-xs text-white/40">{category.skills.length} skills</span>
+              </div>
+
+              <div class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(120px,1fr))]">
+                {
+                  category.skills.map((skill) => (
+                    <article class="space-y-4 border border-white/10 bg-white/[0.02] p-4 transition hover:border-accent/40">
+                      <div class="flex items-center justify-between gap-3 text-accent">
+                        <SkillIcon icon={skill.icon} />
+                        <span class="text-[11px] uppercase tracking-[0.18em] text-white/40">
+                          {skill.level}/5
+                        </span>
+                      </div>
+                      <h4 class="text-sm font-medium text-white">{skill.name}</h4>
+                      <div class="flex gap-1" aria-label={`Nivel ${skill.level} de 5`}>
+                        {
+                          Array.from({ length: 5 }, (_, index) => (
+                            <span
+                              class:list={[
+                                "h-1.5 flex-1 rounded-full",
+                                index < skill.level ? "bg-accent" : "bg-white/10"
+                              ]}
+                            />
+                          ))
+                        }
+                      </div>
+                    </article>
+                  ))
+                }
+              </div>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+
+    <section aria-labelledby="certificados-title" class="space-y-6">
+      <div class="flex items-end justify-between gap-4">
+        <h3 id="certificados-title" class="font-display text-2xl font-bold md:text-3xl">Certificados</h3>
+        <span class="text-xs uppercase tracking-[0.2em] text-white/60">{certificates.length} activos</span>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        {
+          certificates.map((certificate) => (
+            <article class="space-y-4 border border-white/10 bg-white/[0.02] p-6">
+              <div class="space-y-2">
+                <p class="text-xs uppercase tracking-[0.18em] text-white/50">{certificate.date}</p>
+                <h4 class="font-display text-2xl font-bold">{certificate.title}</h4>
+                <p class="text-sm text-accent">{certificate.issuer}</p>
+              </div>
+
+              <a
+                href={certificate.file}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center text-sm uppercase tracking-[0.16em] text-white transition hover:text-accent"
+              >
+                Ver certificado
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</section>

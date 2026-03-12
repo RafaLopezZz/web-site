@@ -1,14 +1,17 @@
 {
-  "name": "portfolio",
-  "type": "module",
+  "name": "portfolio-fullstack-astro",
   "version": "0.0.1",
+  "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/vercel": "^7.8.0",
+    "astro": "^4.16.0",
+    "zod": "^3.23.8"
   }
 }

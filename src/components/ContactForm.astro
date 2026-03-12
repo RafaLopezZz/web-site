@@ -1,0 +1,181 @@
+---
+const web3formsAccessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? "YOUR_ACCESS_KEY_HERE";
+---
+
+<section id="contacto" class="scroll-mt-28 border-t border-white/10 py-14 md:py-16" aria-labelledby="contacto-title">
+  <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="space-y-4">
+      <h2 id="contacto-title" class="font-display text-3xl font-bold md:text-5xl">Contacto</h2>
+      <p class="max-w-xl text-base leading-relaxed text-white/80">
+        Si quieres hablar de una oportunidad, colaboración o producto digital, escríbeme y te responderé lo antes posible.
+      </p>
+      <p class="text-sm text-white/50">Fallback de contacto: rafael.lopez [at] ejemplo [dot] com</p>
+    </div>
+
+    <form id="contact-form" class="space-y-5" novalidate>
+      <input type="hidden" name="access_key" value={web3formsAccessKey} />
+      <input type="hidden" name="from_name" value="Portfolio Rafael López Plana" />
+
+      <div class="botcheck-field" aria-hidden="true">
+        <label for="botcheck">No rellenar este campo</label>
+        <input id="botcheck" name="botcheck" autocomplete="off" tabindex="-1" />
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <label class="space-y-2 text-sm text-white/75" for="name">
+          <span>Nombre*</span>
+          <input
+            id="name"
+            name="name"
+            maxlength="100"
+            required
+            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+          />
+        </label>
+
+        <label class="space-y-2 text-sm text-white/75" for="email">
+          <span>Email*</span>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            maxlength="150"
+            required
+            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+          />
+        </label>
+      </div>
+
+      <label class="space-y-2 text-sm text-white/75" for="contact-subject">
+        <span>Asunto</span>
+        <input
+          id="contact-subject"
+          name="subject"
+          maxlength="150"
+          class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+        />
+      </label>
+
+      <label class="space-y-2 text-sm text-white/75" for="message">
+        <span>Mensaje*</span>
+        <textarea
+          id="message"
+          name="message"
+          maxlength="2000"
+          rows="7"
+          required
+          class="w-full resize-y border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+        />
+      </label>
+
+      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <button
+          id="contact-submit"
+          type="submit"
+          class="inline-flex items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Enviar mensaje
+        </button>
+        <p id="contact-status" class="text-sm text-white/60" role="alert" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  const form = document.querySelector("#contact-form");
+  const submitButton = document.querySelector("#contact-submit");
+  const status = document.querySelector("#contact-status");
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const limits = {
+    name: 100,
+    email: 150,
+    message: 2000,
+    subject: 150
+  };
+
+  const setStatus = (message, isError = false) => {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle("text-red-300", isError);
+    status.classList.toggle("text-emerald-300", !isError && message.toLowerCase().includes("correctamente"));
+    status.classList.toggle("text-white/60", !isError && !message.toLowerCase().includes("correctamente"));
+  };
+
+  if (form instanceof HTMLFormElement && submitButton instanceof HTMLButtonElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const name = String(formData.get("name") ?? "").trim();
+      const email = String(formData.get("email") ?? "").trim();
+      const message = String(formData.get("message") ?? "").trim();
+      const customSubject = String(formData.get("subject") ?? "").trim();
+      const botcheck = String(formData.get("botcheck") ?? "").trim();
+      const accessKey = String(formData.get("access_key") ?? "").trim();
+
+      if (botcheck) {
+        setStatus("No se ha podido enviar el mensaje.", true);
+        return;
+      }
+
+      if (!name || !email || !message) {
+        setStatus("Completa los campos obligatorios.", true);
+        return;
+      }
+
+      if (
+        name.length > limits.name ||
+        email.length > limits.email ||
+        message.length > limits.message ||
+        customSubject.length > limits.subject
+      ) {
+        setStatus("Uno de los campos supera la longitud permitida.", true);
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        setStatus("Introduce un email válido.", true);
+        return;
+      }
+
+      if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE") {
+        setStatus("Configura PUBLIC_WEB3FORMS_ACCESS_KEY antes de activar el envío.", true);
+        return;
+      }
+
+      submitButton.disabled = true;
+      setStatus("Enviando...");
+
+      try {
+        // TODO: Integrar hCaptcha o reCAPTCHA v3 antes de producción
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.message || "Submission failed");
+        }
+
+        form.reset();
+        setStatus("Mensaje enviado correctamente.");
+      } catch (error) {
+        console.error(error);
+        setStatus(
+          "No se pudo enviar. Prueba de nuevo o escribe a rafael.lopez [at] ejemplo [dot] com.",
+          true
+        );
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  }
+</script>
