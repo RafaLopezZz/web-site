@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   # Se ejecuta cada vez que haces push a la rama main
   push:
-    branches: [ main ]
+    branches: [ master]
   workflow_dispatch:
 
 permissions:
