@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title = "RafaLopezZz | Desarrollador Fullstack & Técnico de Sistemas",
-  description = "Portfolio donde expresar mis conocimientos y proyectos como desarrollador fullstack y técnico de sistemas. Aquí encontrarás una muestra de mi trabajo, habilidades y experiencia en el mundo de la tecnología."
+  description = "Portfolio donde expresar mis conocimientos y proyectos como desarrollador fullstack y técnico de sistemas. Aquí encontrarás una muestra de mi trabajo, habilidades y experiencia en el mundo de la tecnología.",
 } = Astro.props;
 ---
 
@@ -19,6 +19,12 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <link rel="icon" type="image/svg+xml" href="/web-site/favicon.svg" />
+    <link rel="icon" href="/web-site/favicon.ico" />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{Astro.props.title ?? "Rafael López Plana"}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
