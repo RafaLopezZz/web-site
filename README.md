@@ -1,46 +1,41 @@
-# Astro Starter Kit: Basics
+# Portfolio Astro
 
-```sh
-npm create astro@latest -- --template basics
+Sitio estático en Astro 4 desplegado en GitHub Pages.
+
+## Variables de entorno
+
+Crea un archivo `.env` en la raíz a partir de `.env.example`:
+
+```env
+PUBLIC_WEB3FORMS_KEY=
+PUBLIC_HCAPTCHA_SITEKEY=
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Estas variables usan el prefijo `PUBLIC_` porque Astro solo expone al cliente las variables públicas.
 
-## 🚀 Project Structure
+## Formulario de contacto
 
-Inside of your Astro project, you'll see the following folders and files:
+El formulario de contacto envía el `POST` a `https://api.web3forms.com/submit` con:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- `access_key` de Web3Forms
+- validación cliente
+- honeypot anti-bot
+- hCaptcha con `@hcaptcha/vanilla-hcaptcha`
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+El email destinatario se configura exclusivamente en el dashboard de Web3Forms, nunca en el código fuente.
 
-## 🧞 Commands
+## GitHub Actions Secrets
 
-All commands are run from the root of the project, from a terminal:
+Antes del primer deploy en GitHub Pages, añade estos secrets en `Settings -> Secrets and variables -> Actions`:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- `PUBLIC_WEB3FORMS_KEY`
+- `PUBLIC_HCAPTCHA_SITEKEY`
 
-## 👀 Want to learn more?
+El workflow de deploy inyecta ambos secretos en el paso de build para que Astro pueda generar el sitio estático con la configuración correcta.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Comandos
+
+- `npm install`
+- `npm run dev`
+- `npm run build`
+- `npm run preview`

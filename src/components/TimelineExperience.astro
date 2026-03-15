@@ -24,7 +24,7 @@ const { id, title, items } = Astro.props;
           <div class="space-y-2">
             <h3 class="font-display text-2xl font-bold">{item.role}</h3>
             <p class="text-sm text-accent">{item.company}</p>
-            <p class="max-w-3xl text-sm leading-relaxed text-white/80 whitespace-pre-line">{item.description}</p>
+            <p class="max-w-3xl text-sm leading-relaxed text-white/80 whitespace-pre-line" set:html={item.description} />
             {item.p && <p class="max-w-3xl text-sm leading-relaxed text-white/80">{item.p}</p>}
             {item.webs && item.webs.length > 0 && (
               <ul class="mt-2 flex flex-wrap gap-2">

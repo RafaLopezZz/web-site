@@ -19,6 +19,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
         uses: withastro/action@v3
+        env:
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_KEY }}
+          PUBLIC_HCAPTCHA_SITEKEY: ${{ secrets.PUBLIC_HCAPTCHA_SITEKEY }}
 
   deploy:
     needs: build

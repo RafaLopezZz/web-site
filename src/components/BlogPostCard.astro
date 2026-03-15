@@ -10,7 +10,7 @@ const { post } = Astro.props;
 ---
 
 <article class="group overflow-hidden border border-white/10 bg-white/[0.02] transition hover:border-accent/50">
-  <a href={`/blog/${post.slug}/`} class="block" aria-label={`Leer ${post.data.title}`}>
+  <a href={`/web-site/blog/${post.slug}/`} class="block" aria-label={`Leer ${post.data.title}`}>
     <Image
       src={post.data.cover}
       alt={post.data.coverAlt}
@@ -30,7 +30,7 @@ const { post } = Astro.props;
 
     <div class="space-y-3">
       <h2 class="font-display text-2xl font-bold">
-        <a href={`/blog/${post.slug}/`} class="transition hover:text-accent">{post.data.title}</a>
+        <a href={`/web-site/blog/${post.slug}/`} class="transition hover:text-accent">{post.data.title}</a>
       </h2>
       <p class="text-sm leading-relaxed text-white/75">{post.data.excerpt}</p>
     </div>
