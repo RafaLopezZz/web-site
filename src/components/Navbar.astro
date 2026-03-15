@@ -2,6 +2,8 @@
 import { Image } from "astro:assets";
 import logo from "../assets/logo-cyan.svg";
 
+const base = import.meta.env.BASE_URL;
+
 const links = [
   { href: "/web-site/blog", label: "Blog" },
   { href: "#sobre-mi", label: "Sobre mí" },
@@ -10,7 +12,7 @@ const links = [
   { href: "#proyectos", label: "Proyectos" },
   { href: "#habilidades", label: "Habilidades" },
   { href: "#cv", label: "CV" },
-  { href: "#contacto", label: "Contacto" }
+  { href: "#contacto", label: "Contacto" },
 ];
 ---
 
@@ -20,7 +22,11 @@ const links = [
       class="mt-4 flex items-center justify-between gap-6 border border-white/10 bg-white/[0.02] px-4 py-2.5 transition-all duration-300 md:px-6 md:py-3.5"
       aria-label="Principal"
     >
-      <a href="/web-site" class="flex min-w-0 items-center gap-4 text-white" aria-label="Ir al inicio">
+      <a
+        href="/web-site"
+        class="flex min-w-0 items-center gap-4 text-white"
+        aria-label="Ir al inicio"
+      >
         <Image
           src={logo}
           alt="Rafael López Plana"
@@ -40,21 +46,36 @@ const links = [
       >
         <span class="sr-only">Abrir menú</span>
         <span class="flex flex-col gap-1.5">
-          <span class="block h-px w-5 bg-current" />
-          <span class="block h-px w-5 bg-current" />
-          <span class="block h-px w-5 bg-current" />
+          <span class="block h-px w-5 bg-current"></span>
+          <span class="block h-px w-5 bg-current"></span>
+          <span class="block h-px w-5 bg-current"></span>
         </span>
       </button>
 
-      <div id="nav-menu" class="nav-menu hidden md:block">
-        <ul class="flex flex-col gap-4 pt-4 text-sm uppercase tracking-[0.16em] text-white/70 md:flex-row md:items-center md:gap-6 md:pt-0">
+      <div
+        id="nav-menu"
+        class="nav-menu hidden md:block
+         absolute left-0 top-full w-full
+         border-t border-white/10 bg-[#0B0C10]
+         px-4 py-6
+         md:static md:w-auto md:border-0 md:bg-transparent md:p-0"
+      >
+        <ul
+          class="flex flex-col gap-4 pt-4 text-sm uppercase tracking-[0.16em] text-white/70 md:flex-row md:items-center md:gap-6 md:pt-0"
+        >
           {
             links.map((link) => (
               <li>
                 <a
-                  href={link.href.startsWith("#") ? `/${link.href}` : link.href}
+                  href={
+                    link.href.startsWith("#")
+                      ? `${base}${link.href}`
+                      : link.href
+                  }
                   class="nav-link transition hover:text-accent"
-                  data-section-link={link.href.startsWith("#") ? true : undefined}
+                  data-section-link={
+                    link.href.startsWith("#") ? true : undefined
+                  }
                 >
                   {link.label}
                 </a>
@@ -87,7 +108,11 @@ const links = [
   };
 
   const closeMenu = () => {
-    if (!(menu instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement)) return;
+    if (
+      !(menu instanceof HTMLElement) ||
+      !(toggle instanceof HTMLButtonElement)
+    )
+      return;
     menu.classList.add("hidden");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Abrir menú");
@@ -123,7 +148,7 @@ const links = [
           });
         });
       },
-      { rootMargin: "-35% 0px -45% 0px", threshold: 0.2 }
+      { rootMargin: "-35% 0px -45% 0px", threshold: 0.2 },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -141,7 +166,11 @@ const links = [
   setScrolledState();
   window.addEventListener("scroll", setScrolledState, { passive: true });
   window.addEventListener("resize", () => {
-    if (window.innerWidth >= 768 && menu instanceof HTMLElement && toggle instanceof HTMLButtonElement) {
+    if (
+      window.innerWidth >= 768 &&
+      menu instanceof HTMLElement &&
+      toggle instanceof HTMLButtonElement
+    ) {
       menu.classList.remove("hidden");
       toggle.setAttribute("aria-expanded", "false");
     } else if (window.innerWidth < 768) {
