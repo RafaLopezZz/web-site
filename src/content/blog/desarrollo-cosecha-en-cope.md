@@ -45,7 +45,10 @@ No todo productor necesita ni puede mantener una solución compleja para vender 
 - El posible **distribuidor** o comprador profesional que requiere una estructura más robusta.
 - Y, además, un sistema interno capaz de dividir correctamente la operativa cuando en un mismo pedido participan varios productores.
 
-Ahí es donde el proyecto empezó a adquirir profundidad.
+Aquí es donde el proyecto empezó a adquirir profundidad, en su contexto.
+
+![Diagrama de contexto de Cosecha en Cope](./images/diagrama-contexto.png)
+
 
 ## El objetivo del proyecto: un marketplace agrícola fullstack útil, escalable y bien planteado
 
@@ -54,7 +57,7 @@ La meta no era solo construir una aplicación funcional, sino desarrollar una so
 **Cosecha en Cope** se planteó como una plataforma fullstack con:
 
 - **Backend en Spring Boot**
-- **Frontend SPA en Angular**
+- **Frontend SPA en Angular + SSR Thymeleaf**
 - **Base de datos PostgreSQL**
 - **Almacenamiento de imágenes en AWS S3**
 - **Autenticación y autorización con JWT**
@@ -62,6 +65,10 @@ La meta no era solo construir una aplicación funcional, sino desarrollar una so
 - **Testing end to end con Cypress**
 
 A nivel funcional, el proyecto debía cubrir una serie de flujos clave: autenticación, catálogo, carrito, checkout, gestión de artículos, segmentación por productor y generación automática de órdenes derivadas.
+
+El primer planteamiento de la arquitectura, quedó reflejado en el siguiente diagrama, que sirvió como mapa inicial para el desarrollo:
+
+![Primera versión de arquitectura de Cosecha en Cope](./images/cosechaencope_arquitectura.png)
 
 ## El gran reto técnico: no era una tienda online simple
 
@@ -75,6 +82,10 @@ Cuando un cliente realiza un pedido, el sistema no solo guarda la compra global.
 
 Este punto, que a nivel de usuario puede parecer invisible, fue uno de los desafíos más importantes del desarrollo, porque afecta a la estructura de datos, a la lógica de negocio y a cómo se interpreta cada pedido dentro del sistema.
 
+A esto lo llamé: **El motor de segregación de pedidos**. Y fue, sin duda, uno de los retos más duro y valioso del proyecto.
+
+![Diagrama del motor de segregación de pedidos y OVP en Cosecha en Cope](./images/diagrama-secuencia.png)
+
 ## La decisión más importante: una arquitectura híbrida SSR + SPA
 
 Uno de los aspectos más interesantes del proyecto fue la elección de arquitectura.
@@ -83,8 +94,14 @@ En lugar de optar por una SPA pura o por un enfoque completamente renderizado en
 
 La idea era sencilla en concepto, pero exigente en ejecución:
 
-- Las **landings públicas** debían estar optimizadas para SEO.
-- La **aplicación privada y autenticada** debía ofrecer una experiencia más fluida, reactiva y moderna.
+Las **landings públicas** debían estar optimizadas para SEO.
+
+![Imagen del Hero de Cosecha en Cope](./images/cosechaencope-hero.png)
+
+
+La **aplicación privada y autenticada** debía ofrecer una experiencia más fluida, reactiva y moderna.
+
+![Imagen del panel de productor en Cosecha en Cope](./images/cosechaencope-dashboard.png)
 
 Por eso el proyecto combina:
 
@@ -110,6 +127,10 @@ Esto permitió:
 
 En términos de desarrollo, esto supuso pensar la plataforma en dos ritmos distintos: el de la visibilidad y el de la operativa.
 
+El ejemplo de configuración de SEO técnico en Thymeleaf SSR:
+
+![Configuración de SEO técnico en Cosecha en Cope](./images/seo-config.png)
+
 ## Backend con Spring Boot: estructura, seguridad y lógica de negocio
 
 El backend del proyecto se desarrolló con **Java 17 y Spring Boot 3**, apoyándose en una arquitectura por capas con controladores, servicios, repositorios, DTOs y configuración específica para seguridad, almacenamiento y documentación.
@@ -124,6 +145,8 @@ Más allá del stack, el reto estuvo en que el backend debía actuar como núcle
 - Protección de rutas y recursos mediante JWT
 
 La parte de seguridad se resolvió con **Spring Security y autenticación JWT**, diferenciando roles como `CLIENTE`, `PRODUCTOR` y `ADMIN`. Esto permitió construir una aplicación donde cada perfil accede solo a las áreas y acciones que le corresponden.
+
+![Backend de Cosecha en Cope con Spring Boot](./images/cosechaencope-backend.png)
 
 ## Frontend con Angular: una SPA orientada a flujo y organización
 
@@ -143,6 +166,8 @@ El frontend tenía un reto claro: soportar perfiles distintos dentro de una mism
 Esta separación fue importante no solo a nivel técnico, sino también a nivel mental. Cuando un proyecto empieza a tener varios actores y varios flujos, la organización deja de ser un detalle y pasa a ser una necesidad.
 
 Además, se implementaron **guards de autenticación y rol**, lo que refuerza la coherencia entre frontend y backend en el control de acceso.
+
+![Frontend de Cosecha en Cope con Angular](./images/cosechaencope-frontend.png)
 
 ## Modelo de datos: cuando el dominio obliga a pensar bien antes de programar
 
@@ -166,6 +191,9 @@ Diseñar este modelo fue una parte clave del desarrollo, porque muchas de las de
 
 En **Cosecha en Cope**, el modelo tenía que ser capaz de sostener tanto el flujo comercial como la segmentación operativa por productor. Ese equilibrio fue uno de los aprendizajes más valiosos del proyecto.
 
+Primer modelo entidad-relación de la base de datos:
+![Modelo entidad-relación de la base de datos de Cosecha en Cope](./images/cosechaencope-ER.jpeg)
+
 ## Gestión de imágenes en AWS S3: preparar el sistema para un escenario real
 
 En cualquier marketplace, las imágenes importan. Pero en un marketplace agrícola, todavía más. El producto entra por la vista, y la calidad con la que se presenta afecta directamente a la percepción del usuario.
@@ -187,6 +215,10 @@ Este tipo de validación aporta mucho valor porque comprueba el sistema desde un
 - confirmar pedido.
 
 Cuando trabajas con autenticación, carrito, pedidos y lógica de segmentación, tener automatizados los recorridos críticos ayuda a detectar errores donde más duele: en las partes que sostienen la experiencia principal.
+
+Además de los tests E2E, también se implementaron pruebas unitarias con **JUnit** para asegurar la calidad del código en el backend, especialmente en servicios clave como el motor de segregación de pedidos.
+
+![Tests E2E en Cosecha en Cope con Cypress](./images/cosechaencope-tests.png)
 
 ## La dificultad real del proyecto: coordinar negocio, arquitectura y experiencia de usuario
 
@@ -239,6 +271,7 @@ Para el desarrollo de este marketplace agrícola se utilizó el siguiente stack 
 - **Spring Security**
 - **JWT**
 - **Spring Data JPA**
+- **Thymeleaf**
 - **PostgreSQL**
 - **Angular 20**
 - **TypeScript**

@@ -5,33 +5,59 @@ import BlogPostCard from "../../components/BlogPostCard.astro";
 import Navbar from "../../components/Navbar.astro";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 ---
 
-<BaseLayout title="Blog | Rafael López" description="Artículos, notas de trabajo y aprendizajes sobre desarrollo y producto.">
+<BaseLayout
+  title="Blog | Rafael López"
+  description="Artículos, notas de trabajo y aprendizajes sobre desarrollo y producto."
+>
   <Navbar />
 
   <main id="main-content" class="editorial-container py-10 md:py-14">
     <section class="border-b border-white/10 pb-12 pt-8 md:pb-16 md:pt-12">
       <p class="mb-6 text-xs uppercase tracking-[0.28em] text-accent">Blog</p>
-      <h1 class="max-w-5xl font-display text-4xl font-extrabold leading-[0.95] md:text-6xl lg:text-7xl">
+      <h1
+        class="max-w-5xl font-display text-4xl font-extrabold leading-[0.95] md:text-6xl lg:text-7xl"
+      >
         Artículos, notas de trabajo y aprendizajes sobre desarrollo y producto.
       </h1>
-      <p class="mt-6 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg">
-        Sitio donde expresar mis ideas, documentar proyectos personales, experiencias y aprendizajes.
+      <p
+        class="mt-6 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg"
+      >
+        Sitio donde expresar mis ideas, documentar proyectos personales,
+        experiencias y aprendizajes.
       </p>
     </section>
 
     <section class="py-14 md:py-16" aria-labelledby="blog-list-title">
       <div class="mb-8 flex items-end justify-between gap-4">
-        <h2 id="blog-list-title" class="font-display text-3xl font-bold md:text-5xl">Publicaciones</h2>
-        <span class="text-xs uppercase tracking-[0.2em] text-white/60">{posts.length} entradas</span>
+        <h2
+          id="blog-list-title"
+          class="font-display text-3xl font-bold md:text-5xl"
+        >
+          Publicaciones
+        </h2>
+        <span class="text-xs uppercase tracking-[0.2em] text-white/60"
+          >{posts.length} entradas</span
+        >
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
         {posts.map((post) => <BlogPostCard post={post} />)}
       </div>
     </section>
+    <footer
+      class="mt-20 border-t border-white/10 py-10 text-center text-sm text-white/50"
+    >
+      © {new Date().getFullYear()} Hecho con ❤️, gracias a <a
+        href="https://astro.build"
+        target="_blank"
+        rel="noreferrer"
+        class="text-accent"
+        >Astro,
+      </a> por Rafael López. Todos los derechos reservados.
+    </footer>
   </main>
 </BaseLayout>

@@ -4,8 +4,8 @@ export const skillCategories: SkillCategory[] = [
   {
     title: "Backend",
     skills: [
-      { name: "Java", level: 2, icon: "openjdk" },
-      { name: "PHP", level: 2, icon: "php" },
+      { name: "Java", level: 3, icon: "openjdk" },
+      { name: "PHP", level: 3, icon: "php" },
       { name: "Spring Boot", level: 2, icon: "springboot" },
       { name: "Laravel", level: 2, icon: "laravel" },
       { name: "Bash/Shell", level: 4, icon: "gnubash" }
