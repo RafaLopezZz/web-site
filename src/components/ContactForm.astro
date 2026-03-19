@@ -319,6 +319,8 @@ import { ENV } from "../config/env";
           },
           body: JSON.stringify(object),
         });
+        setStatus(states.success, "¡Mensaje enviado con éxito! Gracias por contactarme.");
+        form.reset();
       } catch (error) {
         console.error(error);
         captchaToken = "";
