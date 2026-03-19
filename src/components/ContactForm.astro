@@ -2,14 +2,28 @@
 import { ENV } from "../config/env";
 ---
 
-<section id="contacto" class="scroll-mt-28 border-t border-white/10 py-14 md:py-16" aria-labelledby="contacto-title">
+<section
+  id="contacto"
+  class="scroll-mt-28 border-t border-white/10 py-14 md:py-16"
+  aria-labelledby="contacto-title"
+>
   <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
     <div class="space-y-4">
-      <h2 id="contacto-title" class="font-display text-3xl font-bold md:text-5xl">Contacto</h2>
+      <h2
+        id="contacto-title"
+        class="font-display text-3xl font-bold md:text-5xl"
+      >
+        Contacto
+      </h2>
       <p class="max-w-xl text-base leading-relaxed text-white/80">
-        Si quieres hablar de una oportunidad, colaboración o producto digital, escríbeme y te responderé lo antes posible.
+        Si quieres hablar de una oportunidad, colaboración o producto digital,
+        escríbeme y te responderé lo antes posible.
       </p>
-      <p class="text-sm text-white/50">O si lo prefieres, puedes enviarme un correo a <a class="text-accent" href="mailto:rlp.murcia@gmail.com">rlp.murcia@gmail.com</a></p>
+      <p class="text-sm text-white/50">
+        O si lo prefieres, puedes enviarme un correo a <a
+          class="text-accent"
+          href="mailto:rlp.murcia@gmail.com">rlp.murcia@gmail.com</a>
+      </p>
     </div>
 
     <form
@@ -20,7 +34,11 @@ import { ENV } from "../config/env";
       novalidate
     >
       <input type="hidden" name="access_key" value={ENV.WEB3FORMS_KEY} />
-      <input type="hidden" name="from_name" value="Portfolio Rafael López Plana" />
+      <input
+        type="hidden"
+        name="from_name"
+        value="Portfolio Rafael López Plana"
+      />
 
       <div class="honeypot" aria-hidden="true">
         <label for="botcheck">No rellenar este campo</label>
@@ -71,7 +89,7 @@ import { ENV } from "../config/env";
           rows="7"
           required
           class="w-full resize-y border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
-        />
+        ></textarea>
       </label>
 
       <div class="space-y-2">
@@ -79,12 +97,19 @@ import { ENV } from "../config/env";
           id="contact-hcaptcha"
           site-key={ENV.HCAPTCHA_SITEKEY}
           theme="dark"
-          tabindex="0"
-        ></h-captcha>
-        <p id="contact-captcha-error" class="text-sm text-red-300" role="alert" aria-live="polite"></p>
+          tabindex="0"></h-captcha>
+        <p
+          id="contact-captcha-error"
+          class="text-sm text-red-300"
+          role="alert"
+          aria-live="polite"
+        >
+        </p>
       </div>
 
-      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div
+        class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+      >
         <button
           id="contact-submit"
           type="submit"
@@ -92,7 +117,13 @@ import { ENV } from "../config/env";
         >
           Enviar mensaje
         </button>
-        <p id="contact-status" class="text-sm text-white/60" role="alert" aria-live="polite"></p>
+        <p
+          id="contact-status"
+          class="text-sm text-white/60"
+          role="alert"
+          aria-live="polite"
+        >
+        </p>
       </div>
     </form>
   </div>
@@ -108,10 +139,14 @@ import { ENV } from "../config/env";
   import "@hcaptcha/vanilla-hcaptcha";
 
   const form = document.querySelector<HTMLFormElement>("#contact-form");
-  const submitButton = document.querySelector<HTMLButtonElement>("#contact-submit");
+  const submitButton =
+    document.querySelector<HTMLButtonElement>("#contact-submit");
   const status = document.querySelector<HTMLElement>("#contact-status");
-  const captchaElement = document.querySelector<HTMLElement>("#contact-hcaptcha");
-  const captchaError = document.querySelector<HTMLElement>("#contact-captcha-error");
+  const captchaElement =
+    document.querySelector<HTMLElement>("#contact-hcaptcha");
+  const captchaError = document.querySelector<HTMLElement>(
+    "#contact-captcha-error",
+  );
 
   const EMAIL_REGEX =
     /^(?:[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+|"(?:[\u0001-\u0008\u000b\u000c\u000e-\u001f\u0021\u0023-\u005b\u005d-\u007f]|\\[\u0001-\u0009\u000b\u000c\u000e-\u007f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}|\[(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\])$/;
@@ -140,10 +175,19 @@ import { ENV } from "../config/env";
     status.dataset.state = state;
     status.classList.toggle("text-red-300", state === states.error);
     status.classList.toggle("text-emerald-300", state === states.success);
-    status.classList.toggle("text-white/60", state === states.idle || state === states.sending);
+    status.classList.toggle(
+      "text-white/60",
+      state === states.idle || state === states.sending,
+    );
   };
 
-  const validateFields = ({ botcheck, email, message, name, subject }: Record<string, string>) => {
+  const validateFields = ({
+    botcheck,
+    email,
+    message,
+    name,
+    subject,
+  }: Record<string, string>) => {
     if (botcheck) {
       return { silentAbort: true };
     }
@@ -186,7 +230,8 @@ import { ENV } from "../config/env";
     let captchaToken = "";
 
     captchaElement.addEventListener("verified", (event: Event) => {
-      const token = (event as CustomEvent).detail?.token ?? (event as any).token;
+      const token =
+        (event as CustomEvent).detail?.token ?? (event as any).token;
       captchaToken = typeof token === "string" ? token : "";
       setCaptchaError("");
     });
@@ -236,7 +281,9 @@ import { ENV } from "../config/env";
         return;
       }
 
-      const hiddenCaptchaToken = String(formData.get("h-captcha-response") ?? "").trim();
+      const hiddenCaptchaToken = String(
+        formData.get("h-captcha-response") ?? "",
+      ).trim();
       const effectiveCaptchaToken = hiddenCaptchaToken || captchaToken;
 
       if (!effectiveCaptchaToken) {
@@ -244,6 +291,9 @@ import { ENV } from "../config/env";
         setStatus(states.error, "Debes completar el captcha para continuar.");
         return;
       }
+
+      formData.delete("g-recaptcha-response"); // Elimina el campo conflictivo
+      formData.set("h-captcha-response", effectiveCaptchaToken); // Tu token limpio
 
       formData.set("name", name);
       formData.set("email", email);
@@ -260,7 +310,7 @@ import { ENV } from "../config/env";
         // TODO: Revisar rate limiting si el tráfico crece
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          body: formData
+          body: formData,
         });
 
         if (!response.ok) {
@@ -283,7 +333,7 @@ import { ENV } from "../config/env";
         (captchaElement as any).reset?.();
         setStatus(
           states.error,
-          "No se pudo enviar. Prueba de nuevo o escribe a rlp.murcia@gmail.com."
+          "No se pudo enviar. Prueba de nuevo o escribe a rlp.murcia@gmail.com.",
         );
       } finally {
         isSubmitting = false;
