@@ -299,16 +299,17 @@ import { ENV } from "../config/env";
       setStatus(states.sending, "Enviando...");
 
       try {
-        const payload = {
-          access_key: form.dataset.web3formsKey ?? "",
-          from_name: "Portfolio Rafael López Plana",
-          name,
-          email,
-          subject,
-          message,
-          botcheck,
-          "h-captcha-response": effectiveCaptchaToken,
-        };
+        // Lee todo el FormData como objeto plano y añade el captcha
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData.entries());
+
+        // Sobreescribe con los valores ya saneados y el captcha correcto
+        object["name"] = name;
+        object["email"] = email;
+        object["subject"] = subject;
+        object["message"] = message;
+        object["h-captcha-response"] = effectiveCaptchaToken;
+        delete object["g-recaptcha-response"];
 
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
@@ -316,23 +317,8 @@ import { ENV } from "../config/env";
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(payload),
+          body: JSON.stringify(object),
         });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-
-        if (!result.success) {
-          throw new Error(result.message || "Submission failed");
-        }
-
-        form.reset();
-        captchaToken = "";
-        (captchaElement as any).reset?.();
-        setStatus(states.success, "Mensaje enviado correctamente.");
       } catch (error) {
         console.error(error);
         captchaToken = "";
