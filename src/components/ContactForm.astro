@@ -22,7 +22,8 @@ import { ENV } from "../config/env";
       <p class="text-sm text-white/50">
         O si lo prefieres, puedes enviarme un correo a <a
           class="text-accent"
-          href="mailto:rlp.murcia@gmail.com">rlp.murcia@gmail.com</a>
+          href="mailto:rlp.murcia@gmail.com">rlp.murcia@gmail.com</a
+        >
       </p>
     </div>
 
@@ -292,25 +293,30 @@ import { ENV } from "../config/env";
         return;
       }
 
-      formData.delete("g-recaptcha-response"); // Elimina el campo conflictivo
-      formData.set("h-captcha-response", effectiveCaptchaToken); // Tu token limpio
-
-      formData.set("name", name);
-      formData.set("email", email);
-      formData.set("message", message);
-      formData.set("subject", subject);
-      formData.set("h-captcha-response", effectiveCaptchaToken);
-
       isSubmitting = true;
       submitButton.disabled = true;
       setCaptchaError("");
       setStatus(states.sending, "Enviando...");
 
       try {
-        // TODO: Revisar rate limiting si el tráfico crece
+        const payload = {
+          access_key: form.dataset.web3formsKey ?? "",
+          from_name: "Portfolio Rafael López Plana",
+          name,
+          email,
+          subject,
+          message,
+          botcheck,
+          "h-captcha-response": effectiveCaptchaToken,
+        };
+
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
         });
 
         if (!response.ok) {
