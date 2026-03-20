@@ -319,8 +319,24 @@ import { ENV } from "../config/env";
           },
           body: JSON.stringify(object),
         });
-        setStatus(states.success, "¡Mensaje enviado con éxito! Gracias por contactarme.");
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+          throw new Error(result.message || "Submission failed");
+        }
+
         form.reset();
+        captchaToken = "";
+        (captchaElement as any).reset?.();
+        setStatus(
+          states.success,
+          "¡Mensaje enviado con éxito! Gracias por contactarme.",
+        );
+        
       } catch (error) {
         console.error(error);
         captchaToken = "";
