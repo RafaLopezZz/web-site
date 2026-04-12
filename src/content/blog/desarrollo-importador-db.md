@@ -142,3 +142,5 @@ Desarrollar **ImportadorDB** ha sido una forma muy clara de trabajar un tipo de 
 Porque aquí no se trataba solo de abrir un Excel o conectar una base de datos. Se trataba de construir una herramienta intermedia, usable y técnica a la vez, capaz de reducir fricción en una tarea que sigue existiendo en muchísimos contextos reales.
 
 Y para mí, ahí está precisamente su interés.
+
+[Pincha aquí para ver en GitHub](https://github.com/RafaLopezZz/importador-db)
