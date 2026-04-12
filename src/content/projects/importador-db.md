@@ -7,7 +7,7 @@ techStack:
   - "Maven"
 githubUrl: "https://github.com/RafaLopezZz/importador-db"
 image: "importador-db"
-date: "2025-10-20"
+date: "2026-04-12"
 ---
 
 Dashboard fullstack orientado a negocio real de restauración con foco en decisiones rápidas.
