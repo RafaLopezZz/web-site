@@ -5,23 +5,35 @@ export const education: TimelineItemEducation[] = [
     degree: "Curso de especialización FP en Inteligencia Artificial y Big Data",
     institution: "iLERNA Online",
     period: "Cursando",
-    description:
-      "Preparándome para diseñar e implementar soluciones con IA, utilizando lenguajes como Python y dominando técnicas de machine learning y deep learning. Aprendiendo a procesar datos a gran escala, aplicando técnicas de visualización y business intelligence para facilitar la toma de decisiones.",
+    summary: "Especialización orientada a ampliar base en datos e IA aplicada.",
+    highlights: [
+      "Estoy reforzando fundamentos de Python, datos y técnicas de machine learning.",
+      "Me interesa entender bien cómo integrar automatización e IA en herramientas útiles.",
+      "Completa mi perfil actual sin perder la base de desarrollo de software.",
+    ],
   },
   {
     degree: "FP Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
     institution: "IES Alfonso X El Sabio - Murcia (A distancia)",
     marks: "Nota media: 7.93",
     period: "2023 - 2025",
-    description:
-      "Ciclo formativo de Grado Superior donde aprendí fundamentos de programación, desarrollo de aplicaciones móviles y de escritorio en Java y POO. Adquirí habilidades en diseño de interfaces, gestión de bases de datos y control de versiones, preparándome así para el desarrollo de software en entornos profesionales.",
+    summary: "La etapa donde consolidé la parte de programación y desarrollo de aplicaciones.",
+    highlights: [
+      "Trabajé Java, POO, bases de datos, interfaces y control de versiones.",
+      "Me ayudó a construir proyectos completos y a ordenar mejor la parte técnica.",
+      "Es la base más directa del perfil fullstack que enseño en el portfolio.",
+    ],
   },
   {
     degree: "FP Grado Medio en Sistemas Microinformáticos y Redes",
     institution: "IES Europa - Águilas (Murcia)",
     marks: "Nota media: 9.6 - Mención Honorífica",
     period: "2021 - 2023",
-    description:
-      "Ciclo formativo de Grado Medio donde aprendí fundamentos de redes, administración de sistemas y soporte técnico. Adquirí habilidades en configuración de hardware y software, gestión de redes y resolución de problemas, preparándome así para el ámbito profesional en tecnologías de la información.",
+    summary: "Formación que me dio base sólida en sistemas, redes y soporte técnico.",
+    highlights: [
+      "Aprendí hardware, software, redes y resolución de incidencias desde una base práctica.",
+      "Me dio soltura para entender mejor entornos reales y no solo escribir código.",
+      "Fue el punto de partida del cambio hacia desarrollo y consultoría tecnológica.",
+    ],
   },
 ];

@@ -1,6 +1,11 @@
 # Portfolio Astro
 
-Sitio estático en Astro 4 desplegado en GitHub Pages.
+Sitio estático en Astro 6 desplegado en GitHub Pages.
+
+## Requisitos
+
+- Node.js `20.19.0` o superior
+- npm
 
 ## Variables de entorno
 
@@ -39,3 +44,8 @@ El workflow de deploy inyecta ambos secretos en el paso de build para que Astro 
 - `npm run dev`
 - `npm run build`
 - `npm run preview`
+
+## Notas de despliegue
+
+- El proyecto usa `Astro 6` y `Vite 7`.
+- El workflow de GitHub Pages fija `Node 20.19.0` para evitar incompatibilidades en CI.

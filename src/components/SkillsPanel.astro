@@ -1,56 +1,46 @@
 ---
 import { certificates } from "../data/certificates";
-import { skillCategories } from "../data/skills";
 import SkillIcon from "./SkillIcon.astro";
+import { skillCategories } from "../data/skills";
 
 const toId = (value: string) => value.toLowerCase().replaceAll("/", "-").replaceAll(" ", "-");
+const base = import.meta.env.BASE_URL;
 ---
 
 <section id="habilidades" class="scroll-mt-28 border-t border-white/10 pt-14 md:pt-16" aria-labelledby="habilidades-title">
   <div class="space-y-12">
     <div>
       <div class="mb-8 flex items-end justify-between gap-4">
-        <h2 id="habilidades-title" class="font-display text-3xl font-bold md:text-5xl">Habilidades</h2>
+        <h2 id="habilidades-title" class="font-display text-3xl font-bold md:text-5xl">Stack técnico</h2>
       </div>
 
-      <div class="space-y-8">
+      <p class="mb-8 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg">
+        Tecnologías con las que he trabajado en proyectos personales, formación y trabajo reciente.
+      </p>
+
+      <div class="grid gap-5 md:grid-cols-2">
         {
           skillCategories.map((category) => (
-            <section aria-labelledby={`skills-${toId(category.title)}`} class="space-y-4">
-              <div class="flex items-center justify-between gap-4">
+            <section aria-labelledby={`skills-${toId(category.title)}`} class="space-y-4 border border-white/10 bg-white/[0.02] p-6 md:p-7">
+              <div class="space-y-3">
                 <h3 id={`skills-${toId(category.title)}`} class="text-xs uppercase tracking-[0.24em] text-white/60">
                   {category.title}
                 </h3>
-                <span class="text-xs text-white/40">{category.skills.length} skills</span>
+                {category.description && (
+                  <p class="max-w-2xl text-sm leading-relaxed text-white/70">{category.description}</p>
+                )}
               </div>
 
-              <div class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(120px,1fr))]">
+              <ul class="flex flex-wrap gap-3">
                 {
                   category.skills.map((skill) => (
-                    <article class="space-y-4 border border-white/10 bg-white/[0.02] p-4 transition hover:border-accent/40">
-                      <div class="flex items-center justify-between gap-3 text-accent">
-                        <SkillIcon icon={skill.icon} />
-                        <span class="text-[11px] uppercase tracking-[0.18em] text-white/40">
-                          {skill.level}/5
-                        </span>
-                      </div>
-                      <h4 class="text-sm font-medium text-white">{skill.name}</h4>
-                      <div class="flex gap-1" aria-label={`Nivel ${skill.level} de 5`}>
-                        {
-                          Array.from({ length: 5 }, (_, index) => (
-                            <span
-                              class:list={[
-                                "h-1.5 flex-1 rounded-full",
-                                index < skill.level ? "bg-accent" : "bg-white/10"
-                              ]}
-                            />
-                          ))
-                        }
-                      </div>
-                    </article>
+                    <li class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-white/85 transition hover:border-accent/50 hover:text-white">
+                      {skill.icon && <SkillIcon icon={skill.icon} />}
+                      {skill.name}
+                    </li>
                   ))
                 }
-              </div>
+              </ul>
             </section>
           ))
         }
@@ -74,7 +64,7 @@ const toId = (value: string) => value.toLowerCase().replaceAll("/", "-").replace
               </div>
 
               <a
-                href={certificate.file}
+                href={`${base}${certificate.file}`}
                 target="_blank"
                 rel="noreferrer"
                 class="inline-flex items-center text-sm uppercase tracking-[0.16em] text-white transition hover:text-accent"

@@ -25,7 +25,17 @@ const { id, title, items } = Astro.props;
             <h3 class="font-display text-2xl font-bold">{item.degree}</h3>
             <p class="text-sm text-accent">{item.institution}</p>
             {item.marks && <p class="text-sm text-accent">{item.marks}</p>}
-            <p class="max-w-3xl text-sm leading-relaxed text-white/80 whitespace-pre-line">{item.description}</p>
+            {item.summary && (
+              <p class="max-w-3xl text-sm leading-relaxed text-white/75">{item.summary}</p>
+            )}
+            <ul class="max-w-3xl space-y-2 text-sm leading-relaxed text-white/80">
+              {item.highlights.map((highlight) => (
+                <li class="flex gap-3">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </article>
       ))
