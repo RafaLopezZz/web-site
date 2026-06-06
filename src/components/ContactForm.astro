@@ -4,7 +4,7 @@ import { ENV } from "../config/env";
 
 <section
   id="contacto"
-  class="scroll-mt-28 border-t border-white/10 py-14 md:py-16"
+  class="scroll-mt-28 border-t border-white/10 py-12 md:py-16"
   aria-labelledby="contacto-title"
 >
   <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -15,21 +15,32 @@ import { ENV } from "../config/env";
       >
         Contacto
       </h2>
-      <p class="max-w-xl text-base leading-relaxed text-white/80">
-        Si quieres hablar de una oportunidad, colaboración o producto digital,
-        escríbeme y te responderé lo antes posible.
+      <p class="max-w-xl text-base leading-relaxed text-white/82">
+        Si estás revisando perfiles junior y quieres ver mejor algún proyecto o comentar una oportunidad, puedes escribirme por email, LinkedIn o usar el formulario.
       </p>
-      <p class="text-sm text-white/50">
+      <p class="text-sm text-white/60">
         O si lo prefieres, puedes enviarme un correo a <a
-          class="text-accent"
+          class="text-accent underline decoration-transparent underline-offset-4 transition hover:decoration-accent"
           href="mailto:rlp.murcia@gmail.com">rlp.murcia@gmail.com</a
         >
       </p>
+
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a href="mailto:rlp.murcia@gmail.com" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+          Email
+        </a>
+        <a href="https://www.linkedin.com/in/rafalopezzz/" target="_blank" rel="noreferrer" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+          LinkedIn
+        </a>
+        <a href="https://github.com/RafaLopezZz" target="_blank" rel="noreferrer" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+          GitHub
+        </a>
+      </div>
     </div>
 
     <form
       id="contact-form"
-      class="space-y-5"
+      class="space-y-5 border border-white/10 bg-white/[0.03] p-5 md:p-6"
       data-web3forms-key={ENV.WEB3FORMS_KEY}
       data-hcaptcha-sitekey={ENV.HCAPTCHA_SITEKEY}
       novalidate
@@ -47,18 +58,18 @@ import { ENV } from "../config/env";
       </div>
 
       <div class="grid gap-5 md:grid-cols-2">
-        <label class="space-y-2 text-sm text-white/75" for="name">
+        <label class="space-y-2 text-sm text-white/80" for="name">
           <span>Nombre*</span>
           <input
             id="name"
             name="name"
             maxlength="100"
             required
-            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-accent"
           />
         </label>
 
-        <label class="space-y-2 text-sm text-white/75" for="email">
+        <label class="space-y-2 text-sm text-white/80" for="email">
           <span>Email*</span>
           <input
             id="email"
@@ -66,22 +77,22 @@ import { ENV } from "../config/env";
             type="email"
             maxlength="150"
             required
-            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+            class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-accent"
           />
         </label>
       </div>
 
-      <label class="space-y-2 text-sm text-white/75" for="contact-subject">
+      <label class="space-y-2 text-sm text-white/80" for="contact-subject">
         <span>Asunto</span>
         <input
           id="contact-subject"
           name="subject"
           maxlength="150"
-          class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+          class="w-full border border-white/10 bg-white/[0.02] px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-accent"
         />
       </label>
 
-      <label class="space-y-2 text-sm text-white/75" for="message">
+      <label class="space-y-2 text-sm text-white/80" for="message">
         <span>Mensaje*</span>
         <textarea
           id="message"
@@ -89,7 +100,7 @@ import { ENV } from "../config/env";
           maxlength="2000"
           rows="7"
           required
-          class="w-full resize-y border border-white/10 bg-white/[0.02] px-4 py-3 text-white outline-none transition focus:border-accent"
+          class="w-full resize-y border border-white/10 bg-white/[0.02] px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-accent"
         ></textarea>
       </label>
 
@@ -114,7 +125,7 @@ import { ENV } from "../config/env";
         <button
           id="contact-submit"
           type="submit"
-          class="inline-flex items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+          class="inline-flex min-h-12 items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           Enviar mensaje
         </button>

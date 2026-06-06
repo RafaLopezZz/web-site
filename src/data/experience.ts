@@ -5,34 +5,42 @@ export const experience: TimelineItemExperience[] = [
     role: "Desarrollador Fullstack y Técnico de Sistemas",
     company: "Leovinci Consulting S.L.",
     period: "2024 - Actualmente",
-    description:
-      "Trabajo desarrollando aplicaciones web para digitalizar y automatizar procesos de cliente con PHP, Laravel, Bootstrap, MySQL, Java y scripts en bash y powershell.\n" +
-
-      "Implantando, parametrizando y configurando sistemas ERP y programas de gestión para empresas, reduciendo tiempos de despliegue mediante scripts, estandarización y plantillas.\n" +
-      
-      "Configurando y optimizando entornos Windows y Linux orientado a rendimiento y seguridad.",
-    p: "Más de 20 webs activas, algunos ejemplos destacados:",
+    summary:
+      "Trabajo entre desarrollo web, automatización y soporte técnico en entorno de consultoría.",
+    highlights: [
+      "Desarrollo aplicaciones y mejoras internas con PHP, Laravel, Bootstrap, MySQL, Java y scripts en Bash y PowerShell.",
+      "Implanto y configuro ERP y programas de gestión para empresas, intentando dejar procesos más claros y repetibles.",
+      "Mantengo entornos Windows y Linux y resuelvo incidencias con una visión práctica de negocio y soporte.",
+      "Algunos ejemplos de mi trabajo en web: ",
+    ],
     webs: [
-      "https://www.victoriafincas.es",
-      "https://www.alteagroservicios.com",
-      "https://www.espingabinete.com/",
+      "https://www.laolaart.com",
+      "https://www.quintabella.com",
+      "https://www.victoriafincas.es/",
     ],
   },
   {
     role: "Técnico en ruta",
     company: "Blázquez Liria S.L.",
     period: "2023 - 2024",
-    description:
-      "Diagnóstico y resolución de problemas de hardware y software, logrando un tiempo medio de resolución 10% inferior al estándar del departamento.\n" +
-      "Implementé soluciones de conectividad en red para dispositivos empresariales, aumentando la fiabilidad y estabilidad del sistema y reduciendo incidencias de conectividad.",
+    summary:
+      "Puesto centrado en soporte técnico y resolución de incidencias en cliente.",
+    highlights: [
+      "Diagnostiqué y resolví incidencias de hardware, software y conectividad en equipos de uso profesional.",
+      "Trabajé con tiempos de respuesta ajustados y atención directa a usuarios en ruta.",
+      "Me ayudó a reforzar base de sistemas, redes y trato técnico con cliente final.",
+    ],
   },
   {
     role: "Experiencia Transferible",
     company: "Otros cargos en Hostelería",
     period: "2004 - 2023",
-    description:
-      `<strong>Orientación al cliente:</strong> Mentalidad enfocada en la satisfacción del usuario final. Entiendo que el software es el medio para aportar valor y resolver problemas del cliente.\n\n` +
-      `<strong>Gestión bajo presión:</strong> Capacidad para mantener la calma y el foco resolutivo cuando surgen imprevistos técnicos o logísticos, desarrollada en 19 años de gestión en sector servicios (Gerencia y Jefatura de Sala).\n\n` +
-      `<strong>Colaboración:</strong> Experiencia coordinando equipos multidisciplinares y alineando expectativas técnicas con necesidades de negocio.`,
+    summary:
+      "Antes de dedicarme al desarrollo trabajé años en atención al cliente, coordinación y gestión de equipos.",
+    highlights: [
+      "Aprendí a tratar con clientes, detectar problemas rápidos y explicar soluciones de forma clara.",
+      "Trabajé durante años bajo presión real, algo que hoy me ayuda cuando una aplicación falla o hay que resolver una incidencia.",
+      "Esa etapa me dejó una forma de trabajar más ordenada y cercana a lo que necesita quien usa el producto.",
+    ],
   },
 ];

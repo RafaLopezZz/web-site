@@ -7,10 +7,11 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <article class="group overflow-hidden border border-white/10 bg-white/[0.02] transition hover:border-accent/50">
-  <a href={`/web-site/blog/${post.slug}/`} class="block" aria-label={`Leer ${post.data.title}`}>
+  <a href={`${base}blog/${post.id}/`} class="block" aria-label={`Leer ${post.data.title}`}>
     <Image
       src={post.data.cover}
       alt={post.data.coverAlt}
@@ -25,12 +26,12 @@ const { post } = Astro.props;
       <time class="text-xs uppercase tracking-[0.18em] text-white/50">
         {post.data.date.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}
       </time>
-      <span class="text-xs uppercase tracking-[0.18em] text-white/35">{post.data.tags.length} tags</span>
+      <span class="text-xs uppercase tracking-[0.18em] text-white/35">Blog</span>
     </div>
 
     <div class="space-y-3">
       <h2 class="font-display text-2xl font-bold">
-        <a href={`/web-site/blog/${post.slug}/`} class="transition hover:text-accent">{post.data.title}</a>
+        <a href={`${base}blog/${post.id}/`} class="transition hover:text-accent">{post.data.title}</a>
       </h2>
       <p class="text-sm leading-relaxed text-white/75">{post.data.excerpt}</p>
     </div>

@@ -1,15 +1,30 @@
 ---
 import "../styles/global.css";
+import type { ImageMetadata } from "astro";
+import profileImage from "../assets/foto-perfil2.png";
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string | ImageMetadata;
+  noindex?: boolean;
 }
 
 const {
-  title = "RafaLopezZz | Desarrollador Fullstack & Técnico de Sistemas",
-  description = "Portfolio donde expresar mis conocimientos y proyectos como desarrollador fullstack y técnico de sistemas. Aquí encontrarás una muestra de mi trabajo, habilidades y experiencia en el mundo de la tecnología.",
+  title = "Rafael López | Junior Fullstack Developer",
+  description = "Portfolio de Rafael López, desarrollador Fullstack Junior con base en Java, Spring Boot, Angular, APIs REST y bases de datos.",
+  image,
+  noindex = false,
 } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const pageTitle = title;
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+const imageSrc = typeof image === "string" ? image : image?.src;
+const socialImage = imageSrc
+  ? new URL(imageSrc, siteUrl).toString()
+  : new URL(profileImage.src, siteUrl).toString();
 ---
 
 <!doctype html>
@@ -18,13 +33,24 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <title>{pageTitle}</title>
 
-    <link rel="icon" type="image/svg+xml" href="/web-site/favicon.svg" />
-    <link rel="icon" href="/web-site/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
 
     <meta name="generator" content={Astro.generator} />
-    <title>{Astro.props.title ?? "Rafael López Plana"}</title>
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

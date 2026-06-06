@@ -2,8 +2,8 @@ export interface TimelineItemExperience {
   role: string;
   company: string;
   period: string;
-  description: string;
-  p?: string;
+  summary?: string;
+  highlights: string[];
   webs?: string[];
 }
 
@@ -12,17 +12,18 @@ export interface TimelineItemEducation {
   institution: string;
   marks?: string;
   period: string;
-  description: string;
+  summary?: string;
+  highlights: string[];
 }
 
 export interface Skill {
   name: string;
-  level: number;
-  icon: string;
+  icon?: string;
 }
 
 export interface SkillCategory {
   title: string;
+  description?: string;
   skills: Skill[];
 }
 

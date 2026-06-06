@@ -10,4 +10,4 @@ image: "importador-db"
 date: "2026-04-12"
 ---
 
-Dashboard fullstack orientado a negocio real de restauración con foco en decisiones rápidas.
+Herramienta de escritorio pensada para importar datos desde archivos Excel a bases de datos relacionales con menos trabajo manual y menos margen de error.

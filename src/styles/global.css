@@ -18,7 +18,9 @@ body {
 }
 
 body {
-  background-image: radial-gradient(circle at top, rgba(0, 229, 255, 0.08), transparent 28%);
+  background-image:
+    radial-gradient(circle at top, rgba(0, 229, 255, 0.05), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0));
 }
 
 ::selection {
@@ -27,11 +29,11 @@ body {
 }
 
 .editorial-container {
-  @apply mx-auto w-full max-w-7xl px-6 md:px-10;
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-6 md:px-10;
 }
 
 #site-header[data-scrolled="true"] nav {
-  background: rgba(11, 12, 16, 0.72);
+  background: rgba(11, 12, 16, 0.82);
   backdrop-filter: blur(18px);
 }
 
@@ -42,7 +44,7 @@ body {
 .timeline {
   position: relative;
   display: grid;
-  gap: 2.5rem;
+  gap: 2.25rem;
   padding-left: 2rem;
 }
 
@@ -84,8 +86,9 @@ body {
 
 .skill-icon {
   display: inline-block;
-  height: 1.25rem;
-  width: 1.25rem;
+  height: 0.95rem;
+  width: 0.95rem;
+  flex-shrink: 0;
   background-color: #00e5ff;
   -webkit-mask-image: var(--icon-url);
   mask-image: var(--icon-url);
@@ -133,15 +136,17 @@ body {
   color: #00e5ff;
 }
 
-@keyframes crossfade {
-  0%, 42% { opacity: 1; }
-  50%     { opacity: 0; }
-  92%     { opacity: 0; }
-  100%    { opacity: 1; }
+input,
+textarea {
+  border-radius: 0;
 }
 
-.crossfade-front {
-  animation: crossfade 12s ease-in-out infinite;
+input:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 2px;
 }
 
 @keyframes timeline-pulse {
@@ -163,5 +168,24 @@ body {
     grid-template-columns: 10rem minmax(0, 1fr);
     align-items: start;
     column-gap: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 6rem;
+  }
+
+  .timeline {
+    gap: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline::before {
+    left: 0.2rem;
+  }
+
+  .timeline-dot {
+    left: -1.58rem;
   }
 }
