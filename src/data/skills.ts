@@ -17,7 +17,8 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Frontend",
-    description: "Interfaces claras con Angular, TypeScript y base sólida en HTML y CSS.",
+    description:
+      "Interfaces claras con Angular, TypeScript y base sólida en HTML y CSS.",
     skills: [
       { name: "Angular", icon: "angular" },
       { name: "TypeScript", icon: "typescript" },
@@ -30,7 +31,8 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Herramientas",
-    description: "Trabajo habitual con control de versiones, documentación y despliegues sencillos.",
+    description:
+      "Trabajo habitual con control de versiones, documentación y despliegues sencillos.",
     skills: [
       { name: "Git", icon: "git" },
       { name: "GitHub", icon: "github" },
@@ -42,7 +44,8 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Aprendiendo y practicando",
-    description: "Tecnologías y áreas que estoy trabajando en la especialización de IA y Big Data para ampliar base técnica.",
+    description:
+      "Tecnologías y áreas que estoy trabajando en la especialización de IA y Big Data para ampliar base técnica.",
     skills: [
       { name: "Python", icon: "python" },
       { name: "Machine Learning" },
@@ -51,7 +54,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Business Intelligence" },
       { name: "Testing" },
       { name: "CI / CD" },
-      { name: "AWS", icon: "amazonaws" },
+      { name: "AWS" },
       { name: "MongoDB", icon: "mongodb" },
       { name: "Astro", icon: "astro" },
     ],
