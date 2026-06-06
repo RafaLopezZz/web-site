@@ -4,7 +4,7 @@ Sitio estático en Astro 6 desplegado en GitHub Pages.
 
 ## Requisitos
 
-- Node.js `20.19.0` o superior
+- Node.js `24` o superior
 - npm
 
 ## Variables de entorno
@@ -48,4 +48,4 @@ El workflow de deploy inyecta ambos secretos en el paso de build para que Astro 
 ## Notas de despliegue
 
 - El proyecto usa `Astro 6` y `Vite 7`.
-- El workflow de GitHub Pages fija `Node 20.19.0` para evitar incompatibilidades en CI.
+- El workflow de GitHub Pages usa `actions/checkout@v5`, `actions/setup-node@v5` y `Node 24` para evitar la deprecación de Node 20 en GitHub Actions.
