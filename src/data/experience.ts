@@ -11,7 +11,7 @@ export const experience: TimelineItemExperience[] = [
       "Desarrollo aplicaciones y mejoras internas con PHP, Laravel, Bootstrap, MySQL, Java y scripts en Bash y PowerShell.",
       "Implanto y configuro ERP y programas de gestión para empresas, intentando dejar procesos más claros y repetibles.",
       "Mantengo entornos Windows y Linux y resuelvo incidencias con una visión práctica de negocio y soporte.",
-      "Algunos ejemplos de mi trabajo en web: ",
+      "Algunos ejemplos de mi trabajo profesional con PHP/Laravel y MySQL: ",
     ],
     webs: [
       "https://www.laolaart.com",
