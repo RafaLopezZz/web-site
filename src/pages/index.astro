@@ -76,7 +76,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
     primaryLabel: "Ver repositorio",
     highlights: [
       `Proyecto desarrollado con ${project.data.techStack.slice(0, 3).join(", ")}${project.data.techStack.length > 3 ? " y más" : ""}.`,
-      "Enseña una parte representativa de mi trabajo actual como perfil junior fullstack.",
+      "Enseña una parte representativa de mi trabajo actual como perfil fullstack.",
       "Puedo ampliar contexto técnico y decisiones de implementación en entrevista o en el repositorio.",
     ],
   };
@@ -84,8 +84,11 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
 ---
 
 <BaseLayout
-  title="Rafael López | Junior Fullstack Developer"
-  description="Portfolio de Rafael López, desarrollador Fullstack Junior con base en Java, Spring Boot, Angular, APIs REST y bases de datos."
+  title="Rafael López | Fullstack Developer"
+  description="title = Rafael López | Desarrollador Fullstack"
+  ,
+  description="Desarrollo aplicaciones web y APIs con Java/Spring Boot, PHP/Laravel y PostgreSQL/MySQL, priorizando calidad, escalabilidad y mantenibilidad."
+  ,
 >
   <Navbar />
 
@@ -99,7 +102,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
       >
         <div class="space-y-6 md:space-y-7">
           <p class="text-xs uppercase tracking-[0.28em] text-accent">
-            Junior Fullstack Developer
+            Fullstack Developer
           </p>
 
           <div class="space-y-5">
@@ -111,11 +114,11 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
             <p
               class="max-w-3xl text-base leading-relaxed text-white/85 sm:text-lg md:text-xl"
             >
-              Soy Rafael López, desarrollador Fullstack Junior. En este
-              portfolio muestro proyectos con Java, Spring Boot, Angular, APIs
-              REST, bases de datos e interfaces sencillas de entender. Me
-              interesa crear software útil, que ayude a resolver problemas
-              reales y aporte algo positivo a las personas que lo usan.
+              Soy Rafael López, desarrollador Fullstack. En este portfolio
+              muestro proyectos con Java, Spring Boot, Angular, APIs REST, bases
+              de datos e interfaces sencillas de entender. Me interesa crear
+              software útil, que ayude a resolver problemas reales y aporte algo
+              positivo a las personas que lo usan.
             </p>
           </div>
 
@@ -165,7 +168,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
                 Perfil
               </p>
               <p class="mt-2 text-sm leading-relaxed text-white/82">
-                Junior fullstack con mejor base en Java, APIs REST y datos.
+                Fullstack con mejor base en Java, APIs REST y datos.
               </p>
             </article>
             <article class="border border-white/10 bg-white/[0.03] p-4">

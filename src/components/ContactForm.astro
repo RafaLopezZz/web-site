@@ -16,7 +16,8 @@ import { ENV } from "../config/env";
         Contacto
       </h2>
       <p class="max-w-xl text-base leading-relaxed text-white/82">
-        Si estás revisando perfiles junior y quieres ver mejor algún proyecto o comentar una oportunidad, puedes escribirme por email, LinkedIn o usar el formulario.
+        Si quieres ver mejor algún proyecto o comentar una oportunidad, puedes
+        escribirme por email, LinkedIn o usar el formulario.
       </p>
       <p class="text-sm text-white/60">
         O si lo prefieres, puedes enviarme un correo a <a
@@ -26,13 +27,26 @@ import { ENV } from "../config/env";
       </p>
 
       <div class="flex flex-wrap gap-3 pt-2">
-        <a href="mailto:rlp.murcia@gmail.com" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+        <a
+          href="mailto:rlp.murcia@gmail.com"
+          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+        >
           Email
         </a>
-        <a href="https://www.linkedin.com/in/rafalopezzz/" target="_blank" rel="noreferrer" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+        <a
+          href="https://www.linkedin.com/in/rafalopezzz/"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+        >
           LinkedIn
         </a>
-        <a href="https://github.com/RafaLopezZz" target="_blank" rel="noreferrer" class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent">
+        <a
+          href="https://github.com/RafaLopezZz"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+        >
           GitHub
         </a>
       </div>
@@ -347,7 +361,6 @@ import { ENV } from "../config/env";
           states.success,
           "¡Mensaje enviado con éxito! Gracias por contactarme.",
         );
-        
       } catch (error) {
         console.error(error);
         captchaToken = "";
