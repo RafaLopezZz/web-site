@@ -120,3 +120,18 @@ Evidence:
 - semantic image preservation: PASS
 - full E2E: PASS
 - production build: PASS
+
+### M0.4 — Experience + Education Preservation
+
+Status: COMPLETE
+
+Evidence:
+
+- Experience section preservation: PASS
+- three current professional records: PASS
+- Education section preservation: PASS
+- three current education records: PASS
+- qualification marks preservation: PASS
+- full E2E: PASS
+- production build: PASS
+- git diff check: PASS
