@@ -109,4 +109,14 @@ Authoritative value not established.
 
 ### M0.3 — Blog Preservation
 
-Status: NEXT
+Status: COMPLETE
+
+Evidence:
+
+- blog index preservation: PASS
+- three article routes: PASS
+- Unicode slug: PASS
+- deep-content preservation: PASS
+- semantic image preservation: PASS
+- full E2E: PASS
+- production build: PASS
