@@ -19,6 +19,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
 
+    env:
+      PUBLIC_WEB3FORMS_KEY: ci-web3forms-key
+      PUBLIC_HCAPTCHA_SITEKEY: ci-hcaptcha-sitekey
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
