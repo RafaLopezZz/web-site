@@ -105,6 +105,18 @@ long-form article.
 
 Authoritative value not established.
 
+### B-004
+
+hCaptcha cleanup can mask submission feedback.
+
+After Web3Forms settles, `ContactForm` resets the captcha before setting
+final user-visible status. If reset throws, success feedback is skipped;
+the catch path resets again and can suppress failure feedback too.
+
+Observed in isolated E2E because the external hCaptcha runtime is
+intentionally unavailable. Future hardening should make provider cleanup
+failure-safe. Do not fix during M0.
+
 ## Next
 
 ### M0.3 — Blog Preservation
@@ -132,6 +144,24 @@ Evidence:
 - Education section preservation: PASS
 - three current education records: PASS
 - qualification marks preservation: PASS
+- full E2E: PASS
+- production build: PASS
+- git diff check: PASS
+
+### M0.5 — Contact Preservation
+
+Status: COMPLETE
+
+Evidence:
+
+- Contact availability: PASS
+- direct email fallback: PASS
+- required-field validation: PASS
+- invalid-email validation: PASS
+- captcha gate: PASS
+- mocked success submission: PASS
+- mocked provider-failure recovery: PASS
+- external-service isolation: PASS
 - full E2E: PASS
 - production build: PASS
 - git diff check: PASS
