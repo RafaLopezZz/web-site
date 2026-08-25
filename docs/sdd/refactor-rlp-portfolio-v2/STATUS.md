@@ -186,4 +186,17 @@ Known debt intentionally preserved:
 - B-004
 
 Next:
-M1 — RLP Design Foundation
+
+### M1.1 — COMPLETE
+
+Evidence:
+
+- `DESIGN.md` created as the normative RLP design doctrine
+- doctrine repaired with canonical DESIGN.md color schema, RLP identity, bilingual territories, 60/25/10/5 hierarchy, light editorial identity, bounded terminal/CMD and Windows 95 references, production-case information architecture, responsive principles, accessibility, motion, and primitive contracts
+- `npx --yes @google/design.md lint DESIGN.md`: PASS
+- no production source changes
+- full E2E: PASS
+- production build: PASS
+
+Next:
+M1.2 — Stitch Exploration
