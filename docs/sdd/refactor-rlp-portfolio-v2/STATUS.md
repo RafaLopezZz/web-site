@@ -165,3 +165,23 @@ Evidence:
 - full E2E: PASS
 - production build: PASS
 - git diff check: PASS
+
+### M0.6 — PR CI
+
+Status: LOCALLY COMPLETE / REMOTE CI PENDING
+
+Evidence:
+
+- CI workflow created: PASS
+- PR trigger configured: PASS
+- push-to-master trigger configured: PASS
+- Node 24: PASS
+- npm ci: PASS
+- Chromium-only Playwright install: PASS
+- unit test gate: PASS
+- E2E gate: PASS
+- production build gate: PASS
+- minimum permissions: PASS
+- no production secrets required: PASS
+- local regression: PASS
+- remote GitHub Actions run: PENDING
