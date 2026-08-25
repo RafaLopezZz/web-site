@@ -166,22 +166,24 @@ Evidence:
 - production build: PASS
 - git diff check: PASS
 
-### M0.6 — PR CI
+### M0.6 — COMPLETE
 
-Status: LOCALLY COMPLETE / REMOTE CI PENDING
+Remote evidence:
 
-Evidence:
+- GitHub Actions Portfolio CI: PASS
+- PR #12: MERGED
+- merge commit: 93d318e70dc546633b91cf9e276a682724df602b
 
-- CI workflow created: PASS
-- PR trigger configured: PASS
-- push-to-master trigger configured: PASS
-- Node 24: PASS
-- npm ci: PASS
-- Chromium-only Playwright install: PASS
-- unit test gate: PASS
-- E2E gate: PASS
-- production build gate: PASS
-- minimum permissions: PASS
-- no production secrets required: PASS
-- local regression: PASS
-- remote GitHub Actions run: PENDING
+M0 — COMPLETE
+
+Baseline regression harness established and remotely validated.
+
+Known debt intentionally preserved:
+
+- B-001
+- B-002
+- B-003
+- B-004
+
+Next:
+M1 — RLP Design Foundation
