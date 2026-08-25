@@ -6,7 +6,7 @@
 
 ## Branch
 
-`refactor/rlp-v2-m0-baseline`
+`design/rlp-v2-m1-foundation`
 
 ## Execution policy
 
@@ -199,4 +199,14 @@ Evidence:
 - production build: PASS
 
 Next:
-M1.2 — Stitch Exploration
+M1.2 — Design Decision Promotion
+
+### M1.2 — COMPLETE
+
+Evidence:
+
+- `DESIGN.md` normatively promotes IBM Plex typography, invariant SiteHeader/navigation, short Home and bilingual route IA, global actions, surface variants, bounded CMD identity, responsive Home, territory grammars, real-evidence rules, token intent, internal-only creative principle, and component contracts
+- decision-evidence only; no production source changes
+
+Next:
+M1.3 — Global UI Foundation
