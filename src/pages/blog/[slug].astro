@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Navbar from "../../components/Navbar.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -24,7 +24,7 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={`${post.data.title} | Rafael López`} description={post.data.excerpt} image={post.data.cover}>
-  <Navbar />
+  <SiteHeader />
 
   <main id="main-content" class="editorial-container py-10 md:py-14">
     <article class="mx-auto max-w-4xl">

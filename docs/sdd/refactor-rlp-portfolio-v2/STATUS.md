@@ -91,12 +91,10 @@ Current Astro build tolerates the source.
 
 Do not fix during M0 without explicit scope.
 
-### B-002
+### B-002 — CLOSED
 
-Navbar emits `aria-current="page"` while legacy CSS targets
-`aria-current="true"`.
-
-Not fixed during M0.
+Resolved in M1.3.2: `SiteHeader` aligns semantic `aria-current="page"`
+with its cyan-plus-bottom-rule current treatment.
 
 ### B-003
 
@@ -228,3 +226,21 @@ Evidence:
 
 Next:
 M1.3.2 — SiteHeader
+
+### M1.3.2 — COMPLETE
+
+Evidence:
+
+- one `SiteHeader` replaces all three confirmed `Navbar` consumers; `Navbar` removed
+- RLP brand links home; only valid transitional destinations remain: Home, Work, Experience, Education, Notes (`/blog`), Contact, and CV
+- Home and Blog/Blog article routes expose one semantic current destination; B-002 closed
+- keyboard-operable 390px menu provides `aria-expanded`, `aria-controls`, changing labels, Escape close, and reachable links
+- no future-route 404s or fake locale routes introduced
+- focused SiteHeader E2E: PASS (3 tests)
+- full E2E: PASS (16 tests)
+- production build: PASS
+- `git diff --check`: PASS
+- browser inspection at Home and Blog, 1024px and 390px: no horizontal overflow, legible header/current state, reachable mobile menu
+
+Next:
+M1.3.3 — Action / ActionLink

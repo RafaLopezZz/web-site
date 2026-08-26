@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ContactForm from "../components/ContactForm.astro";
-import Navbar from "../components/Navbar.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SkillsPanel from "../components/SkillsPanel.astro";
 import TimelineEducation from "../components/TimelineEducation.astro";
@@ -90,7 +90,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
   description="Desarrollo aplicaciones web y APIs con Java/Spring Boot, PHP/Laravel y PostgreSQL/MySQL, priorizando calidad, escalabilidad y mantenibilidad."
   ,
 >
-  <Navbar />
+  <SiteHeader />
 
   <main id="main-content" class="editorial-container py-8 md:py-12">
     <section

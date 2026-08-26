@@ -1,0 +1,202 @@
+---
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const isBlog = Astro.url.pathname.startsWith(`${base}blog`);
+
+const links = [
+  { href: base, label: "Home", current: !isBlog },
+  { href: `${base}#proyectos`, label: "Work" },
+  { href: `${base}#experiencia`, label: "Experience" },
+  { href: `${base}#formacion`, label: "Education" },
+  { href: `${base}blog`, label: "Notes", current: isBlog },
+  { href: `${base}#contacto`, label: "Contact" },
+  { href: `${base}#cv`, label: "CV" },
+];
+---
+
+<header class="site-header">
+  <div class="editorial-container">
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a class="site-header__brand" href={base}>RLP</a>
+
+      <button
+        id="site-menu-toggle"
+        class="site-header__toggle"
+        type="button"
+        aria-controls="site-navigation"
+        aria-expanded="false"
+        aria-label="Open navigation"
+      >
+        <span aria-hidden="true">Menu</span>
+      </button>
+
+      <div id="site-navigation" class="site-header__menu" hidden>
+        <ul class="site-header__links">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={["site-header__link", link.current && "is-current"]}
+                  aria-current={link.current ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  const toggle = document.querySelector("#site-menu-toggle");
+  const menu = document.querySelector("#site-navigation");
+
+  const closeMenu = () => {
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+    menu.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open navigation");
+  };
+
+  if (toggle instanceof HTMLButtonElement && menu instanceof HTMLElement) {
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      menu.hidden = isOpen;
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      toggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+    });
+
+    menu.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement && window.innerWidth < 900) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) closeMenu();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 900) closeMenu();
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-ink);
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .site-header__nav {
+    display: flex;
+    min-height: 4.25rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-header__brand,
+  .site-header__link,
+  .site-header__toggle {
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  .site-header__brand {
+    border-bottom: 2px solid transparent;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+  }
+
+  .site-header__toggle {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-ink);
+    background: transparent;
+    color: inherit;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+  }
+
+  .site-header__menu {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 100%;
+    border-bottom: 1px solid var(--color-ink);
+    background: var(--color-paper);
+  }
+
+  .site-header__menu[hidden] {
+    display: none;
+  }
+
+  .site-header__links {
+    display: grid;
+    margin: 0;
+    padding: 0.5rem 1.25rem 1rem;
+    list-style: none;
+  }
+
+  .site-header__link {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    color: var(--color-ink);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .site-header__link:hover,
+  .site-header__link.is-current {
+    border-bottom-color: var(--color-rlp-cyan);
+  }
+
+  .site-header__link.is-current {
+    color: var(--color-rlp-cyan);
+    font-weight: 700;
+  }
+
+  .site-header__brand:focus-visible,
+  .site-header__link:focus-visible,
+  .site-header__toggle:focus-visible {
+    outline: 2px solid var(--color-rlp-cyan);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 900px) {
+    .site-header__toggle {
+      display: none;
+    }
+
+    .site-header__menu,
+    .site-header__menu[hidden] {
+      position: static;
+      display: block;
+      border: 0;
+    }
+
+    .site-header__links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0;
+    }
+
+    .site-header__link {
+      min-height: 4.25rem;
+      white-space: nowrap;
+    }
+  }
+</style>
