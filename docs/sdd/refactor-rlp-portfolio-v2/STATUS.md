@@ -276,7 +276,22 @@ Evidence:
 - `git diff --check`: PASS
 - browser inspection at 390px, 768px, and 1024px: no horizontal overflow; three readable artifacts; nested links retain focus and image evidence remains present; no whole-card interactivity
 
-M1.3 remains open.
+### M1.3.5 — COMPLETE
 
-Next:
-M1.3.5 — Layout Responsive Primitives
+Evidence:
+
+- fresh baseline E2E: PASS (21 tests)
+- fresh baseline production build: PASS
+- canonical values: content max `80rem`; reading max `46rem`; gutters `1rem` at 320/390, `1.5rem` at 768, and `2rem` at >=1024; spacing scale 4/8/12/16/24/32/48/64/96px in rem
+- `editorial-container`: 0 remaining consumers; legacy rule removed with no alias
+- `rlp-container`: 6 locations — global primitive definition plus Home main, Blog index main, Blog article main, SiteHeader, and SiteFooter
+- `rlp-reading`: global primitive plus the Blog article readable shell; it adds only max-width and retains inherited typography
+- local composition remains untouched: Hero, project grid, timelines, contact layout, local grids/flex, and page spacing
+- global hCaptcha max-width containment prevents its third-party embed from overflowing the 320px canonical Home shell without changing contact behavior
+- focused layout E2E: PASS (1 test), including canonical token contract, Home container behavior, 320/390/768/1024 gutters, no overflow, desktop max/centering, readable measure, and typography inheritance
+- full E2E: PASS (22 tests)
+- production build: PASS
+- `git diff --check`: PASS
+- browser viewport inspection at Home, Blog index, and Blog article for 320px, 390px, 768px, 1024px, and wide: no horizontal overflow, coherent shared alignment, usable gutters, reasonable desktop reading measure, and unchanged dark canvas
+
+M1.3 slices are COMPLETE. M1 remains pending the Global UI Foundation gate and M1 foundation settlement. Do not begin the gate in this slice.
