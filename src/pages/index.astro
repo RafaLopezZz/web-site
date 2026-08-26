@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ContactForm from "../components/ContactForm.astro";
 import ActionLink from "../components/ActionLink.astro";
+import Surface from "../components/Surface.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SkillsPanel from "../components/SkillsPanel.astro";
@@ -244,7 +245,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
             const details = getProjectDetails(project);
 
             return (
-              <article class="flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.03] transition hover:border-accent/50 hover:bg-white/[0.04]">
+              <Surface class="flex h-full flex-col overflow-hidden">
                 <Image
                   src={projectImage}
                   alt={project.data.title}
@@ -320,7 +321,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
                     )}
                   </div>
                 </div>
-              </article>
+              </Surface>
             );
           })
         }

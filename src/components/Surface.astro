@@ -1,0 +1,14 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"article"> {
+  as?: "article" | "section" | "div";
+  variant?: "artifact";
+}
+
+const { as: Tag = "article", class: className, variant = "artifact", ...attributes } = Astro.props;
+---
+
+<Tag {...attributes} class:list={["surface", `surface--${variant}`, className]} data-surface={variant}>
+  <slot />
+</Tag>

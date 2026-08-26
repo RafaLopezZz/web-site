@@ -261,3 +261,22 @@ Evidence:
 
 Next:
 M1.3.4 — Surface Foundation
+
+### M1.3.4 — COMPLETE
+
+Evidence:
+
+- `Surface` provides only the current semantic `artifact` variant with native `article`/`section`/`div` output, forwarded native attributes, and `data-surface="artifact"`
+- only the three repeated Home project articles consume the foundation; their semantics, project data, images/alts, content, metadata, highlights, and `ActionLink` links remain preserved
+- square border/background containment, IBM Plex Sans inheritance, and a restrained focus-within border support the temporary dark canvas without defining a dark-theme API
+- Dossier, Record, Explorer, and generic Card are intentionally deferred; hero microcards, experience/education, skills/certificates, blog cards, and the contact form remain untouched legacy surfaces
+- focused Surface foundation E2E: PASS (1 test)
+- full E2E: PASS (21 tests)
+- production build: PASS
+- `git diff --check`: PASS
+- browser inspection at 390px, 768px, and 1024px: no horizontal overflow; three readable artifacts; nested links retain focus and image evidence remains present; no whole-card interactivity
+
+M1.3 remains open.
+
+Next:
+M1.3.5 — Layout Responsive Primitives
