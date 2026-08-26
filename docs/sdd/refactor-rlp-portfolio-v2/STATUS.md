@@ -210,3 +210,21 @@ Evidence:
 
 Next:
 M1.3 — Global UI Foundation
+
+### M1.3.1 — COMPLETE
+
+Evidence:
+
+- canonical CSS properties: Paper `#F2F0EA`, Ink `#111315`, Terminal `#0C0C0C`, RLP Cyan `#059AAF`, and Graphite `#606568`
+- semantic Tailwind tokens: `paper`, `ink`, `terminal`, `rlp`, and `graphite`; `accent` retained only as the canonical RLP Cyan migration alias
+- IBM Plex Sans is the global body/display family; IBM Plex Mono is technical/code typography
+- Google Fonts loads Sans 400/500/600/700 and Mono 400/500
+- legacy dark canvas intentionally not migrated to Paper in this bounded foundation slice
+- focused design-foundation E2E: PASS (1 test)
+- full E2E: PASS (13 tests)
+- production build: PASS
+- `git diff --check`: PASS
+- authorized production-file hygiene: no `#00E5FF`, DM Sans, or Syne
+
+Next:
+M1.3.2 — SiteHeader
