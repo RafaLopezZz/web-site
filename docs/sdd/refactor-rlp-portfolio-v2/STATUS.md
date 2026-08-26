@@ -295,3 +295,27 @@ Evidence:
 - browser viewport inspection at Home, Blog index, and Blog article for 320px, 390px, 768px, 1024px, and wide: no horizontal overflow, coherent shared alignment, usable gutters, reasonable desktop reading measure, and unchanged dark canvas
 
 M1.3 slices are COMPLETE. M1 remains pending the Global UI Foundation gate and M1 foundation settlement. Do not begin the gate in this slice.
+
+### M1 — Global UI Foundation Settlement
+
+Status: COMPLETE — Global UI Foundation accepted
+
+Evidence:
+
+- preflight: clean tree; branch `design/rlp-v2-m1-foundation`; approved unchanged candidate at `c01e5bc feat(layout): establish RLP layout primitives`
+- M1.1, M1.2, and M1.3: COMPLETE
+- `npx --yes @google/design.md lint DESIGN.md`: PASS
+- focused Playwright: design foundation PASS (1/1); SiteHeader PASS (3/3); action system PASS (4/4); Surface foundation PASS (1/1); layout foundation PASS (1/1)
+- `npm run test:e2e`: PASS (22/22)
+- `npm run build`: PASS
+- `git diff --check`: PASS
+- integration review: canonical IBM Plex Sans/Mono and Paper/Ink/Terminal/RLP Cyan/Graphite tokens; migration-only aliases; one `SiteHeader` and no `Navbar`; semantic current state with cyan plus non-color rule; mobile keyboard menu; native `Action` buttons and `ActionLink` anchors; retained CV download and contact behavior; only Home artifacts consume `Surface`; no generic Card, whole-card interaction, or nested-control regression; canonical 80rem content and 46rem reading measures with 1rem/1.5rem/2rem responsive gutters and 4--96px spacing scale
+- route compatibility: `/blog/`, `/blog/desarrollo-importador-db/`, `/blog/desarrollo-cosecha-en-cope/`, and `/blog/historia-transición/` remain generated and covered by the passing suite; B-002 remains closed
+- accepted external maintainer visual evidence (not independently rendered in settlement): Home approximately 320px, 768px, and 1440px PASS; Blog article approximately 1440px PASS. Reported: visible gutters, no visible overflow, header/shell alignment, constrained wide content, wrapping actions, appropriate 46rem reading measure, and intact legacy local composition. 390px and 1024px are interpolation targets with no observed foundation blocker.
+- settlement made no production changes. Current pages remain legacy presentation; the legacy dark canvas is transitional while Paper remains the v2 doctrine. B-001, B-003, and B-004 are preserved debt.
+
+M1 — COMPLETE
+
+Next:
+
+M2 — Home: implement the short RLP v2 Home atop the settled foundation. Not started.
