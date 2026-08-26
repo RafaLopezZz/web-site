@@ -1,5 +1,7 @@
 ---
 import { ENV } from "../config/env";
+import Action from "./Action.astro";
+import ActionLink from "./ActionLink.astro";
 ---
 
 <section
@@ -27,28 +29,28 @@ import { ENV } from "../config/env";
       </p>
 
       <div class="flex flex-wrap gap-3 pt-2">
-        <a
+        <ActionLink
           href="mailto:rlp.murcia@gmail.com"
-          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+          variant="secondary"
         >
           Email
-        </a>
-        <a
+        </ActionLink>
+        <ActionLink
           href="https://www.linkedin.com/in/rafalopezzz/"
           target="_blank"
           rel="noreferrer"
-          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+          variant="secondary"
         >
           LinkedIn
-        </a>
-        <a
+        </ActionLink>
+        <ActionLink
           href="https://github.com/RafaLopezZz"
           target="_blank"
           rel="noreferrer"
-          class="inline-flex min-h-11 items-center border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:border-accent hover:text-accent"
+          variant="secondary"
         >
           GitHub
-        </a>
+        </ActionLink>
       </div>
     </div>
 
@@ -136,13 +138,12 @@ import { ENV } from "../config/env";
       <div
         class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
       >
-        <button
+        <Action
           id="contact-submit"
           type="submit"
-          class="inline-flex min-h-12 items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           Enviar mensaje
-        </button>
+        </Action>
         <p
           id="contact-status"
           class="text-sm text-white/60"

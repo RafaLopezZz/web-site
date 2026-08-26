@@ -154,6 +154,66 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+.action {
+  border-radius: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.action--primary,
+.action--secondary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-paper);
+  padding: 0.625rem 1.25rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.action--primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.action--primary:hover {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.action--secondary {
+  border-color: var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.action--secondary:hover {
+  border-color: var(--color-rlp-cyan);
+}
+
+.action--text {
+  color: var(--color-paper);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rlp-cyan);
+  text-underline-offset: 0.25em;
+}
+
+.action--text:hover {
+  color: var(--color-rlp-cyan);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--color-rlp-cyan);
+  outline-offset: 3px;
+}
+
+.action:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 @keyframes timeline-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(5, 154, 175, 0.45);

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ContactForm from "../components/ContactForm.astro";
+import ActionLink from "../components/ActionLink.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SkillsPanel from "../components/SkillsPanel.astro";
@@ -123,42 +124,36 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
           </div>
 
           <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a
-              href="#proyectos"
-              class="inline-flex min-h-12 items-center justify-center border border-accent bg-accent px-5 py-3 text-sm uppercase tracking-[0.16em] text-ink transition hover:opacity-90"
-            >
+            <ActionLink href="#proyectos" variant="primary">
               Ver proyectos
-            </a>
-            <a
+            </ActionLink>
+            <ActionLink
               href={`${base}cv/lopez-plana-rafael-2026.pdf`}
               download
               target="_blank"
               rel="noreferrer"
-              class="inline-flex min-h-12 items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent"
+              variant="secondary"
             >
               Descargar CV
-            </a>
+            </ActionLink>
           </div>
 
           <div class="flex flex-wrap gap-3 text-sm text-white/75">
-            <a
+            <ActionLink
               href="https://github.com/RafaLopezZz"
               target="_blank"
               rel="noreferrer"
-              class="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5 transition hover:border-accent/50 hover:text-accent"
-              >GitHub</a
+              >GitHub</ActionLink
             >
-            <a
+            <ActionLink
               href="https://www.linkedin.com/in/rafalopezzz/"
               target="_blank"
               rel="noreferrer"
-              class="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5 transition hover:border-accent/50 hover:text-accent"
-              >LinkedIn</a
+              >LinkedIn</ActionLink
             >
-            <a
+            <ActionLink
               href={`${base}blog`}
-              class="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5 transition hover:border-accent/50 hover:text-accent"
-              >Blog técnico</a
+              >Blog técnico</ActionLink
             >
           </div>
 
@@ -298,7 +293,7 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
                   </ul>
 
                   <div class="mt-auto flex flex-wrap gap-3 pt-2">
-                    <a
+                    <ActionLink
                       href={details.primaryHref}
                       target={
                         details.primaryHref.startsWith("http")
@@ -310,20 +305,18 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
                           ? "noreferrer"
                           : undefined
                       }
-                      class="inline-flex min-h-11 items-center justify-center border border-accent px-4 py-2 text-xs uppercase tracking-[0.16em] text-accent transition hover:bg-accent hover:text-ink"
                     >
                       {details.primaryLabel}
-                    </a>
+                    </ActionLink>
 
                     {details.primaryHref !== project.data.githubUrl && (
-                      <a
+                      <ActionLink
                         href={project.data.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        class="inline-flex min-h-11 items-center justify-center border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent"
                       >
                         Ver repositorio
-                      </a>
+                      </ActionLink>
                     )}
                   </div>
                 </div>
@@ -368,12 +361,11 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
             pueda explicar con honestidad.
           </p>
           <div class="flex flex-wrap gap-3 pt-2">
-            <a
+            <ActionLink
               href={`${base}blog/historia-transición/`}
-              class="inline-flex items-center rounded-full border border-white/10 px-4 py-2 text-sm uppercase tracking-[0.16em] text-accent transition hover:border-accent/50 hover:text-white"
             >
               Leer mi transición profesional
-            </a>
+            </ActionLink>
           </div>
         </div>
       </div>
@@ -411,15 +403,15 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
           </p>
         </div>
 
-        <a
+        <ActionLink
           href={`${base}cv/lopez-plana-rafael-2026.pdf`}
           download
           target="_blank"
           rel="noreferrer"
-          class="inline-flex min-h-12 items-center justify-center border border-white/15 px-5 py-3 text-sm uppercase tracking-[0.16em] text-white transition hover:border-accent hover:text-accent"
+          variant="secondary"
         >
           Descargar CV
-        </a>
+        </ActionLink>
       </div>
     </section>
 

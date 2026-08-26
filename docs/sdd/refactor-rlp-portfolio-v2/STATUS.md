@@ -244,3 +244,20 @@ Evidence:
 
 Next:
 M1.3.3 — Action / ActionLink
+
+### M1.3.3 — COMPLETE
+
+Evidence:
+
+- native `Action` button primitive supports Primary and Secondary variants with genuine disabled behavior; native `ActionLink` preserves navigation semantics and anchor attributes across Primary, Secondary, and Text variants
+- shared IBM Plex Sans, sharp Ink/Paper action hierarchy, unfilled contextual links, RLP Cyan plus non-color visible focus, and legacy dark-canvas readability
+- authorized consumers migrated: Home Hero/CV, quick links, project and transition links; Contact destinations and submit action
+- SiteHeader, SiteFooter, and BlogPostCard inspected only and unchanged; B-004 remains untouched
+- focused Action system E2E: PASS (4 tests)
+- full E2E: PASS (20 tests)
+- production build: PASS
+- `git diff --check`: PASS
+- browser viewport inspection at 390px and 1024px: no horizontal overflow; readable non-pill action hierarchy and reachable contact controls
+
+Next:
+M1.3.4 — Surface Foundation
