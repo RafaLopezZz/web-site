@@ -1,88 +1,12 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import ContactForm from "../components/ContactForm.astro";
 import ActionLink from "../components/ActionLink.astro";
-import Surface from "../components/Surface.astro";
-import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import SkillsPanel from "../components/SkillsPanel.astro";
-import TimelineEducation from "../components/TimelineEducation.astro";
-import TimelineExperience from "../components/TimelineExperience.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import profileImage from "../assets/foto-perfil4.jpg";
-import cosechaEnCopeCover from "../assets/projects/portada.png";
-import importadorDBCover from "../assets/projects/importador-db.png";
-import gleaNexoCover from "../assets/projects/glea-nexo.png";
-import { education } from "../data/education";
-import { experience } from "../data/experience";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
-
-const projects: CollectionEntry<"projects">[] = (
-  await getCollection("projects")
-).sort(
-  (a: CollectionEntry<"projects">, b: CollectionEntry<"projects">) =>
-    b.data.date.getTime() - a.data.date.getTime(),
-);
-
-const projectImages = {
-  "cosecha-en-cope": cosechaEnCopeCover,
-  "importador-db": importadorDBCover,
-  "glea-nexo": gleaNexoCover,
-};
-
-const projectMeta = {
-  "cosecha-en-cope": {
-    primaryHref: `${base}blog/desarrollo-cosecha-en-cope/`,
-    primaryLabel: "Leer caso técnico",
-    highlights: [
-      "Proyecto fullstack con backend en Spring Boot, frontend Angular y base de datos PostgreSQL.",
-      "Muestra trabajo con autenticación, catálogo, carrito y documentación de API.",
-      "Sirve para enseñar estructura de proyecto, lógica de negocio y despliegue de recursos.",
-    ],
-  },
-  "importador-db": {
-    primaryHref: `${base}blog/desarrollo-importador-db/`,
-    primaryLabel: "Leer caso técnico",
-    highlights: [
-      "Aplicación de escritorio en Java para pasar datos de Excel a motores SQL distintos.",
-      "Enseña JDBC, lectura de ficheros, validación de datos e interfaz usable con JavaFX.",
-      "Parte de una necesidad real y está pensada para ahorrar trabajo manual.",
-    ],
-  },
-  "glea-nexo": {
-    primaryHref: "https://github.com/RafaLopezZz/glea-nexo",
-    primaryLabel: "Ver repositorio",
-    highlights: [
-      "Proyecto en desarrollo con IoT agrícola, backend Spring Boot y frontend Angular.",
-      "Me ayuda a trabajar integración entre dispositivos, datos y aplicación web.",
-      "Aporta contexto de arquitectura y aprendizaje más allá de un CRUD clásico.",
-    ],
-  },
-} as const;
-
-const getProjectDetails = (project: CollectionEntry<"projects">) => {
-  const projectKey = project.id as keyof typeof projectMeta;
-  const config = projectMeta[projectKey];
-
-  if (config) {
-    return config;
-  }
-
-  return {
-    primaryHref: project.data.githubUrl,
-    primaryLabel: "Ver repositorio",
-    highlights: [
-      `Proyecto desarrollado con ${project.data.techStack.slice(0, 3).join(", ")}${project.data.techStack.length > 3 ? " y más" : ""}.`,
-      "Enseña una parte representativa de mi trabajo actual como perfil fullstack.",
-      "Puedo ampliar contexto técnico y decisiones de implementación en entrevista o en el repositorio.",
-    ],
-  };
-};
 ---
 
 <BaseLayout
@@ -94,40 +18,19 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
 >
   <SiteHeader />
 
-  <main id="main-content" class="rlp-container py-8 md:py-12">
-    <section
-      id="top"
-      class="border-b border-white/10 pb-12 pt-6 md:pb-18 md:pt-10"
-    >
-      <div
-        class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14"
-      >
-        <div class="space-y-6 md:space-y-7">
-          <p class="text-xs uppercase tracking-[0.28em] text-accent">
-            Fullstack Developer
+  <main id="main-content" class="home-shell">
+    <div class="rlp-container">
+      <section id="hero" class="home-hero" aria-labelledby="hero-title">
+        <div id="hero-identity" class="home-hero__identity">
+          <p class="home-hero__role">Software Developer</p>
+          <h1 id="hero-title">Rafael López</h1>
+          <p class="home-hero__territory">Backend · Datos · Sistemas</p>
+          <p class="home-hero__copy">
+            Desarrollo software para resolver problemas reales, con especial interés en backend, datos, automatización y sistemas conectados.
           </p>
 
-          <div class="space-y-5">
-            <h1
-              class="max-w-5xl font-display text-4xl font-extrabold leading-[0.96] sm:text-5xl md:text-6xl lg:text-7xl"
-            >
-              Construyo software útil, claro y mantenible
-            </h1>
-            <p
-              class="max-w-3xl text-base leading-relaxed text-white/85 sm:text-lg md:text-xl"
-            >
-              Soy Rafael López, desarrollador Fullstack. En este portfolio
-              muestro proyectos con Java, Spring Boot, Angular, APIs REST, bases
-              de datos e interfaces sencillas de entender. Me interesa crear
-              software útil, que ayude a resolver problemas reales y aporte algo
-              positivo a las personas que lo usan.
-            </p>
-          </div>
-
-          <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <ActionLink href="#proyectos" variant="primary">
-              Ver proyectos
-            </ActionLink>
+          <div class="home-hero__actions">
+            <ActionLink href={`${base}blog/`} variant="primary">Ver trabajo</ActionLink>
             <ActionLink
               href={`${base}cv/lopez-plana-rafael-2026.pdf`}
               download
@@ -138,286 +41,135 @@ const getProjectDetails = (project: CollectionEntry<"projects">) => {
               Descargar CV
             </ActionLink>
           </div>
+        </div>
 
-          <div class="flex flex-wrap gap-3 text-sm text-white/75">
-            <ActionLink
-              href="https://github.com/RafaLopezZz"
-              target="_blank"
-              rel="noreferrer"
-              >GitHub</ActionLink
-            >
-            <ActionLink
-              href="https://www.linkedin.com/in/rafalopezzz/"
-              target="_blank"
-              rel="noreferrer"
-              >LinkedIn</ActionLink
-            >
-            <ActionLink
-              href={`${base}blog`}
-              >Blog técnico</ActionLink
-            >
+        <aside id="cmd-identity" class="cmd-identity" aria-label="Technical identity">
+          <div class="cmd-identity__titlebar">
+            <span>C:\RLP\identity.exe</span>
+            <span class="cmd-identity__controls" aria-hidden="true">_ □ ×</span>
           </div>
-
-          <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            <article class="border border-white/10 bg-white/[0.03] p-4">
-              <p class="text-xs uppercase tracking-[0.18em] text-white/45">
-                Perfil
-              </p>
-              <p class="mt-2 text-sm leading-relaxed text-white/82">
-                Fullstack con mejor base en Java, APIs REST y datos.
-              </p>
-            </article>
-            <article class="border border-white/10 bg-white/[0.03] p-4">
-              <p class="text-xs uppercase tracking-[0.18em] text-white/45">
-                Trabajo actual
-              </p>
-              <p class="mt-2 text-sm leading-relaxed text-white/82">
-                Consultoría informática con desarrollo web, automatización y
-                soporte.
-              </p>
-            </article>
-            <article
-              class="border border-white/10 bg-white/[0.03] p-4 sm:col-span-2 xl:col-span-1"
-            >
-              <p class="text-xs uppercase tracking-[0.18em] text-white/45">
-                Qué puedes revisar
-              </p>
-              <p class="mt-2 text-sm leading-relaxed text-white/82">
-                Proyectos, experiencia, formación, blog técnico y CV.
-              </p>
-            </article>
+          <div class="cmd-identity__terminal">
+            <p>C:\RLP&gt; whoami</p>
+            <p>rlp-sys-admin</p>
+            <p>C:\RLP&gt; <span class="cmd-identity__cursor">█</span></p>
           </div>
-        </div>
-
-        <div class="grid gap-4 md:gap-5">
-          <div class="overflow-hidden border border-white/10 bg-white/[0.03]">
-            <Image
-              src={profileImage}
-              alt="Rafael López"
-              width={900}
-              height={1200}
-              class="aspect-[4/5] w-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      id="proyectos"
-      class="scroll-mt-28 py-12 md:py-16"
-      aria-labelledby="proyectos-title"
-    >
-      <div
-        class="mb-6 flex flex-col gap-4 md:mb-8 md:flex-row md:items-end md:justify-between"
-      >
-        <div class="space-y-3">
-          <p class="text-xs uppercase tracking-[0.24em] text-white/50">
-            Trabajo reciente
-          </p>
-          <h2
-            id="proyectos-title"
-            class="font-display text-3xl font-bold md:text-5xl"
-          >
-            Proyectos destacados
-          </h2>
-        </div>
-        <span class="text-xs uppercase tracking-[0.2em] text-white/60"
-          >{projects.length} proyectos</span
-        >
-      </div>
-
-      <p
-        class="mb-8 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg"
-      >
-        Son los proyectos que mejor enseñan cómo trabajo Java, Spring Boot,
-        Angular, APIs REST y bases de datos sin depender solo de una lista de
-        tecnologías.
-      </p>
-
-      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {
-          projects.map((project) => {
-            const projectKey = project.id as keyof typeof projectMeta;
-            const projectImage =
-              projectImages[projectKey as keyof typeof projectImages] ??
-              cosechaEnCopeCover;
-            const details = getProjectDetails(project);
-
-            return (
-              <Surface class="flex h-full flex-col overflow-hidden">
-                <Image
-                  src={projectImage}
-                  alt={project.data.title}
-                  width={1200}
-                  height={720}
-                  class="h-52 w-full object-cover"
-                />
-
-                <div class="flex flex-1 flex-col gap-4 p-5 md:gap-5 md:p-6">
-                  <div class="space-y-3">
-                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                      <h3 class="font-display text-2xl font-bold">
-                        {project.data.title}
-                      </h3>
-                      <time class="text-xs uppercase tracking-[0.18em] text-white/60">
-                        {project.data.date.toLocaleDateString("es-ES", {
-                          year: "numeric",
-                          month: "short",
-                        })}
-                      </time>
-                    </div>
-
-                    <p class="text-sm leading-relaxed text-white/82">
-                      {project.data.description}
-                    </p>
-                  </div>
-
-                  <ul class="flex flex-wrap gap-2">
-                    {project.data.techStack.map((tech: string) => (
-                      <li class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/75">
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <ul class="space-y-2 text-sm leading-relaxed text-white/80">
-                    {details.highlights.map((highlight) => (
-                      <li class="flex gap-3">
-                        <span
-                          class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                          aria-hidden="true"
-                        />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div class="mt-auto flex flex-wrap gap-3 pt-2">
-                    <ActionLink
-                      href={details.primaryHref}
-                      target={
-                        details.primaryHref.startsWith("http")
-                          ? "_blank"
-                          : undefined
-                      }
-                      rel={
-                        details.primaryHref.startsWith("http")
-                          ? "noreferrer"
-                          : undefined
-                      }
-                    >
-                      {details.primaryLabel}
-                    </ActionLink>
-
-                    {details.primaryHref !== project.data.githubUrl && (
-                      <ActionLink
-                        href={project.data.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Ver repositorio
-                      </ActionLink>
-                    )}
-                  </div>
-                </div>
-              </Surface>
-            );
-          })
-        }
-      </div>
-    </section>
-
-    <section
-      id="sobre-mi"
-      class="scroll-mt-28 border-t border-white/10 py-12 md:py-16"
-      aria-labelledby="sobre-mi-title"
-    >
-      <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-        <div class="space-y-4">
-          <p class="text-xs uppercase tracking-[0.24em] text-white/50">
-            Sobre mí
-          </p>
-          <h2
-            id="sobre-mi-title"
-            class="font-display text-3xl font-bold leading-tight md:text-5xl"
-          >
-            De trabajar con clientes y equipos a construir software que se
-            entienda bien.
-          </h2>
-        </div>
-
-        <div
-          class="space-y-5 text-base leading-relaxed text-white/82 md:text-lg"
-        >
-          <p>
-            Vengo de años trabajando con clientes, equipos y problemas reales.
-            Esa etapa me ayuda a entender mejor qué necesita una aplicación: que
-            sea clara, útil y mantenible.
-          </p>
-          <p>
-            Ahora estoy centrado en desarrollo fullstack, con una base más
-            fuerte en Java, Spring Boot, Angular y bases de datos. Me interesa
-            aprender bien las bases y convertir cada proyecto en algo que se
-            pueda explicar con honestidad.
-          </p>
-          <div class="flex flex-wrap gap-3 pt-2">
-            <ActionLink
-              href={`${base}blog/historia-transición/`}
-            >
-              Leer mi transición profesional
-            </ActionLink>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <TimelineExperience
-      id="experiencia"
-      title="Experiencia"
-      items={experience}
-    />
-
-    <TimelineEducation id="formacion" title="Formación" items={education} />
-
-    <SkillsPanel />
-
-    <section
-      id="cv"
-      class="scroll-mt-28 border-t border-white/10 py-12 md:py-16"
-      aria-labelledby="cv-title"
-    >
-      <div
-        class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
-      >
-        <div class="space-y-3">
-          <p class="text-xs uppercase tracking-[0.24em] text-white/50">
-            Perfil en una página
-          </p>
-          <h2 id="cv-title" class="font-display text-3xl font-bold md:text-5xl">
-            Currículum
-          </h2>
-          <p class="max-w-2xl text-base leading-relaxed text-white/82">
-            Si quieres revisar el perfil en menos tiempo, aquí tienes una
-            versión resumida con experiencia, formación, stack y enlaces
-            principales.
-          </p>
-        </div>
-
-        <ActionLink
-          href={`${base}cv/lopez-plana-rafael-2026.pdf`}
-          download
-          target="_blank"
-          rel="noreferrer"
-          variant="secondary"
-        >
-          Descargar CV
-        </ActionLink>
-      </div>
-    </section>
-
-    <ContactForm />
+        </aside>
+      </section>
+    </div>
   </main>
 
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .home-shell {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .home-hero {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+
+  .home-hero__identity {
+    display: grid;
+    align-content: center;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .home-hero__role,
+  .home-hero__territory {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home-hero__role {
+    color: var(--color-graphite);
+    font-size: 0.875rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+
+  .home-hero__territory {
+    font-size: 1rem;
+  }
+
+  .home-hero__copy {
+    max-width: var(--reading-max);
+    margin: 0;
+    color: var(--color-graphite);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .home-hero :global(.action--primary) {
+    border-color: var(--color-ink);
+  }
+
+  .cmd-identity {
+    align-self: center;
+    min-width: 0;
+    border: 2px solid #606568;
+    box-shadow: inset 1px 1px #ffffff, inset -1px -1px #303437;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .cmd-identity__titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 0.25rem 0.375rem;
+    background: #b8b8b8;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .cmd-identity__controls {
+    white-space: nowrap;
+  }
+
+  .cmd-identity__terminal {
+    min-height: 10rem;
+    padding: var(--space-5);
+    background: var(--color-terminal);
+  }
+
+  .cmd-identity__terminal p {
+    margin: 0;
+  }
+
+  .cmd-identity__cursor {
+    color: var(--color-rlp-cyan);
+  }
+
+  @media (min-width: 768px) {
+    .home-hero {
+      grid-template-columns: minmax(0, 1.3fr) minmax(16rem, 0.7fr);
+      align-items: center;
+      min-height: calc(100vh - 4.25rem);
+      padding-block: var(--space-9);
+    }
+  }
+</style>

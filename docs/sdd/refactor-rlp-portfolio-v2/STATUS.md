@@ -6,7 +6,7 @@
 
 ## Branch
 
-`design/rlp-v2-m1-foundation`
+`refactor/rlp-v2`
 
 ## Execution policy
 
@@ -319,3 +319,22 @@ M1 — COMPLETE
 Next:
 
 M2 — Home: implement the short RLP v2 Home atop the settled foundation. Not started.
+
+### M2.1 — Short Home Shell + Hero + CMD Identity
+
+Status: COMPLETE
+
+Evidence:
+
+- focused RED: `Ver trabajo` failed the truthful-destination check because it targeted synthetic `#trabajo` with no meaningful destination
+- Home/action/layout focused E2E covers `/blog/` as the existing `Ver trabajo` destination, retained CV download, the `main.home-shell > .rlp-container > .home-hero` composition, full-width Paper canvas, constrained content, and responsive CMD behavior
+- 20 E2E checks accepted; production build and `git diff --check` accepted
+- external maintainer visual evidence accepted for Home at 320px, 768px, and 1440px: Paper canvas, constrained content, and route-local CMD visuals
+- Home is route-local Paper/Ink with the settled SiteHeader and SiteFooter unchanged; `CmdIdentity.astro` was not created and the CMD identity remains inline in the Home route
+- intentional Home characterization replacements remove legacy project, professional/Education, Contact, and old CTA assertions only; Blog index/article, SiteHeader, layout/design/action semantics, routes, and shared foundations remain covered; no components or data were deleted
+
+Next:
+
+M2.2 — Light/Dark/System Theme System. M2 is not complete.
+
+Roadmap: M2.3 — Featured Evidence; M2.4 — Explore + Footer integration; M2.5 — Responsive/content polish; M2 Gate.

@@ -41,7 +41,9 @@ test("provides canonical responsive editorial layout primitives", async ({ page 
     "--space-9": "6rem",
   });
 
-  const main = page.locator("main.rlp-container");
+  const homeShell = page.locator("main.home-shell");
+  const main = homeShell.locator(":scope > .rlp-container");
+  await expect(homeShell).toHaveCount(1);
   await expect(main).toHaveCount(1);
 
   const overflowWidths: number[] = [];
