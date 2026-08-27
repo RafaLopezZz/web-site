@@ -20,7 +20,7 @@ The internal creative principle is **`Engineered, not generated.`** It guides cr
 
 This is hierarchy, not literal layout: Editorial content is 60%; Windows 95 information structure is 25%; CMD/terminal evidence is 10%; and RLP identity is 5%. Editorial reading leads every screen. Windows 95 supports containment and orientation. CMD proves technical context. RLP identity signs the work without competing with it.
 
-Light mode is the default doctrine: Paper surfaces, Ink reading text, and calm editorial space. Dark is not a site theme. Terminal is reserved for bounded CMD, code, command output, and explicit technical evidence.
+Light mode is the canonical editorial default: Paper surfaces, Ink reading text, and calm editorial space. Terminal is reserved for bounded CMD, code, command output, and explicit technical evidence.
 
 Spanish and English are complete public territories. They must preserve meaning, facts, hierarchy, labels, destinations, and action priority. Translation may reflow for readable line length; it must not mirror sentence length or create a weaker locale.
 
@@ -37,6 +37,18 @@ Spanish and English are complete public territories. They must preserve meaning,
 The canonical colors express semantic intentions: Paper is the editorial canvas, Ink is readable primary content, Terminal denotes bounded technical evidence, RLP Cyan denotes meaningful focus/selection/activity, and Graphite supports secondary information. The Windows grey classic neutral/bevel family is reserved for chrome, borders, bevels, titlebars, and supporting UI. Legacy `#00E5FF` is explicitly not part of RLP v2 and must not be added as a token.
 
 RLP Cyan never carries meaning alone. Every state also has text, structure, iconography with a label, or another non-color cue. Maintain accessible contrast for text, controls, focus indicators, and borders on their actual surfaces.
+
+### Theme Modes
+
+M1 correctly established light editorial doctrine for its historical foundation scope. A later M2 decision prospectively supersedes M1's no-dark restriction: the site supports System, Light, and Dark modes. Light remains canonical and the default editorial presentation; Dark is optional editorial presentation, not a separate product.
+
+Dark preserves the same IA, hierarchy, semantics, spacing, typography, components, and interactions as Light. Theme changes color roles only. Canonical colors remain authoritative; future semantic roles `canvas`, `surface`, `text`, `text-muted`, `line-border`, and `accent` map foundation colors to components. No exact dark hex values are decided here.
+
+CMD remains Terminal `#0C0C0C` in both themes. It stays bounded technical evidence and must never make the site look like CMD. Do not convert the portfolio into terminal, cyberpunk, dark-SaaS, fake-OS, Windows, neon, or glow territory.
+
+Future preference resolution is explicit choice first, then system preference when the chosen mode is System, then the resulting effective mode. Future implementation supports system preference and persists an explicit Light or Dark choice. Keyboard operation, real-button semantics, visible focus, contrast, non-color cues, and reduced-motion behavior remain unchanged.
+
+Legacy routes may adopt theme-aware colors without premature territory redesign; Blog remains Blog, not Notes Explorer.
 
 ## Typography
 
@@ -194,7 +206,7 @@ Each primitive has one bounded responsibility. Add a component only when a repea
 - Semantic purpose: present short command or system evidence, including `C:\RLP> whoami` in the hero.
 - Visual responsibility: provide the bounded Terminal surface, focus/status text, and restrained RLP Cyan cursor.
 - Accessibility rule: expose command and output as selectable text; cursor animation is non-essential and disabled for reduced motion.
-- Prohibited behavior: requiring input, auto-typing that delays reading, command-only navigation, or a full-page dark theme.
+- Prohibited behavior: requiring input, auto-typing that delays reading, command-only navigation, or using CMD as a full-page dark conversion.
 
 ### RetroTree
 
@@ -262,7 +274,7 @@ Each primitive has one bounded responsibility. Add a component only when a repea
 
 - Do not turn the portfolio into a dark SaaS dashboard, cyberpunk landing page, retro Windows 95 clone, terminal simulator, logo wall, or generic rounded-card gallery.
 - Do not use generic AI gradients, glassmorphism, fake accessible controls, fake terminal navigation, meaningless retro decoration, or large generic SaaS card grids.
-- Do not use a dark alternate site theme, a fake desktop, draggable windows, or interactive terminal behavior as a requirement.
+- Do not use a fake desktop, draggable windows, interactive terminal behavior, terminal/cyberpunk/dark-SaaS styling, fake-OS or Windows conversion, neon, or glow as a requirement.
 - Do not use motion, color, iconography, device width, screenshots, or the maker mark as the sole carrier of meaning.
 - Do not use cyan as body text, a large decorative field, or the only indicator of focus, status, or selection.
 - Do not invent unapproved token values, type metrics, effects, or new font families beyond established design decisions.
