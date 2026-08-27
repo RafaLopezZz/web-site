@@ -338,3 +338,29 @@ Next:
 M2.2 — Light/Dark/System Theme System. M2 is not complete.
 
 Roadmap: M2.3 — Featured Evidence; M2.4 — Explore + Footer integration; M2.5 — Responsive/content polish; M2 Gate.
+
+### M2.2 — Light/Dark/System Theme System
+
+Status: TECHNICALLY GREEN — manual visual review PENDING MAINTAINER. M2 remains open.
+
+Evidence:
+
+- locale: URL-only Spanish `/` and English `/en/` Home counterparts set exact `html[lang]`; locale is never stored, inferred, redirected, or represented with flags
+- locale control: `SiteHeader` provides a compact 48×34px retro plate with real ES-left/EN-right `nav[aria-label="Idioma"]` anchors, URL-driven `aria-current="page"`, and an inset cyan route marker as the secondary non-color cue; it precedes Theme in the centered locale → theme → Menu mobile and locale → theme desktop utility row, with no flags or locale persistence
+- English scope: English reuses Home/CMD semantics with bounded translated identity/actions, links its truthful work action to the real `/blog/`, and Header exposes only English Home plus the existing Blog rather than future English placeholders
+- locale/theme verification: `tests/locale-system.spec.ts` RED against the pre-locale candidate, then focused locale/Header/Home/theme PASS (15/15) across 320/390/768/1024/1440; preference and effective theme survive locale navigation independently
+- build: `/` and `/en/` emit alongside the established Blog routes; full E2E PASS (28/28), production build PASS, `git diff --check` PASS
+- model: preference (`system`/`light`/`dark`) is separate from effective theme; `rlp-theme` localStorage accepts only valid values and absent/invalid storage safely falls back to System
+- root: `html[data-theme-preference]` records choice and `html[data-theme]` records effective Light/Dark; `color-scheme` follows effective mode; no component owns a second theme state
+- bootstrap: synchronous defensive head bootstrap reads storage and sets root state before first render, including stored Dark
+- tokens: semantic `canvas`, `surface`, `surface-raised`, `text`, `text-muted`, `line`, and `accent`; Light retains Paper/Ink direction; Dark values are canvas `#1C1D1D`, surface `#242525`, raised `#2D2E2E`, text `#F2F0EA`, muted `#B8B7B0`, line `#85857E`, accent `#5CB6C3`
+- control: superseding button/select/radio presentations, one native SiteHeader `input[type="range"]` is the semantic owner of the compact retro inline SVG switch: `min="0" max="2" step="1"` maps System left (`0`), Light center (`1`), Dark right (`2`). Spanish name/value text expose stored preference rather than effective theme; direct selection plus native Arrow Left/Right and Home/End behavior persist it. SVG is `aria-hidden`; visible focus and desktop/mobile utility placement are preserved
+- runtime: System follows `matchMedia("(prefers-color-scheme: dark)")` changes live; explicit Light/Dark ignore system changes
+- CMD: terminal background remains invariant `#0C0C0C`; Home plus Blog index/article receive color-only semantic adoption
+- TDD: the native range contract was RED against the compact button candidate before the SiteHeader refinement; `tests/theme-system.spec.ts` GREEN (4/4)
+- focused regressions: SiteHeader 4/4; Home 4/4
+- full E2E: PASS (25/25); production build: PASS; `git diff --check`: PASS
+- manual visual: PENDING MAINTAINER; no rendering claim is made
+- RetroLocaleSwitch visual refinement: locale/Header/theme focused E2E PASS (11/11) at 320/390/768/1024/1440, covering real anchors/current URL state, native tab order, shared utility bounds/no overlap/no overflow, and theme preservation across locale navigation; manual visual review remains PENDING MAINTAINER
+
+Next: M2.3 — Featured Evidence awaits maintainer acceptance. Do not begin M2.3 in this slice.

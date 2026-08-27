@@ -2,10 +2,19 @@
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
-const isBlog = Astro.url.pathname.startsWith(`${base}blog`);
+interface Props {
+  locale?: "es" | "en";
+}
 
-const links = [
-  { href: base, label: "Home", current: !isBlog },
+const { locale = "es" } = Astro.props;
+const home = locale === "en" ? `${base}en/` : base;
+const isBlog = locale === "es" && Astro.url.pathname.startsWith(`${base}blog`);
+
+const links = locale === "en" ? [
+  { href: home, label: "Home", current: true },
+  { href: `${base}blog`, label: "Notes" },
+] : [
+  { href: home, label: "Home", current: !isBlog },
   { href: `${base}#proyectos`, label: "Work" },
   { href: `${base}#experiencia`, label: "Experience" },
   { href: `${base}#formacion`, label: "Education" },
@@ -18,36 +27,50 @@ const links = [
 <header class="site-header">
   <div class="rlp-container">
     <nav class="site-header__nav" aria-label="Primary navigation">
-      <a class="site-header__brand" href={base}>RLP</a>
+      <a class="site-header__brand" href={home}>RLP</a>
 
-      <button
-        id="site-menu-toggle"
-        class="site-header__toggle"
-        type="button"
-        aria-controls="site-navigation"
-        aria-expanded="false"
-        aria-label="Open navigation"
-      >
-        <span aria-hidden="true">Menu</span>
-      </button>
-
-      <div id="site-navigation" class="site-header__menu" hidden>
-        <ul class="site-header__links">
-          {
-            links.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class:list={["site-header__link", link.current && "is-current"]}
-                  aria-current={link.current ? "page" : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+      <div class="site-header__primary">
+        <div id="site-navigation" class="site-header__menu" hidden>
+          <ul class="site-header__links">
+            {
+              links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class:list={["site-header__link", link.current && "is-current"]}
+                    aria-current={link.current ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
+
+      <div class="site-header__utility">
+        <nav id="locale-control" class="site-header__locale" aria-label="Idioma" data-retro-locale={locale}>
+          <a href={base} aria-current={locale === "es" ? "page" : undefined}>ES</a>
+          <a href={`${base}en/`} aria-current={locale === "en" ? "page" : undefined}>EN</a>
+          <span class="site-header__locale-marker" data-position={locale} aria-hidden="true"></span>
+        </nav>
+        <div id="theme-control" class="site-header__theme" data-theme-preference="system">
+          <svg aria-hidden="true" viewBox="0 0 80 36">
+            <rect class="site-header__theme-plate" x="1" y="2" width="78" height="32" rx="1" />
+            <path d="M8 11h16v11H8zM13 25h6M16 22v3" />
+            <circle cx="40" cy="16.5" r="4" />
+            <path d="M40 7v3M40 23v3M30.5 16.5h3M46.5 16.5h3M33.3 9.8l2.1 2.1M44.6 21.1l2.1 2.1M46.7 9.8l-2.1 2.1M35.4 21.1l-2.1 2.1M70.5 20.2A7 7 0 0 1 61.8 9.5 7 7 0 1 0 70.5 20.2z" />
+            <path class="site-header__theme-detents" d="M28 7v19M52 7v19" />
+            <rect class="site-header__theme-slider" x="4" y="5" width="24" height="23" rx="1" />
+          </svg>
+          <input id="theme-control-range" type="range" min="0" max="2" step="1" value="0" aria-label="Preferencia de tema" aria-valuetext="Sistema" />
+        </div>
+        <button id="site-menu-toggle" class="site-header__toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Open navigation">
+          <span aria-hidden="true">Menu</span>
+        </button>
+      </div>
+
     </nav>
   </div>
 </header>
@@ -55,6 +78,37 @@ const links = [
 <script is:inline>
   const toggle = document.querySelector("#site-menu-toggle");
   const menu = document.querySelector("#site-navigation");
+  const themeControl = document.querySelector("#theme-control");
+  const themeRange = document.querySelector("#theme-control-range");
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const applyTheme = (preference) => {
+    const effective = preference === "system" ? (media.matches ? "dark" : "light") : preference;
+    document.documentElement.dataset.themePreference = preference;
+    document.documentElement.dataset.theme = effective;
+    document.documentElement.style.colorScheme = effective;
+  };
+
+  if (themeControl instanceof HTMLElement && themeRange instanceof HTMLInputElement) {
+    const preferences = ["system", "light", "dark"];
+    const labels = { system: "Sistema", light: "Claro", dark: "Oscuro" };
+    const updateThemeControl = (preference) => {
+      themeControl.dataset.themePreference = preference;
+      themeRange.value = String(preferences.indexOf(preference));
+      themeRange.setAttribute("aria-valuetext", labels[preference]);
+    };
+    const setPreference = (preference) => {
+      try { localStorage.setItem("rlp-theme", preference); } catch {}
+      applyTheme(preference);
+      updateThemeControl(preference);
+    };
+
+    updateThemeControl(document.documentElement.dataset.themePreference || "system");
+    themeRange.addEventListener("input", () => setPreference(preferences[Number(themeRange.value)] || "system"));
+    media.addEventListener("change", () => {
+      if (document.documentElement.dataset.themePreference === "system") applyTheme("system");
+    });
+  }
 
   const closeMenu = () => {
     if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
@@ -90,9 +144,9 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
-    border-bottom: 1px solid var(--color-ink);
-    background: var(--color-paper);
-    color: var(--color-ink);
+    border-bottom: 1px solid var(--theme-line);
+    background: var(--theme-surface);
+    color: var(--theme-text);
   }
 
   .site-header__nav {
@@ -105,6 +159,7 @@ const links = [
 
   .site-header__brand,
   .site-header__link,
+  .site-header__locale a,
   .site-header__toggle {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -121,11 +176,58 @@ const links = [
   .site-header__toggle {
     min-width: 2.75rem;
     min-height: 2.75rem;
-    border: 1px solid var(--color-ink);
+    border: 1px solid var(--theme-text);
     background: transparent;
     color: inherit;
     font-size: 0.875rem;
     letter-spacing: 0.04em;
+  }
+
+  .site-header__utility {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__locale {
+    display: grid;
+    position: relative;
+    width: 3rem;
+    height: 2.125rem;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--theme-line);
+    background: var(--theme-surface-raised);
+  }
+
+  .site-header__locale a {
+    display: grid;
+    place-items: center;
+    color: var(--theme-text);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-decoration: none;
+    z-index: 1;
+  }
+
+  .site-header__locale a + a { border-left: 1px solid var(--theme-line); }
+
+  .site-header__locale a[aria-current="page"] {
+    font-weight: 700;
+  }
+
+  .site-header__locale-marker {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: 17px;
+    border: 1px solid var(--theme-accent);
+    pointer-events: none;
+  }
+
+  .site-header__locale-marker[data-position="en"] {
+    transform: translateX(23px);
   }
 
   .site-header__menu {
@@ -133,8 +235,8 @@ const links = [
     right: 0;
     left: 0;
     top: 100%;
-    border-bottom: 1px solid var(--color-ink);
-    background: var(--color-paper);
+    border-bottom: 1px solid var(--theme-line);
+    background: var(--theme-surface);
   }
 
   .site-header__menu[hidden] {
@@ -153,7 +255,7 @@ const links = [
     min-height: 2.75rem;
     align-items: center;
     border-bottom: 2px solid transparent;
-    color: var(--color-ink);
+    color: var(--theme-text);
     font-size: 0.875rem;
     text-decoration: none;
   }
@@ -170,9 +272,63 @@ const links = [
 
   .site-header__brand:focus-visible,
   .site-header__link:focus-visible,
-  .site-header__toggle:focus-visible {
-    outline: 2px solid var(--color-rlp-cyan);
+  .site-header__locale a:focus-visible,
+  .site-header__toggle:focus-visible,
+  .site-header__theme:focus-within {
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
+  }
+
+  .site-header__theme {
+    display: grid;
+    position: relative;
+    width: 5rem;
+    min-height: 2.75rem;
+    place-items: center;
+    color: inherit;
+  }
+
+  .site-header__theme svg {
+    width: 4.75rem;
+    height: 2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-width: 1.25;
+  }
+
+  .site-header__theme input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .site-header__theme-plate {
+    fill: var(--theme-surface-raised);
+    stroke: var(--theme-line);
+  }
+
+  .site-header__theme-detents {
+    stroke: var(--theme-line);
+  }
+
+  .site-header__theme-slider {
+    fill: var(--theme-surface);
+    stroke: var(--theme-text);
+    transition: transform 120ms linear;
+  }
+
+  .site-header__theme[data-theme-preference="light"] .site-header__theme-slider { transform: translateX(24px); }
+
+  .site-header__theme[data-theme-preference="dark"] .site-header__theme-slider { transform: translateX(48px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__theme-slider { transition: none; }
   }
 
   @media (min-width: 900px) {
@@ -185,6 +341,14 @@ const links = [
       position: static;
       display: block;
       border: 0;
+    }
+
+    .site-header__menu {
+      display: block;
+    }
+
+    .site-header__primary {
+      margin-left: auto;
     }
 
     .site-header__links {

@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string | ImageMetadata;
   noindex?: boolean;
+  lang?: "es" | "en";
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = "Portfolio de Rafael López, desarrollo aplicaciones web y APIs con Java/Spring Boot, PHP/Laravel y PostgreSQL/MySQL, priorizando calidad, escalabilidad y mantenibilidad.",
   image,
   noindex = false,
+  lang = "es",
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -30,10 +32,26 @@ const socialImage = imageSrc
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang} data-theme="light" data-theme-preference="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        let preference = "system";
+        try {
+          const stored = localStorage.getItem("rlp-theme");
+          if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
+        } catch {}
+        const effective = preference === "system" && matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : preference === "system" ? "light" : preference;
+        root.dataset.themePreference = preference;
+        root.dataset.theme = effective;
+        root.style.colorScheme = effective;
+      })();
+    </script>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}

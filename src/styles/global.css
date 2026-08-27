@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   --color-paper: #F2F0EA;
   --color-ink: #111315;
   --color-terminal: #0C0C0C;
@@ -11,7 +11,14 @@
   --color-graphite: #606568;
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --border: rgba(255, 255, 255, 0.12);
+  --theme-canvas: #F2F0EA;
+  --theme-surface: #F2F0EA;
+  --theme-surface-raised: #FFFEFA;
+  --theme-text: #111315;
+  --theme-text-muted: #606568;
+  --theme-line: #9A9993;
+  --theme-accent: #059AAF;
+  --border: var(--theme-line);
   --content-max: 80rem;
   /* 46rem preserves a readable editorial line length without narrowing page shells. */
   --reading-max: 46rem;
@@ -27,6 +34,17 @@
   --space-9: 6rem;
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --theme-canvas: #1C1D1D;
+  --theme-surface: #242525;
+  --theme-surface-raised: #2D2E2E;
+  --theme-text: #F2F0EA;
+  --theme-text-muted: #B8B7B0;
+  --theme-line: #85857E;
+  --theme-accent: #5CB6C3;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
@@ -34,13 +52,15 @@ html {
 
 html,
 body {
-  @apply bg-ink text-slate-100 font-body antialiased;
+  font-family: var(--font-sans);
+  color: var(--theme-text);
+  background-color: var(--theme-canvas);
 }
 
-body {
-  background-image:
-    radial-gradient(circle at top, rgba(5, 154, 175, 0.05), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0));
+body.bg-ink {
+  background-image: none;
+  background-color: var(--theme-canvas);
+  color: var(--theme-text);
 }
 
 ::selection {
@@ -74,8 +94,8 @@ h-captcha iframe {
 }
 
 .surface--artifact {
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--theme-line);
+  background: var(--theme-surface-raised);
 }
 
 .surface--artifact:focus-within {
@@ -96,7 +116,7 @@ h-captcha iframe {
   top: 0.4rem;
   bottom: 0.4rem;
   width: 2px;
-  background: rgba(5, 154, 175, 0.3);
+  background: var(--theme-accent);
 }
 
 .timeline-item {
@@ -122,7 +142,7 @@ h-captcha iframe {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--theme-text-muted);
 }
 
 .skill-icon {
@@ -152,7 +172,7 @@ h-captcha iframe {
 
 .article-content p,
 .article-content li {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--theme-text-muted);
   font-size: 1rem;
   line-height: 1.8;
 }
@@ -174,7 +194,7 @@ h-captcha iframe {
 }
 
 .article-content code {
-  color: var(--color-rlp-cyan);
+  color: var(--theme-accent);
 }
 
 code,
@@ -191,6 +211,7 @@ textarea {
 
 input:focus,
 textarea:focus,
+select:focus,
 button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--color-rlp-cyan);
@@ -210,41 +231,41 @@ a:focus-visible {
   min-height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-paper);
+  border: 1px solid var(--theme-text);
   padding: 0.625rem 1.25rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .action--primary {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--theme-text);
+  color: var(--theme-canvas);
 }
 
 .action--primary:hover {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--theme-surface);
+  color: var(--theme-text);
 }
 
 .action--secondary {
-  border-color: var(--color-ink);
-  background: var(--color-paper);
-  color: var(--color-ink);
+  border-color: var(--theme-text);
+  background: var(--theme-surface);
+  color: var(--theme-text);
 }
 
 .action--secondary:hover {
-  border-color: var(--color-rlp-cyan);
+  border-color: var(--theme-accent);
 }
 
 .action--text {
-  color: var(--color-paper);
+  color: var(--theme-text);
   text-decoration: underline;
-  text-decoration-color: var(--color-rlp-cyan);
+  text-decoration-color: var(--theme-accent);
   text-underline-offset: 0.25em;
 }
 
 .action--text:hover {
-  color: var(--color-rlp-cyan);
+  color: var(--theme-accent);
 }
 
 .action:focus-visible {

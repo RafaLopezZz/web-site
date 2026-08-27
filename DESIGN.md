@@ -26,13 +26,13 @@ Spanish and English are complete public territories. They must preserve meaning,
 
 ## Colors
 
-| Token | Value | Use |
-| --- | --- | --- |
-| Paper | `#F2F0EA` | Default editorial canvas and light surfaces |
-| Ink | `#111315` | Primary reading text and high-contrast outlines |
-| Terminal | `#0C0C0C` | Bounded CMD/code technical surfaces only |
+| Token    | Value     | Use                                                          |
+| -------- | --------- | ------------------------------------------------------------ |
+| Paper    | `#F2F0EA` | Default editorial canvas and light surfaces                  |
+| Ink      | `#111315` | Primary reading text and high-contrast outlines              |
+| Terminal | `#0C0C0C` | Bounded CMD/code technical surfaces only                     |
 | RLP Cyan | `#059AAF` | Focus, selection, active state, and restrained cursor signal |
-| Graphite | `#606568` | Secondary text, quiet rules, and metadata |
+| Graphite | `#606568` | Secondary text, quiet rules, and metadata                    |
 
 The canonical colors express semantic intentions: Paper is the editorial canvas, Ink is readable primary content, Terminal denotes bounded technical evidence, RLP Cyan denotes meaningful focus/selection/activity, and Graphite supports secondary information. The Windows grey classic neutral/bevel family is reserved for chrome, borders, bevels, titlebars, and supporting UI. Legacy `#00E5FF` is explicitly not part of RLP v2 and must not be added as a token.
 

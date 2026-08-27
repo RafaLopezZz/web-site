@@ -17,15 +17,15 @@ const posts = (await getCollection("blog")).sort(
   <SiteHeader />
 
   <main id="main-content" class="rlp-container py-10 md:py-14">
-    <section class="border-b border-white/10 pb-12 pt-8 md:pb-16 md:pt-12">
-      <p class="mb-6 text-xs uppercase tracking-[0.28em] text-accent">Blog</p>
+    <section class="blog-index__intro pb-12 pt-8 md:pb-16 md:pt-12">
+      <p class="blog-index__accent mb-6 text-xs uppercase tracking-[0.28em]">Blog</p>
       <h1
         class="max-w-5xl font-display text-4xl font-extrabold leading-[0.95] md:text-6xl lg:text-7xl"
       >
         Artículos, notas de trabajo y aprendizajes sobre desarrollo y producto.
       </h1>
       <p
-        class="mt-6 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg"
+        class="blog-index__summary mt-6 max-w-3xl text-base leading-relaxed md:text-lg"
       >
         Sitio donde expresar mis ideas, documentar proyectos personales,
         experiencias y aprendizajes.
@@ -40,7 +40,7 @@ const posts = (await getCollection("blog")).sort(
         >
           Publicaciones
         </h2>
-        <span class="text-xs uppercase tracking-[0.2em] text-white/60"
+        <span class="blog-index__count text-xs uppercase tracking-[0.2em]"
           >{posts.length} entradas</span
         >
       </div>
@@ -52,3 +52,9 @@ const posts = (await getCollection("blog")).sort(
   </main>
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .blog-index__intro { border-bottom: 1px solid var(--theme-line); }
+  .blog-index__accent { color: var(--theme-accent); }
+  .blog-index__summary, .blog-index__count { color: var(--theme-text-muted); }
+</style>
