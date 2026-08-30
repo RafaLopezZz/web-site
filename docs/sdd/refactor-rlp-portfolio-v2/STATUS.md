@@ -96,12 +96,16 @@ Do not fix during M0 without explicit scope.
 Resolved in M1.3.2: `SiteHeader` aligns semantic `aria-current="page"`
 with its cyan-plus-bottom-rule current treatment.
 
-### B-003
+### B-003 — CLOSED
 
-ImportadorDB Java/JavaFX version differs between project metadata and
-long-form article.
+Resolved by the source-backed ImportadorDB detailed case. The current public
+master `pom.xml` is authoritative for present technical state and declares
+Java 25, JavaFX 25.0.1, and compiler release 25. The older long-form article is
+historical context only; no migration claim is inferred from the difference.
 
-Authoritative value not established.
+Historical milestone records below may state that B-003 was then preserved or
+out of scope. Those statements describe their checkpoint only and do not reopen
+this closed blocker.
 
 ### B-004
 
@@ -318,7 +322,7 @@ M1 — COMPLETE
 
 Next:
 
-M2 — Home: implement the short RLP v2 Home atop the settled foundation. Not started.
+M2 — Home: COMPLETE. The bounded short RLP v2 Home is settled; Work is next and remains NOT STARTED.
 
 ### M2.1 — Short Home Shell + Hero + CMD Identity
 
@@ -335,13 +339,13 @@ Evidence:
 
 Next:
 
-M2.2 — Light/Dark/System Theme System. M2 is not complete.
+At the M2.1 checkpoint, the next slice was M2.2 — Light/Dark/System Theme System.
 
 Roadmap: M2.3 — Featured Evidence; M2.4 — Explore + Footer integration; M2.5 — Responsive/content polish; M2 Gate.
 
 ### M2.2 — Light/Dark/System Theme System
 
-Status: TECHNICALLY GREEN — manual visual review PENDING MAINTAINER. M2 remains open.
+Status: COMPLETE — manual visual review accepted.
 
 Evidence:
 
@@ -360,7 +364,180 @@ Evidence:
 - TDD: the native range contract was RED against the compact button candidate before the SiteHeader refinement; `tests/theme-system.spec.ts` GREEN (4/4)
 - focused regressions: SiteHeader 4/4; Home 4/4
 - full E2E: PASS (25/25); production build: PASS; `git diff --check`: PASS
-- manual visual: PENDING MAINTAINER; no rendering claim is made
-- RetroLocaleSwitch visual refinement: locale/Header/theme focused E2E PASS (11/11) at 320/390/768/1024/1440, covering real anchors/current URL state, native tab order, shared utility bounds/no overlap/no overflow, and theme preservation across locale navigation; manual visual review remains PENDING MAINTAINER
+- RetroLocaleSwitch visual refinement: locale/Header/theme focused E2E PASS (11/11) at 320/390/768/1024/1440, covering real anchors/current URL state, native tab order, shared utility bounds/no overlap/no overflow, and theme preservation across locale navigation
+- accepted real visual review: Home ES/EN plus Blog index/article at 320px and 1440px in Light/Dark; Theme/Locale controls, contrast, terminal readability, hierarchy, no overlap, and URL-driven locale remained intact
+- visual-review defect: Blog index at 320px measured `scrollWidth` 308 greater than `clientWidth` 305 because the Publications title/count desktop flex row did not fit
+- bounded fix: the Publications title/count row uses `flex-column items-start` on mobile and `sm:flex-row` on desktop; no copy or route changed
+- genuine RED: the focused semantic theme test failed on the Blog publications row/mobile overflow; GREEN: focused semantic theme PASS (1/1) and full theme-system PASS (4/4)
 
-Next: M2.3 — Featured Evidence awaits maintainer acceptance. Do not begin M2.3 in this slice.
+### M2.3 — Selected Work Category Carousels
+
+Status: COMPLETE.
+
+Evidence:
+
+- One semantic Home section, `#featured-evidence`, is headed `Trabajo seleccionado` / `Selected Work` and labelled by `#featured-evidence-title`; Hero targets it in both locales. It contains exactly one Work carousel and one Production carousel, with no LAB or category mixing.
+- `src/data/selected-work.ts` is the canonical source for locale-equivalent `workItems` and `productionItems`. Work is `RLP / WORK / 001` ImportadorDB and `RLP / WORK / 002` Cosecha en Cope; Production remains `RLP / PROD / 001` Águilas FC and `RLP / PROD / 002` La Ola. All identifiers share the same restrained semantic `--theme-accent`; no category hues or color-only ranking authority is introduced.
+- Home copy follows one product-first grammar: technical ID, product name, concise locale-equivalent description, and two or three verified technologies. ImportadorDB renders its Java/JavaFX Excel-import purpose; Cosecha en Cope renders its Java/Angular/PostgreSQL producer-consumer marketplace purpose. Their complete verified stacks remain canonical, unrendered `facts`, preserving their technical authority for future Work detail surfaces.
+- Historical M2.3 snapshot: ImportadorDB data then recorded Java 21 and JavaFX 21 while B-003 was unresolved. That version assertion is superseded by the later source-backed detailed case: the current public master manifest declares Java 25, JavaFX 25.0.1, and release 25. Cosecha preserves its bounded stack inventory, but its facts remain unrendered pending surface-specific provenance.
+- Production uses the same concise Home grammar and retains only approved public identity, summary, compact technology labels, and truthful destinations. The checkpoint provenance audit removed unproven implementation-detail strings from canonical Production data and from the public indexes; future dossiers require their own source review. La Ola alone has the exact live-site action `https://www.laolaart.com/` using `_blank` and `noreferrer`; Work actions remain the established Spanish case routes and no manual case action is invented.
+- `EvidenceCarousel.astro` provides scroll-snap tracks and local button behavior only: visible ES/EN category headings are absent while locale-correct category accessible names remain. Work and Production each have independent bounded native controls plus technical mono `01 / 02` position; Work is `01 / 02 → 02 / 02 → 01 / 02`, with no autoplay or infinite behavior. Native scrollbar is suppressed without disabling overflow, touch/trackpad use, or scroll snap. Carousel footers are a normal single desktop flex row and wrap only when constrained on mobile; controls remain stable and nothing is hidden or forced to overflow. Artifact's accent identity edge and dossier metadata/rule/current position use only `--theme-accent`; no cyan fill or full frame is added.
+- A-proven assets rendered: 0. ImportadorDB and Cosecha media remain omitted because no A provenance was established. Glea Nexo is excluded as LAB; Quinta Bella and Fincas Victoria lack authoritative dossier facts.
+- TDD: `tests/home-featured-evidence.spec.ts` was RED on the accepted fixed Work/Production layout because the evidence section, pure category tracks, Águilas, and independent Production controls did not exist; refinement RED covered visible category headings and bounded ES/EN navigation. Product-first RED then failed on former visible `Context` / `Engineering` / `Evidence` labels and resolver/test detail before summaries and compact verified tech highlights replaced them. Selected-work E2E: PASS (8/8), including compact copy, deferred full facts, shared identifier accent, bounded navigation, ES/EN parity, and responsive footer behavior.
+- Desktop carousel geometry stabilization separates the flexible stage from the normal footer row only for the side-by-side grid. Work and Production footers now align through active-item changes without collapsing the artifact/dossier distinction; mobile 320–390px remains stacked with natural content heights and no forced desktop stage. Geometry RED measured a 25.59375px desktop footer mismatch before the shell change.
+- Featured: PASS (9/9).
+- Named regressions: PASS (20/20).
+- E2E: PASS (38/38).
+- Production build: PASS.
+- `npx --yes @google/design.md lint DESIGN.md`: PASS.
+- `git diff --check`: PASS.
+- Maintainer visual Light/Dark at 320px/1440px: PASS.
+
+## M2 continuation and post-M2 sequence
+
+M2.4, M2.5, M2.6, and the historical M2 Gate are COMPLETE. M2.6 closed the corrective slice for the separately authorized post-M2 Explore + About expansion. The expansion delivered minimal Work/Production indexes and a Home About introduction without completing any later territory. This sequence does not define M3 or M4 milestones.
+
+### M2.4 — Explore + Footer integration
+
+Status: COMPLETE.
+
+Evidence:
+
+- Home order is exactly SiteHeader → Hero → Featured Evidence → semantic `#explore` → one final `SiteFooter`.
+- Explore provides equivalent ES/EN meaning, hierarchy, labels, destinations, and action priority. The primary Blog-index action and three lower-priority established Spanish article links are real anchors; English labels explicitly identify the Spanish article destinations.
+- Explore introduces no placeholders, future routes, removed fragments, buttons-as-navigation, or Footer destination duplication. Footer remains compact utility navigation for Email, GitHub, LinkedIn, and CV, with locale-correct accessible navigation naming and the public `Software Developer` role.
+- SiteHeader removes the obsolete Spanish Home fragments and exposes locale-correct Home plus the established Spanish Blog index in both locales.
+- Focused M2.4 E2E PASS (2/2); named Home/action/Surface/locale/theme/Header/M2.3 regressions PASS (29/29); full E2E PASS (40/40); production build PASS.
+- `npx --yes @google/design.md lint DESIGN.md` PASS with 0 errors (2 existing warnings and 3 informational findings); `git diff --check` PASS.
+- Real browser visual review at 320px and 1440px, ES/EN, Light/Dark PASS: semantic order and action hierarchy are intact, desktop Work/Production remain balanced with aligned carousel footers, mobile keeps natural stacked heights, Explore/Footer remain legible and compact, and no overflow, placeholder destination, cyan overuse, Theme/Locale regression, or M2.3 geometry change was found.
+- No historical RED is claimed because the interrupted first writer left implementation before a retained pre-implementation failing run could be captured.
+- The M2.4 slice itself includes no motion, M2.5 implementation, future territory, Theme/Locale controls/BaseLayout, Blog compatibility, M2.3 carousel mechanics/data/geometry, B-001, B-003, or B-004 changes.
+- This slice preceded final M2.2 visual acceptance; the accepted review and completed M2 Gate are recorded in their authority sections.
+
+### M2.5 — Responsive/content polish
+
+Status: COMPLETE.
+
+Evidence:
+
+- M2.5 found and corrected one bounded Dark paint defect: CMD body text no longer relies on inherited Paper color; `.cmd-identity__terminal` owns `color: var(--color-paper)` directly.
+- Genuine RED: the theme regression expected that direct declaration and received an empty value before the fix. Focused Theme PASS (4/4).
+- Named responsive/content Home/action/Surface/locale/theme/Header/M2.3/M2.4 checks PASS (31/31); full E2E PASS (40/40); production build PASS.
+- `npx --yes @google/design.md lint DESIGN.md` PASS with 0 errors (2 existing warnings and 3 informational findings); `git diff --check` PASS.
+- Real browser visual review at 320px and 1440px, ES/EN, Light/Dark PASS: CMD text is restored in Dark, semantic order and content hierarchy remain stable, desktop evidence columns retain equal dignity and aligned footers, mobile keeps natural stacked heights, and no horizontal overflow is present.
+- No routes, territory expansion, unsupported copy, taxonomy changes, Blog URL changes, motion, carousel behavior changes, or B-001/B-003/B-004 resolution were introduced.
+- This slice preceded final M2.2 visual acceptance; the accepted review and completed M2 Gate are recorded in their authority sections.
+
+### M2 Gate
+
+Status: COMPLETE. M2 is COMPLETE.
+
+- **Scope settled:** The bounded M2 Home work is accepted.
+- **Dependencies satisfied:** M2.1, M2.2, M2.3, M2.4, and M2.5 are COMPLETE.
+- **Final acceptance evidence:** focused M2 regressions PASS (31/31); full E2E PASS (40/40); production build PASS (6 pages, 17 optimized images); `npx --yes @google/design.md lint DESIGN.md` PASS with 0 findings; `git diff --check` PASS; accepted maintainer visual review covered Home ES/EN plus Blog index/article at 320px and 1440px in Light/Dark.
+- **Delivery state:** No commit was made.
+- **Next territory:** Work remains NOT STARTED; no later territory implementation began.
+- **Exclusions preserved:** No routes were added; Blog URL compatibility remains intact; B-001, B-003, and B-004 remain out of scope.
+
+### Maintainer-authorized post-M2 expansion
+
+Status: DELIVERED FUNCTIONALLY / VISUALLY ACCEPTED — bounded expansion only; no later territory is COMPLETE.
+
+- **Decision:** After the completed M2 Gate, the maintainer authorized real Home Explore destinations for `/work/` and `/production/`, their `/en/work/` and `/en/production/` counterparts, and a bilingual Home About introduction immediately after Explore.
+- **Delivered boundary:** The four routes are minimal bilingual indexes using only `src/data/selected-work.ts`. The Home About section is a factual introduction. Optional profile imagery remains unrendered until an asset and alternative text are supplied and approved by the maintainer.
+- **Evidence retained:** Focused Playwright PASS (3/3); production build PASS (10 pages, including all four routes); `git diff --check` PASS; the prior review found no horizontal overflow at 320px and 1440px in Light/Dark.
+- **Visual acceptance correction:** The maintainer-supplied capture triggered M2.6. Production-preview diagnosis and the completed technical matrix confirm the corrected layout; the maintainer accepted the final visual review.
+- **Not implied:** M2.6 does not invalidate the historical M2 Gate, complete Work, Production, About, or EN parity, or alter the later territory order. Motion and B-001, B-003, and B-004 remain out of scope.
+
+### M2.6 — Explore + About visual fidelity correction
+
+Status: COMPLETE — maintainer visual review accepted.
+
+- **Purpose and boundary:** Correct the visual fidelity of the post-M2 Explore + About expansion without invalidating the historical M2 Gate or inventing M3/M4 scope. M2.6 is complete.
+- **Diagnosis:** Production-preview inspection confirmed that emitted CSS, Astro scoping, cascade, and breakpoints work; the screenshot layout loss could not be reproduced. Inline Explore SVG was the correctable source-policy defect.
+- **Icon correction:** Inline Explore SVG was removed in favor of two external local decorative assets at `22×22px`, with empty alternative text and exclusion from the accessibility tree. No emoji, font icon, or dependency was added.
+- **Responsive acceptance:** Explore meets its equivalent desktop two-column/vertical-divider and mobile stacked/horizontal-divider contract. About meets its hierarchy and responsive identity/copy-grid contract. The optional portrait remains absent without an approved asset plus alternative text, avoiding placeholder and CLS.
+- **Technical evidence:** Focused M2.6 + Explore PASS (4/4); Home/Action/Surface/Locale/Theme/Header regressions PASS (20/20); full E2E PASS (43/43); production build PASS (10 pages); `git diff --check` PASS; `npx --yes @google/design.md lint DESIGN.md` exited 0. The PowerShell profile warning is unrelated to lint.
+- **Visual matrix:** ES/EN × Light/Dark × 320/390/768/1024/1440 PASS, with no horizontal overflow.
+- **Maintainer visual acceptance:** The maintainer accepted the final visual review: “Confirmo que después de la revisión visual ha quedado muy bien.” M2.6 is COMPLETE.
+- **Out of scope:** Motion; new territory content; completion of Work, Production, or About; post-M2 sequence changes; B-001, B-003, or B-004.
+
+### Work
+
+Status: OPEN — bounded Work index hardening complete; territory not complete.
+
+- **Scope:** Extend the delivered `/work/` and `/en/work/` indexes into the existing Work territory using verified evidence only; the implementation plan is recorded in `M2.md` under **Work — implementation plan**.
+- **Dependencies:** M2 Gate.
+- **Stitch reference:** `Rafael López | Selected Work (Desktop)`, project `2994536844412482857`, screen `8aebc9130a9b485e95414b9f89001f22` (2560×5740), plus the identified but not yet inspectable Home complement `918cde6384b44458bd5765daee9b253e`. These are visual references only; recover/inspect them before declaring visual fidelity.
+- **Evidence boundary:** `src/data/selected-work.ts` remains factual authority for the current index. Its `facts` values require provenance before promotion into public case content. ImportadorDB and Cosecha en Cope require verified context, architecture/technologies, decisions/evidence, and truthful links; missing proof is omitted or blocks the change.
+- **Completed bounded hardening:** Both indexes retain the two ArtifactSurface records and established Spanish Blog actions, but no longer render `facts`. ImportadorDB renders no Java version on the compact index; B-003 is resolved for the detailed case by the current public source manifest (Java 25, JavaFX 25.0.1, release 25). Cosecha renders no unclassified media, JWT, AWS S3, metrics, deployment, users, or sales claims. The Header now exposes the real locale Work route with exactly one truthful primary-navigation `aria-current="page"`, never Home.
+- **Hardening evidence:** Genuine RED: the focused Work check failed because the former candidate emitted two public `.selected-index__facts` elements. GREEN: focused Work/Header PASS (7/7); named Home/Action/Surface/Locale/Theme/Header/Blog regressions PASS (35/35); full E2E PASS (44/44); production build PASS (10 pages); DESIGN lint PASS; `git diff --check` PASS. Visual QA PASS for ES/EN × Light/Dark × 320/390/768/1024/1440 with no horizontal overflow. This is bounded index evidence only, not completion of Work or Stitch-fidelity acceptance.
+- **Acceptance evidence:** Focused Work checks; Home/Action/Surface/Locale/Theme/Header and Blog-compatibility regressions; full E2E; production build; DESIGN lint; `git diff --check`; ES/EN × Light/Dark × 320/390/768/1024/1440 visual comparison with the recovered Stitch reference; and maintainer visual review.
+- **Exclusions:** No Production/Experience/Education/Notes/About/Contact territory completion, Blog URL changes, motion, new dependencies without demonstrated need, inline SVG/emoji/font icons, or B-001/B-004 resolution.
+
+### Production
+
+Status: OPEN — minimal bilingual index delivered; territory not complete.
+
+- **Scope:** Extend the delivered `/production/` and `/en/production/` indexes into existing Production dossiers from verified evidence only.
+- **Dependencies:** Work; the authorized minimal index does not satisfy the full Work dependency.
+- **Acceptance evidence:** Focused Production checks, evidence provenance review, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No invented case facts or outcomes, no additional routes, no later territory implementation, Blog URL changes, motion, or B-001/B-004 resolution.
+
+### Experience
+
+Status: NOT STARTED.
+
+- **Scope:** Implement the existing Experience territory as a factual career record.
+- **Dependencies:** Production.
+- **Acceptance evidence:** Focused Experience checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No new routes, no later territory implementation, Blog URL changes, or B-001/B-004 resolution.
+
+### Education
+
+Status: NOT STARTED.
+
+- **Scope:** Implement the existing Education territory as factual qualifications and records.
+- **Dependencies:** Experience.
+- **Acceptance evidence:** Focused Education checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No new routes, no later territory implementation, Blog URL changes, or B-001/B-004 resolution.
+
+### Notes
+
+Status: NOT STARTED.
+
+- **Scope:** Implement the existing Notes territory while retaining established Blog URL compatibility.
+- **Dependencies:** Education.
+- **Acceptance evidence:** Focused Notes and Blog-compatibility checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No new routes, no later territory implementation, no Blog URL breakage, or B-001/B-004 resolution.
+
+### About
+
+Status: OPEN — Home introduction delivered; territory not complete.
+
+- **Scope:** Extend the factual Home introduction into the existing About territory with factual identity and working context. Add profile imagery only after the maintainer provides and approves both the asset and its alternative text.
+- **Dependencies:** Notes.
+- **Acceptance evidence:** Focused About checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No additional routes, no Contact or EN parity completion, Blog URL changes, motion, or B-001/B-004 resolution.
+
+### Contact
+
+Status: NOT STARTED.
+
+- **Scope:** Implement the existing Contact territory with truthful destinations and form behavior.
+- **Dependencies:** About.
+- **Acceptance evidence:** Focused Contact checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No new routes, no EN parity implementation, Blog URL changes, or B-001/B-004 resolution.
+
+### EN parity
+
+Status: OPEN — bounded parity delivered for the authorized Home and index surfaces; territory not complete.
+
+- **Scope:** Establish complete English parity for the remaining implemented territories without weakening locale meaning, facts, hierarchy, labels, destinations, or action priority. The Home Explore/About expansion and the Work/Production indexes already have direct English counterparts.
+- **Dependencies:** Contact.
+- **Acceptance evidence:** Focused bilingual parity and route-compatibility checks, relevant regressions, production build, `git diff --check`, and maintainer visual review.
+- **Exclusions:** No invented routes, no weaker English placeholders, no Blog URL breakage, and no B-001/B-004 resolution.
+
+### Work — ImportadorDB detailed case
+
+Status: IMPLEMENTED. B-003 RESOLVED for the current source state: pom.xml declares Java 25, JavaFX 25.0.1, and release 25. The case publishes only source-backed technical capabilities; commercial and measured production claims remain omitted.

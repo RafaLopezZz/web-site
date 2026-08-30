@@ -7,14 +7,13 @@ const expectSharpIbmPlex = async (locator: Parameters<typeof expect>[0]) => {
   await expect(locator).toHaveCSS("border-top-left-radius", "0px");
 };
 
-test("uses native anchor hierarchy for M2.1 Hero navigation", async ({ page }) => {
+test("uses native anchor hierarchy for Hero navigation", async ({ page }) => {
   await page.goto(home);
 
   const work = page.getByRole("link", { name: "Ver trabajo", exact: true });
   const cv = page.getByRole("link", { name: "Descargar CV", exact: true }).first();
 
-  await expect(work).toHaveAttribute("href", /\/blog\/$/);
-  await expect(work).not.toHaveAttribute("href", "#trabajo");
+  await expect(work).toHaveAttribute("href", "#featured-evidence");
   await expectSharpIbmPlex(work);
   await expect(work).toHaveCSS("background-color", "rgb(17, 19, 21)");
   await expect(cv).toHaveAttribute("download", "");

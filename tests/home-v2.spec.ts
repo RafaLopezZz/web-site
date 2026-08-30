@@ -20,8 +20,7 @@ test("presents the bounded M2.1 Home identity shell", async ({ page }) => {
   await expect(hero.locator("img")).toHaveCount(0);
 
   const work = hero.getByRole("link", { name: "Ver trabajo", exact: true });
-  await expect(work).toHaveAttribute("href", /\/blog\/$/);
-  await expect(work).not.toHaveAttribute("href", "#trabajo");
+  await expect(work).toHaveAttribute("href", "#featured-evidence");
   await expect(hero.getByRole("link", { name: "Descargar CV", exact: true })).toHaveAttribute("download", "");
 
   await expect(cmd).toContainText("C:\\RLP\\identity.exe");
@@ -31,7 +30,7 @@ test("presents the bounded M2.1 Home identity shell", async ({ page }) => {
   await expect(cmd).not.toContainText(/status|initializ|build|network|log/i);
 
   await expect(page.locator("#proyectos, #sobre-mi, #experiencia, #formacion, #cv, #contacto, [data-home-skills]")).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: /ImportadorDB|Cosecha en Cope|Glea Nexo/ })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: /Glea Nexo/ })).toHaveCount(0);
   await expect(page.getByRole("form")).toHaveCount(0);
 
   const desktop = await hero.evaluate((element) => {

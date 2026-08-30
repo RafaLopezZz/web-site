@@ -12,7 +12,11 @@ async function setTheme(page: import("@playwright/test").Page, value?: string) {
 }
 
 async function expectNoOverflow(page: import("@playwright/test").Page) {
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+  expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
 }
 
 test("resolves system preference from the OS with no stored choice", async ({ page }) => {
@@ -130,12 +134,42 @@ test("keeps semantic theme outputs readable and CMD terminal invariant across ro
       await expectNoOverflow(page);
       await expect(page.locator("main")).toHaveCSS("background-color", colorScheme === "light" ? "rgb(242, 240, 234)" : "rgb(28, 29, 29)");
       await expect(page.locator(".cmd-identity__terminal")).toHaveCSS("background-color", "rgb(12, 12, 12)");
+      const terminalRuleColor = await page.evaluate(() => {
+        for (const sheet of document.styleSheets) {
+          let rules: CSSRuleList;
+          try {
+            rules = sheet.cssRules;
+          } catch {
+            continue;
+          }
+          for (const rule of rules) {
+            if (
+              rule instanceof CSSStyleRule &&
+              rule.selectorText.includes(".cmd-identity__terminal") &&
+              rule.style.getPropertyValue("background").includes("var(--color-terminal)")
+            ) {
+              return rule.style.getPropertyValue("color").trim();
+            }
+          }
+        }
+        return "";
+      });
+      expect(terminalRuleColor).toBe("var(--color-paper)");
     }
     for (const route of [blog, article]) {
-      await page.goto(route);
-      await expectNoOverflow(page);
-      await expect(page.locator("body")).toHaveCSS("background-color", colorScheme === "light" ? "rgb(242, 240, 234)" : "rgb(28, 29, 29)");
-      await expect(page.locator("main")).toBeVisible();
+      for (const width of [320, 1440]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(route);
+        await expectNoOverflow(page);
+        if (route === blog) {
+          await expect(page.locator("#blog-list-title").locator("..")).toHaveCSS(
+            "flex-direction",
+            width === 320 ? "column" : "row",
+          );
+        }
+        await expect(page.locator("body")).toHaveCSS("background-color", colorScheme === "light" ? "rgb(242, 240, 234)" : "rgb(28, 29, 29)");
+        await expect(page.locator("main")).toBeVisible();
+      }
     }
   }
 });
