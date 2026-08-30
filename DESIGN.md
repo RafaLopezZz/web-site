@@ -129,7 +129,11 @@ Do not use rounded decorative cards, excessive badges, ornamental blobs, or gene
 
 ## Components
 
-Each primitive has one bounded responsibility. Add a component only when a repeated semantic contract requires it; do not create premature components. Every component must preserve semantic HTML, keyboard operation, visible focus, logical DOM order, accessible names, and a non-color state cue. Motion is optional and non-essential; honor `prefers-reduced-motion: reduce` by removing cursor blink, transitions, auto-typing, and decorative movement. Allowed motion is a subtle cursor blink, small hover/focus transitions, and restrained content reveal. Avoid boot animations, window flying, CRT distortion, fake loading, constant terminal typing, and intrusive parallax.
+Each primitive has one bounded responsibility. Add a component only when a repeated semantic contract requires it; do not create premature components. Every component must preserve semantic HTML, keyboard operation, visible focus, logical DOM order, accessible names, and a non-color state cue. Motion is optional, non-essential, and geometry-preserving; honor `prefers-reduced-motion: reduce` by removing cursor blink, transitions, auto-typing, and decorative movement. Allowed motion is a subtle cursor blink, small hover/focus transitions, and restrained content reveal. Avoid boot animations, window flying, CRT distortion, fake loading, constant terminal typing, and intrusive parallax.
+
+### Cross-cutting Motion Order
+
+The implementation order is exactly `hovers → carousel motion → technical background → hero micro-motion → later scroll reveals`. This is an ordering principle for progressively adding optional motion, not milestone numbering. Every motion addition remains optional, non-essential, geometry-preserving, and compatible with `prefers-reduced-motion: reduce`; it must never delay reading, move essential content, or carry meaning alone.
 
 ### SiteHeader
 
