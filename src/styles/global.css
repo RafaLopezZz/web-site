@@ -102,6 +102,11 @@ h-captcha iframe {
   border-color: var(--color-rlp-cyan);
 }
 
+.surface--dossier {
+  border-block: 1px solid var(--theme-line);
+  background: var(--theme-surface);
+}
+
 .timeline {
   position: relative;
   display: grid;

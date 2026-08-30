@@ -1,0 +1,88 @@
+export type SelectedWorkLocale = "es" | "en";
+
+type Action = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+type WorkItem = {
+  id: "work001" | "work002";
+  title: "ImportadorDB" | "Cosecha en Cope";
+  summary: string;
+  techHighlights: string;
+  facts: string;
+  action: Action;
+};
+
+type ProductionItem = {
+  id: "prod001" | "prod002";
+  title: "Águilas FC" | "La Ola";
+  summary: string;
+  techHighlights: string;
+  action?: Action;
+};
+
+export const selectedWork: Record<SelectedWorkLocale, {
+  workItems: WorkItem[];
+  productionItems: ProductionItem[];
+}> = {
+  es: {
+    workItems: [{
+      id: "work001",
+      title: "ImportadorDB",
+      summary: "Importador de escritorio: Excel → sistemas relacionales, reduciendo la importación manual.",
+      techHighlights: "Java · JavaFX",
+      facts: "Java 25 · JavaFX 25.0.1 · Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      action: { href: "work/importador-db/", label: "Ver caso →" },
+    }, {
+      id: "work002",
+      title: "Cosecha en Cope",
+      summary: "Marketplace para productores y consumidores: catálogo, autenticación y compra.",
+      techHighlights: "Java · Angular · PostgreSQL",
+      facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
+      action: { href: "blog/desarrollo-cosecha-en-cope/", label: "Leer el caso →" },
+    }],
+    productionItems: [{
+      id: "prod001",
+      title: "Águilas FC",
+      summary: "Web oficial del Águilas FC.",
+      techHighlights: "PHP · Laravel · Blade",
+    }, {
+      id: "prod002",
+      title: "La Ola",
+      summary: "Ecommerce de arte y decoración.",
+      techHighlights: "Laravel · Livewire · MySQL",
+      action: { href: "https://www.laolaart.com/", label: "Ver La Ola ↗", external: true },
+    }],
+  },
+  en: {
+    workItems: [{
+      id: "work001",
+      title: "ImportadorDB",
+      summary: "Desktop importer: Excel → relational systems, reducing manual import.",
+      techHighlights: "Java · JavaFX",
+      facts: "Java 25 · JavaFX 25.0.1 · Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      action: { href: "en/work/importador-db/", label: "View case →" },
+    }, {
+      id: "work002",
+      title: "Cosecha en Cope",
+      summary: "Marketplace for producers and consumers: catalog, authentication, and purchase.",
+      techHighlights: "Java · Angular · PostgreSQL",
+      facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
+      action: { href: "blog/desarrollo-cosecha-en-cope/", label: "Read the Spanish case →" },
+    }],
+    productionItems: [{
+      id: "prod001",
+      title: "Águilas FC",
+      summary: "Official Águilas FC website.",
+      techHighlights: "PHP · Laravel · Blade",
+    }, {
+      id: "prod002",
+      title: "La Ola",
+      summary: "Art and décor ecommerce.",
+      techHighlights: "Laravel · Livewire · MySQL",
+      action: { href: "https://www.laolaart.com/", label: "View La Ola ↗", external: true },
+    }],
+  },
+};

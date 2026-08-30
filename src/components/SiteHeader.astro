@@ -9,18 +9,17 @@ interface Props {
 const { locale = "es" } = Astro.props;
 const home = locale === "en" ? `${base}en/` : base;
 const isBlog = locale === "es" && Astro.url.pathname.startsWith(`${base}blog`);
+const work = locale === "en" ? `${base}en/work/` : `${base}work/`;
+const isWork = Astro.url.pathname === work;
 
 const links = locale === "en" ? [
-  { href: home, label: "Home", current: true },
-  { href: `${base}blog`, label: "Notes" },
+  { href: home, label: "Home", current: !isWork },
+  { href: work, label: "Work", current: isWork },
+  { href: `${base}blog/`, label: "Notes" },
 ] : [
-  { href: home, label: "Home", current: !isBlog },
-  { href: `${base}#proyectos`, label: "Work" },
-  { href: `${base}#experiencia`, label: "Experience" },
-  { href: `${base}#formacion`, label: "Education" },
-  { href: `${base}blog`, label: "Notes", current: isBlog },
-  { href: `${base}#contacto`, label: "Contact" },
-  { href: `${base}#cv`, label: "CV" },
+  { href: home, label: "Inicio", current: !isBlog && !isWork },
+  { href: work, label: "Trabajo", current: isWork },
+  { href: `${base}blog/`, label: "Notas", current: isBlog },
 ];
 ---
 

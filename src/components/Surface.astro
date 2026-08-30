@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"article"> {
   as?: "article" | "section" | "div";
-  variant?: "artifact";
+  variant?: "artifact" | "dossier";
 }
 
 const { as: Tag = "article", class: className, variant = "artifact", ...attributes } = Astro.props;
