@@ -34,7 +34,7 @@ test.beforeEach(async ({ page }) => {
   await page.route(/^https?:\/\//, async (route) => {
     const url = new URL(route.request().url());
 
-    if (url.hostname === "127.0.0.1" && url.port === "4321") {
+    if (url.hostname === "127.0.0.1") {
       await route.continue();
       return;
     }
