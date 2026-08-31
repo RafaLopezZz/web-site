@@ -3,6 +3,15 @@ import { expect, test } from "@playwright/test";
 const home = "/web-site/";
 const blog = "/web-site/blog";
 
+const territorialRoutes = [
+  { route: "/web-site/work/", label: "Trabajo", href: "/web-site/work/" },
+  { route: "/web-site/work/importador-db/", label: "Trabajo", href: "/web-site/work/" },
+  { route: "/web-site/production/", label: "Producción", href: "/web-site/production/" },
+  { route: "/web-site/en/work/", label: "Work", href: "/web-site/en/work/" },
+  { route: "/web-site/en/work/importador-db/", label: "Work", href: "/web-site/en/work/" },
+  { route: "/web-site/en/production/", label: "Production", href: "/web-site/en/production/" },
+] as const;
+
 test("provides the durable home navigation contract", async ({ page }) => {
   await page.goto(home);
 
@@ -12,11 +21,24 @@ test("provides the durable home navigation contract", async ({ page }) => {
   await expect(header.getByRole("link", { name: "RLP", exact: true })).toHaveAttribute("href", home);
   await expect(navigation.getByRole("link", { name: "Inicio", exact: true })).toHaveAttribute("href", home);
   await expect(navigation.getByRole("link", { name: "Trabajo", exact: true })).toHaveAttribute("href", "/web-site/work/");
+  await expect(navigation.getByRole("link", { name: "Producción", exact: true })).toHaveAttribute("href", "/web-site/production/");
   await expect(navigation.getByRole("link", { name: "Notas", exact: true })).toHaveAttribute("href", `${blog}/`);
   await expect(navigation.getByRole("link", { name: "Inicio", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(navigation.locator('#site-navigation [aria-current]')).toHaveCount(1);
 
   await expect(header.locator('a[href^="/production"], a[href^="/experience"], a[href^="/education"], a[href^="/notes"], a[href^="/about"], a[href^="/contact"]')).toHaveCount(0);
+});
+
+test("marks exactly one real territorial destination across index and detail routes", async ({ page }) => {
+  for (const { route, label, href } of territorialRoutes) {
+    await page.goto(route);
+
+    const navigation = page.getByRole("navigation", { name: "Primary navigation" });
+    await expect(navigation.getByRole("link", { name: label, exact: true })).toHaveAttribute("href", href);
+    await expect(navigation.getByRole("link", { name: label, exact: true })).toHaveAttribute("aria-current", "page");
+    await expect(navigation.locator('#site-navigation [aria-current="page"]')).toHaveCount(1);
+    await expect(navigation.getByRole("link", { name: /^(Inicio|Home)$/ })).not.toHaveAttribute("aria-current", "page");
+  }
 });
 
 test("marks Notes as current across the established blog territory", async ({ page }) => {
@@ -70,6 +92,26 @@ test("exposes the complete navigation from a real mobile menu", async ({ page })
   const closeToggle = page.getByRole("button", { name: "Close navigation" });
   await expect(closeToggle).toHaveAttribute("aria-expanded", "true");
   await expect(menu.getByRole("link", { name: "Notas", exact: true })).toBeVisible();
+});
+
+test("supports keyboard operation and visible focus in the mobile navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(home);
+
+  const toggle = page.getByRole("button", { name: "Open navigation" });
+  const menu = page.locator("#site-navigation");
+
+  await toggle.focus();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveCSS("outline-style", "solid");
+  await page.keyboard.press("Enter");
+  await expect(menu).toBeVisible();
+  const workLink = menu.getByRole("link", { name: "Trabajo", exact: true });
+  await workLink.focus();
+  await expect(workLink).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeHidden();
+  await expect(toggle).toBeFocused();
 });
 
 test("keeps the closed header compact and usable across canonical widths", async ({ page }) => {

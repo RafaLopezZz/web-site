@@ -10,15 +10,19 @@ const { locale = "es" } = Astro.props;
 const home = locale === "en" ? `${base}en/` : base;
 const isBlog = locale === "es" && Astro.url.pathname.startsWith(`${base}blog`);
 const work = locale === "en" ? `${base}en/work/` : `${base}work/`;
-const isWork = Astro.url.pathname === work;
+const production = locale === "en" ? `${base}en/production/` : `${base}production/`;
+const isWork = Astro.url.pathname.startsWith(work);
+const isProduction = Astro.url.pathname.startsWith(production);
+const isHome = !isBlog && !isWork && !isProduction;
 
 const links = locale === "en" ? [
-  { href: home, label: "Home", current: !isWork },
+  { href: home, label: "Home", current: isHome },
   { href: work, label: "Work", current: isWork },
-  { href: `${base}blog/`, label: "Notes" },
+  { href: production, label: "Production", current: isProduction },
 ] : [
-  { href: home, label: "Inicio", current: !isBlog && !isWork },
+  { href: home, label: "Inicio", current: isHome },
   { href: work, label: "Trabajo", current: isWork },
+  { href: production, label: "Producción", current: isProduction },
   { href: `${base}blog/`, label: "Notas", current: isBlog },
 ];
 ---
@@ -109,11 +113,12 @@ const links = locale === "en" ? [
     });
   }
 
-  const closeMenu = () => {
+  const closeMenu = (restoreFocus = false) => {
     if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
     menu.hidden = true;
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Open navigation");
+    if (restoreFocus) toggle.focus();
   };
 
   if (toggle instanceof HTMLButtonElement && menu instanceof HTMLElement) {
@@ -129,7 +134,7 @@ const links = locale === "en" ? [
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !menu.hidden) closeMenu();
+      if (event.key === "Escape" && !menu.hidden) closeMenu(true);
     });
 
     window.addEventListener("resize", () => {
