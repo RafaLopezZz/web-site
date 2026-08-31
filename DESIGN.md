@@ -135,6 +135,21 @@ Each primitive has one bounded responsibility. Add a component only when a repea
 
 The implementation order is exactly `hovers → carousel motion → technical background → hero micro-motion → later scroll reveals`. This is an ordering principle for progressively adding optional motion, not milestone numbering. Every motion addition remains optional, non-essential, geometry-preserving, and compatible with `prefers-reduced-motion: reduce`; it must never delay reading, move essential content, or carry meaning alone.
 
+## Post-GREEN Validation Gate
+
+After every GREEN, run this gate in order:
+
+1. Focused test for the changed behavior.
+2. Header, Surface, Action, Locale, and Theme regressions.
+3. Full E2E.
+4. Production build.
+5. DESIGN.md validation.
+6. Diff check.
+7. ES/EN × Light/Dark × 320, 390, 768, 1024, and 1440px matrix.
+8. Human visual review.
+
+Run the automated portion with `npm run verify:green -- tests/<focused>.spec.ts`. It checks the focused test, the named regressions, full E2E, the production build, DESIGN.md, and `git diff --check`. Human visual review remains mandatory before accepting the design. Visual snapshots are fixed only after design acceptance, never before.
+
 ### SiteHeader
 
 - Semantic purpose: provide the site's single primary identity and navigation landmark.

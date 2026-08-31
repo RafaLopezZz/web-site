@@ -13,7 +13,8 @@
     "test:unit": "vitest run",
     "pretest:e2e": "npm run build",
     "test:e2e": "node scripts/run-e2e.mjs",
-    "test:e2e:list": "playwright test --list --pass-with-no-tests"
+    "test:e2e:list": "playwright test --list --pass-with-no-tests",
+    "verify:green": "node scripts/verify-green.mjs"
   },
   "dependencies": {
     "@hcaptcha/vanilla-hcaptcha": "^1.1.4",
