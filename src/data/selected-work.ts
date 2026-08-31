@@ -41,7 +41,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       summary: "Marketplace para productores y consumidores: catálogo, autenticación y compra.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
-      action: { href: "blog/desarrollo-cosecha-en-cope/", label: "Leer el caso →" },
+      action: { href: "work/cosecha-en-cope/", label: "Ver caso →" },
     }],
     productionItems: [{
       id: "prod001",
@@ -70,7 +70,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       summary: "Marketplace for producers and consumers: catalog, authentication, and purchase.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
-      action: { href: "blog/desarrollo-cosecha-en-cope/", label: "Read the Spanish case →" },
+      action: { href: "en/work/cosecha-en-cope/", label: "View case →" },
     }],
     productionItems: [{
       id: "prod001",

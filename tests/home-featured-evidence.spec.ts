@@ -24,7 +24,9 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.getByText("RLP / WORK / 002", { exact: true })).toBeVisible();
     await expect(work.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
     await expect(work.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
-    await expect(work.getByRole("link", { name: /(?:Leer|Read) (?:el caso|the Spanish case) →/ }).last()).toHaveAttribute("href", /\/blog\/desarrollo-cosecha-en-cope\/$/);
+    const workActions = work.getByRole("link", { name: home.endsWith("/en/") ? "View case →" : "Ver caso →", exact: true });
+    await expect(workActions).toHaveCount(2);
+    await expect(workActions.last()).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(work.getByRole("heading", { name: /Glea Nexo/i })).toHaveCount(0);
     await expect(work.getByText(/RLP \/ PROD \/ 002/)).toHaveCount(0);
     await expect(work.getByRole("button")).toHaveCount(2);

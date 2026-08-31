@@ -43,7 +43,7 @@ test("shares the production index composition while preserving Work reading and 
   await expect(workRecords).toHaveCSS("grid-template-columns", /.+ .+/);
   expect(await work.locator("h2").allTextContents()).toEqual(["ImportadorDB", "Cosecha en Cope"]);
 
-  const firstAction = work.getByRole("link", { name: "Ver caso →" });
+  const firstAction = work.getByRole("link", { name: "Ver caso →" }).first();
   await firstAction.focus();
   await expect(firstAction).toBeFocused();
   await expect(firstAction).toHaveCSS("outline-style", "solid");

@@ -15,8 +15,9 @@ test("renders a bilingual Work index with two factual records and only establish
     await expect(index.locator('[data-surface="artifact"]')).toHaveCount(2);
     await expect(index.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
-    await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
-    await expect(index.getByRole("link", { name: entry.title === "Work" ? "Read the Spanish case →" : "Leer el caso →", exact: true })).toHaveAttribute("href", "/web-site/blog/desarrollo-cosecha-en-cope/");
+    await expect(index.getByRole("link", { name: entry.action, exact: true }).first()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
+    await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveCount(2);
+    await expect(index.getByRole("link", { name: entry.action, exact: true }).last()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
 
     await expect(index.locator(".territory-index__facts")).toHaveCount(0);
     await expect(index).not.toContainText("Java 21");

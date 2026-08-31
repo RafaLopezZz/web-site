@@ -1,0 +1,48 @@
+export const cosechaCase = {
+  es: {
+    title: "Cosecha en Cope",
+    description: "Caso de ingeniería: marketplace agrícola fullstack.",
+    eyebrow: "RLP / WORK / 002",
+    subtitle: "Marketplace académico para productores, distribuidores y consumidor final.",
+    stack: "Spring Boot · Angular · PostgreSQL · Thymeleaf",
+    contextTitle: "Contexto",
+    context: "Cosecha en Cope plantea un marketplace agrícola que conecta productores, distribuidores y consumidor final en una misma plataforma.",
+    engineeringTitle: "Ingeniería",
+    decisions: [
+      ["Arquitectura híbrida", "Las páginas públicas usan Spring Boot y Thymeleaf, mientras Angular cubre la aplicación de interacción continua."],
+      ["Modelo relacional", "PostgreSQL organiza el dominio de perfiles, productos, carrito, pedidos y órdenes por productor."],
+    ],
+    evidenceTitle: "Evidencia",
+    evidence: [
+      "Repositorio — Spring Boot, Angular, PostgreSQL, Thymeleaf y Swagger.",
+      "Artículo legado — documentación del proceso y de la arquitectura del proyecto.",
+    ],
+    outcomeTitle: "Alcance verificado",
+    outcome: "El caso documenta la composición fullstack del proyecto y las decisiones de arquitectura visibles en sus fuentes y material de proyecto.",
+    source: "Ver repositorio ↗",
+    blog: "Leer el artículo legado →",
+  },
+  en: {
+    title: "Cosecha en Cope",
+    description: "Engineering case: a full-stack agricultural marketplace.",
+    eyebrow: "RLP / WORK / 002",
+    subtitle: "Academic marketplace for producers, distributors, and end consumers.",
+    stack: "Spring Boot · Angular · PostgreSQL · Thymeleaf",
+    contextTitle: "Context",
+    context: "Cosecha en Cope frames an agricultural marketplace that connects producers, distributors, and end consumers on one platform.",
+    engineeringTitle: "Engineering",
+    decisions: [
+      ["Hybrid architecture", "Public pages use Spring Boot and Thymeleaf, while Angular covers the continuous-interaction application."],
+      ["Relational model", "PostgreSQL organizes the domain of users, products, carts, orders, and producer-specific orders."],
+    ],
+    evidenceTitle: "Evidence",
+    evidence: [
+      "Repository — Spring Boot, Angular, PostgreSQL, Thymeleaf, and Swagger.",
+      "Spanish legacy article — process and architecture documentation for the project.",
+    ],
+    outcomeTitle: "Verified scope",
+    outcome: "The case documents the project's full-stack composition and the architectural decisions visible in its sources and project material.",
+    source: "View repository ↗",
+    blog: "Read the Spanish legacy article →",
+  },
+} as const;

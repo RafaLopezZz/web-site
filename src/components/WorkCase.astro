@@ -1,0 +1,133 @@
+---
+import ActionLink from "./ActionLink.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+import Surface from "./Surface.astro";
+
+type CaseCopy = {
+  title: string;
+  description: string;
+  eyebrow: string;
+  subtitle: string;
+  stack: string;
+  contextTitle: string;
+  context: string;
+  engineeringTitle: string;
+  decisions: readonly (readonly [string, string])[];
+  evidenceTitle: string;
+  evidence: readonly string[];
+  outcomeTitle: string;
+  outcome: string;
+  source: string;
+  blog: string;
+};
+
+type Media = { src: string; alt: string; caption: string };
+
+interface Props {
+  locale: "es" | "en";
+  caseId: "importador-db" | "cosecha-en-cope";
+  copy: CaseCopy;
+  sourceHref: string;
+  blogHref: string;
+  media?: readonly Media[];
+}
+
+const { locale, caseId, copy, sourceHref, blogHref, media = [] } = Astro.props;
+---
+
+<BaseLayout title={`${copy.title} | Rafael López`} description={copy.description} lang={locale}>
+  <SiteHeader locale={locale} />
+
+  <main id="main-content" class="case-shell">
+    <Surface
+      variant="artifact"
+      class="case rlp-container"
+      data-work-case={caseId}
+      data-importador-case={caseId === "importador-db" ? "" : undefined}
+      data-cosecha-case={caseId === "cosecha-en-cope" ? "" : undefined}
+    >
+      <header class="case__hero">
+        <p>{copy.eyebrow}</p>
+        <h1>{copy.title}</h1>
+        <p>{copy.subtitle}</p>
+        <p class="case__stack">{copy.stack}</p>
+      </header>
+
+      {media.length > 0 && (
+        <div class="case__media">
+          {media.map((item) => (
+            <figure>
+              <img src={item.src} alt={item.alt} loading="lazy" />
+              <figcaption>{item.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+
+      <div class="case__body">
+        <section>
+          <h2>{copy.contextTitle}</h2>
+          <p>{copy.context}</p>
+        </section>
+
+        <section>
+          <h2>{copy.engineeringTitle}</h2>
+          <div class="case__decisions">
+            {copy.decisions.map(([title, text]) => (
+              <article>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2>{copy.evidenceTitle}</h2>
+          <ul>{copy.evidence.map((item) => <li>{item}</li>)}</ul>
+        </section>
+
+        <section>
+          <h2>{copy.outcomeTitle}</h2>
+          <p>{copy.outcome}</p>
+        </section>
+      </div>
+
+      <nav class="case__actions" aria-label={locale === "es" ? "Fuentes del caso" : "Case sources"}>
+        <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noreferrer">{copy.source}</ActionLink>
+        <ActionLink href={blogHref}>{copy.blog}</ActionLink>
+      </nav>
+    </Surface>
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>
+
+<style>
+  .case-shell { background: var(--theme-canvas); color: var(--theme-text); }
+  .case { display: grid; gap: var(--space-7); margin-block: var(--space-8); padding-block: var(--space-6); }
+  .case__hero, .case__body section { display: grid; gap: var(--space-4); max-width: var(--reading-max); }
+  .case__hero > p, .case__body section > p, li, figcaption { margin: 0; color: var(--theme-text-muted); line-height: 1.7; }
+  .case__hero > p:first-child, .case__stack, figcaption { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; }
+  .case__hero > p:first-child { color: var(--theme-accent); }
+  h1, h2, h3 { margin: 0; font-family: var(--font-sans); line-height: 1.1; }
+  h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); }
+  h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+  h3 { font-size: 1.1rem; }
+  .case__media, .case__body { display: grid; gap: var(--space-7); }
+  .case__media figure { display: grid; gap: var(--space-2); margin: 0; }
+  .case__media img { display: block; width: 100%; height: auto; border: 1px solid var(--theme-line); }
+  .case__decisions { display: grid; gap: var(--space-4); }
+  .case__decisions article { border-left: 2px solid var(--theme-accent); padding-left: var(--space-4); }
+  .case__decisions p { margin: 0.5rem 0 0; color: var(--theme-text-muted); line-height: 1.6; }
+  ul { display: grid; gap: var(--space-3); margin: 0; padding-left: 1.2rem; }
+  .case__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+  @media (min-width: 1024px) {
+    .case { margin-block: var(--space-9); padding: var(--space-7); }
+    .case__media, .case__body { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    .case__body section { max-width: none; }
+  }
+</style>
