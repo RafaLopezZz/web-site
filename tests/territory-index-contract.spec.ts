@@ -36,20 +36,24 @@ test("keeps Work and Production semantics outside the shared visual shell", () =
   const sharedPath = resolve(repositoryRoot, "src/components/TerritoryIndex.astro");
   const workPath = resolve(repositoryRoot, "src/components/WorkIndex.astro");
   const productionPath = resolve(repositoryRoot, "src/components/ProductionIndex.astro");
+  const dossierPath = resolve(repositoryRoot, "src/components/ProductionDossier.astro");
 
   expect(existsSync(sharedPath)).toBe(true);
   expect(existsSync(workPath)).toBe(true);
   expect(existsSync(productionPath)).toBe(true);
+  expect(existsSync(dossierPath)).toBe(true);
   expect(existsSync(resolve(repositoryRoot, "src/components/SelectedWorkIndex.astro"))).toBe(false);
 
   const shared = readFileSync(sharedPath, "utf8");
   const work = readFileSync(workPath, "utf8");
   const production = readFileSync(productionPath, "utf8");
+  const dossier = readFileSync(dossierPath, "utf8");
 
   expect(shared).not.toContain("selectedWork");
   expect(shared).not.toContain("<Surface");
   expect(work).toContain('variant="artifact"');
   expect(work).not.toContain('variant="dossier"');
-  expect(production).toContain('variant="dossier"');
+  expect(production).toContain("<ProductionDossier");
+  expect(dossier).toContain('variant="dossier"');
   expect(production).not.toContain('variant="artifact"');
 });

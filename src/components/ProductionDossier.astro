@@ -1,0 +1,33 @@
+---
+import ActionLink from "./ActionLink.astro";
+import Surface from "./Surface.astro";
+
+interface Props {
+  item: {
+    id: string;
+    title: string;
+    summary: string;
+    techHighlights: string;
+    action?: { href: string; label: string; external?: boolean };
+  };
+  eyebrow: string;
+}
+
+const { item, eyebrow } = Astro.props;
+---
+
+<Surface variant="dossier" class="territory-index__record production-dossier" data-production-record>
+  <p class="territory-index__id">{eyebrow} / {item.id.slice(-3)}</p>
+  <h2>{item.title}</h2>
+  <p class="territory-index__summary">{item.summary}</p>
+  <p class="territory-index__tech">{item.techHighlights}</p>
+  {item.action && (
+    <ActionLink
+      href={item.action.href}
+      target={item.action.external ? "_blank" : undefined}
+      rel={item.action.external ? "noreferrer" : undefined}
+    >
+      {item.action.label}
+    </ActionLink>
+  )}
+</Surface>

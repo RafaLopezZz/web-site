@@ -38,10 +38,10 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(production.getByText("RLP / PROD / 001", { exact: true })).toBeVisible();
     await expect(production.getByText("RLP / PROD / 002", { exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
-    await expect(production.getByRole("heading", { name: "La Ola", exact: true })).toBeVisible();
-    await expect(production.getByRole("link", { name: /La Ola.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
-    await expect(production.getByRole("link", { name: /La Ola.*↗/ })).toHaveAttribute("target", "_blank");
-    await expect(production.getByRole("link", { name: /La Ola.*↗/ })).toHaveAttribute("rel", "noreferrer");
+    await expect(production.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
+    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
+    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("target", "_blank");
+    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noreferrer");
     const previous = production.getByRole("button", { name: home.endsWith("/en/") ? "Previous" : "Caso anterior" });
     const next = production.getByRole("button", { name: home.endsWith("/en/") ? "Next" : "Caso siguiente" });
     await expect(production.getByRole("button")).toHaveCount(2);

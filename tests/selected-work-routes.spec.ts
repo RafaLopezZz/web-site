@@ -50,15 +50,15 @@ test("keeps the Work index free of horizontal overflow across themes and canonic
 
 test("keeps Production public indexes within the approved factual boundary", async ({ page }) => {
   for (const entry of [
-    { route: "/web-site/production/", heading: "Producción", action: "Ver La Ola ↗" },
-    { route: "/web-site/en/production/", heading: "Production", action: "View La Ola ↗" },
+    { route: "/web-site/production/", heading: "Producción", action: "Ver La Ola Art Gallery ↗" },
+    { route: "/web-site/en/production/", heading: "Production", action: "View La Ola Art Gallery ↗" },
   ]) {
     await page.goto(entry.route);
     const index = page.locator('main [data-territory-index="production"]');
 
     await expect(index.getByRole("heading", { name: entry.heading, exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
-    await expect(index.getByRole("heading", { name: "La Ola", exact: true })).toBeVisible();
+    await expect(index.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(index.locator('[data-surface="dossier"]')).toHaveCount(2);
     await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveAttribute("href", "https://www.laolaart.com/");
 

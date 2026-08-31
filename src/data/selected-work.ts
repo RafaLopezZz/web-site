@@ -17,7 +17,7 @@ type WorkItem = {
 
 type ProductionItem = {
   id: "prod001" | "prod002";
-  title: "Águilas FC" | "La Ola";
+  title: "Águilas FC" | "La Ola Art Gallery";
   summary: string;
   techHighlights: string;
   action?: Action;
@@ -50,10 +50,10 @@ export const selectedWork: Record<SelectedWorkLocale, {
       techHighlights: "PHP · Laravel · Blade",
     }, {
       id: "prod002",
-      title: "La Ola",
+      title: "La Ola Art Gallery",
       summary: "Ecommerce de arte y decoración.",
       techHighlights: "Laravel · Livewire · MySQL",
-      action: { href: "https://www.laolaart.com/", label: "Ver La Ola ↗", external: true },
+      action: { href: "https://www.laolaart.com/", label: "Ver La Ola Art Gallery ↗", external: true },
     }],
   },
   en: {
@@ -79,10 +79,10 @@ export const selectedWork: Record<SelectedWorkLocale, {
       techHighlights: "PHP · Laravel · Blade",
     }, {
       id: "prod002",
-      title: "La Ola",
+      title: "La Ola Art Gallery",
       summary: "Art and décor ecommerce.",
       techHighlights: "Laravel · Livewire · MySQL",
-      action: { href: "https://www.laolaart.com/", label: "View La Ola ↗", external: true },
+      action: { href: "https://www.laolaart.com/", label: "View La Ola Art Gallery ↗", external: true },
     }],
   },
 };
