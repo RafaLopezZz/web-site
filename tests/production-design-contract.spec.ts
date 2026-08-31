@@ -25,6 +25,7 @@ test("renders only approved equal-level Production dossiers", async ({ page }) =
         await expect(index.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
         await expect(index.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
         await expect(index.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
+        await expect(records.locator("[data-territory-media-slot]")).toHaveCount(3);
         await expect(index.locator('[data-production-featured], img, picture, video')).toHaveCount(0);
         await expect(index.getByRole("link", { name: route.action, exact: true })).toHaveAttribute("href", route.casePath);
         for (const claim of unsupported) await expect(index).not.toContainText(claim);

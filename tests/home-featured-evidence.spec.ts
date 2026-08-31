@@ -20,6 +20,7 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.getByRole("heading", { name: home.endsWith("/en/") ? "Work" : "Trabajo", exact: true })).toHaveCount(0);
     await expect(production.getByRole("heading", { name: home.endsWith("/en/") ? "Production" : "Producción", exact: true })).toHaveCount(0);
     await expect(work.locator('[data-evidence-track] article[data-surface="artifact"]')).toHaveCount(2);
+    await expect(work.locator("[data-territory-media-slot]")).toHaveCount(2);
     await expect(work.getByText("RLP / WORK / 001", { exact: true })).toBeVisible();
     await expect(work.getByText("RLP / WORK / 002", { exact: true })).toBeVisible();
     await expect(work.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
@@ -34,6 +35,7 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.locator('[data-surface="dossier"]')).toHaveCount(0);
 
     await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(3);
+    await expect(production.locator("[data-territory-media-slot]")).toHaveCount(3);
     await expect(production.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toHaveCount(0);
     await expect(production.getByText("RLP / PROD / 001", { exact: true })).toBeVisible();
     await expect(production.getByText("RLP / PROD / 002", { exact: true })).toBeVisible();

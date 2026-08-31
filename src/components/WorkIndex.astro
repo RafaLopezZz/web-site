@@ -31,6 +31,7 @@ const copy = locale === "en"
   {selectedWork[locale].workItems.map((item) => (
     <Surface variant="artifact" class="territory-index__record">
       <p class="territory-index__id">{copy.eyebrow} / {item.id.slice(-3)}</p>
+      <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
       <h2>{item.title}</h2>
       <p class="territory-index__summary">{item.summary}</p>
       <p class="territory-index__tech">{item.techHighlights}</p>

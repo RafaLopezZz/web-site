@@ -51,6 +51,7 @@ const { locale, territory, title, description, eyebrow, heading, intro } = Astro
   .territory-index__records :global(.territory-index__record) { display: grid; gap: var(--space-4); padding: var(--space-6) 0; border-inline: 0; border-bottom: 1px solid var(--theme-line); }
   .territory-index__records :global(.territory-index__record h2) { margin: 0; font-family: var(--font-sans); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.05; }
   .territory-index__records :global(.territory-index__record > p) { max-width: var(--reading-max); margin: 0; color: var(--theme-text-muted); line-height: 1.6; }
+  .territory-index__records :global(.territory-index__media-slot) { width: 100%; max-width: var(--reading-max); aspect-ratio: 16 / 9; border: 1px solid var(--theme-line); background: linear-gradient(135deg, var(--theme-surface-raised), var(--theme-canvas)); }
   .territory-index__records :global(.territory-index__id),
   .territory-index__records :global(.territory-index__tech) { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
   .territory-index__records :global(.territory-index__record > .territory-index__id) { color: var(--theme-accent); }

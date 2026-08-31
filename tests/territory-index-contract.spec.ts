@@ -26,6 +26,7 @@ test("keeps one visual record composition with territory-specific semantic surfa
 
     for (const record of await records.all()) {
       await expect(record.locator(":scope > .territory-index__id")).toHaveCount(1);
+      await expect(record.locator(":scope > [data-territory-media-slot][aria-hidden=\"true\"]")).toHaveCount(1);
       await expect(record.locator(":scope > h2")).toHaveCount(1);
       await expect(record.locator(":scope > .territory-index__summary")).toHaveCount(1);
       await expect(record.locator(":scope > .territory-index__tech")).toHaveCount(1);
