@@ -33,12 +33,13 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.locator("[data-evidence-footer]")).toHaveCount(1);
     await expect(work.locator('[data-surface="dossier"]')).toHaveCount(0);
 
-    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(2);
+    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(3);
     await expect(production.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toHaveCount(0);
     await expect(production.getByText("RLP / PROD / 001", { exact: true })).toBeVisible();
     await expect(production.getByText("RLP / PROD / 002", { exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
+    await expect(production.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
     await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
     await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("target", "_blank");
     await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noreferrer");
@@ -48,7 +49,7 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(previous).toHaveText("←");
     await expect(next).toHaveText("→");
     await expect(production.locator("[data-evidence-footer]")).toHaveCount(1);
-    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 02");
+    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
     await expect(production.locator('[data-surface="artifact"]')).toHaveCount(0);
     await expect(evidence.locator('[data-surface="artifact"] [data-surface="dossier"], [data-surface="dossier"] [data-surface="artifact"]')).toHaveCount(0);
     expect(await evidence.locator("a").evaluateAll((links) => links.some((link) => link.getAttribute("href") === "#"))).toBe(false);
@@ -77,6 +78,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
 
     await expect(production).toContainText(english ? "Official Águilas FC website." : "Web oficial del Águilas FC.");
     await expect(production).toContainText(english ? "Art and décor ecommerce." : "Ecommerce de arte y decoración.");
+    await expect(production).toContainText(english ? "Public website and booking flow for a rural campsite." : "Web pública y reservas para un camping rural.");
     await expect(production).toContainText("PHP · Laravel · Blade");
     await expect(production).toContainText("Laravel · Livewire · MySQL");
     await expect(production).not.toContainText(/Contexto\.|Ingeniería\.|Evidencia\.|Context\.|Engineering\.|Evidence\./);
@@ -86,7 +88,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     await expect(production).not.toContainText("pagado_sin_stock");
 
     const identifiers = evidence.locator(".selected-work__id");
-    await expect(identifiers).toHaveCount(4);
+    await expect(identifiers).toHaveCount(5);
     expect(await identifiers.evaluateAll((nodes) => nodes.every((node) => {
       const styles = getComputedStyle(node);
       const probe = document.createElement("span");
@@ -168,19 +170,21 @@ test("keeps Work and Production carousel navigation bounded and independent", as
   await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 02");
   await expect(nextWork).toBeDisabled();
   await expect(previousWork).toBeEnabled();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 02");
+  await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
   await previousWork.click();
   await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 02");
   await expect(previousWork).toBeDisabled();
 
   await nextProduction.click();
   await expect.poll(() => productionTrack.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 02");
-  await expect(nextProduction).toBeDisabled();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
+  await expect(nextProduction).toBeEnabled();
   await expect(previousProduction).toBeEnabled();
+  await nextProduction.click();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("03 / 03");
+  await expect(nextProduction).toBeDisabled();
   await previousProduction.click();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 02");
-  await expect(previousProduction).toBeDisabled();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
   await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 02");
 });
 
@@ -221,9 +225,9 @@ test("does not autoplay either selected-work carousel", async ({ page }) => {
   await page.goto("/web-site/");
 
   const positions = page.locator("[data-evidence-position]");
-  await expect(positions).toHaveText(["01 / 02", "01 / 02"]);
+  await expect(positions).toHaveText(["01 / 02", "01 / 03"]);
   await page.waitForTimeout(500);
-  await expect(positions).toHaveText(["01 / 02", "01 / 02"]);
+  await expect(positions).toHaveText(["01 / 02", "01 / 03"]);
 });
 
 test("keeps Production controls in its footer after its dossier body", async ({ page }) => {
@@ -233,7 +237,7 @@ test("keeps Production controls in its footer after its dossier body", async ({ 
   const production = page.locator('[data-evidence-category="production"]');
   const footer = production.locator("[data-evidence-footer]");
   const lastDossier = production.locator('[data-surface="dossier"]').last();
-  await expect(footer).toContainText("01 / 02");
+  await expect(footer).toContainText("01 / 03");
   expect(await footer.evaluate((element) => element.compareDocumentPosition(element.closest("[data-evidence-carousel]")!.querySelector('[data-surface="dossier"]:last-child')!) & Node.DOCUMENT_POSITION_PRECEDING)).toBeTruthy();
   expect(await footer.evaluate((element) => {
     const control = element.querySelector("button");
@@ -286,7 +290,7 @@ test("stabilizes desktop carousel stages while preserving natural mobile content
 
     await page.locator('[data-evidence-category="work"] [data-evidence-next]').click();
     await expect(page.locator('[data-evidence-category="work"] [data-evidence-position]')).toHaveText("02 / 02");
-    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 02");
+    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 03");
     await page.locator('[data-evidence-category="production"] [data-evidence-next]').click();
     const after = await geometry();
     expect(Math.abs(after[0].footerTop - after[1].footerTop)).toBeLessThanOrEqual(2);

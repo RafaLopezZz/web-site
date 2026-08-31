@@ -8,6 +8,10 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const productionItems = selectedWork[locale].productionItems.map((item) => item.action && !item.action.external
+  ? { ...item, action: { ...item.action, href: `${base}${item.action.href}` } }
+  : item);
 const copy = locale === "en"
   ? {
       title: "Production | Rafael López",
@@ -26,5 +30,5 @@ const copy = locale === "en"
 ---
 
 <TerritoryIndex locale={locale} territory="production" {...copy}>
-  {selectedWork[locale].productionItems.map((item) => <ProductionDossier item={item} eyebrow={copy.eyebrow} />)}
+  {productionItems.map((item) => <ProductionDossier item={item} eyebrow={copy.eyebrow} />)}
 </TerritoryIndex>

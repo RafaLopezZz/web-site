@@ -136,7 +136,7 @@ const portrait: Portrait = {};
                   <p>{item.summary}</p>
                   <p class="selected-work__engineering">{item.techHighlights}</p>
                   {item.action && (
-                    <ActionLink href={item.action.href} target={item.action.external ? "_blank" : undefined} rel={item.action.external ? "noreferrer" : undefined}>{item.action.label}</ActionLink>
+                    <ActionLink href={item.action.external ? item.action.href : `${base}${item.action.href}`} target={item.action.external ? "_blank" : undefined} rel={item.action.external ? "noreferrer" : undefined}>{item.action.label}</ActionLink>
                   )}
                 </Surface>
               ))}

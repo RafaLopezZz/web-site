@@ -19,8 +19,9 @@ test("keeps one visual record composition with territory-specific semantic surfa
     const records = index.locator(".territory-index__record");
 
     await expect(index).toBeVisible();
-    await expect(records).toHaveCount(2);
-    await expect(index.locator(`.territory-index__record[data-surface="${route.surface}"]`)).toHaveCount(2);
+    const count = route.territory === "production" ? 3 : 2;
+    await expect(records).toHaveCount(count);
+    await expect(index.locator(`.territory-index__record[data-surface="${route.surface}"]`)).toHaveCount(count);
     await expect(index.locator(`.territory-index__record${route.surface === "artifact" ? '[data-surface="dossier"]' : '[data-surface="artifact"]'}`)).toHaveCount(0);
 
     for (const record of await records.all()) {

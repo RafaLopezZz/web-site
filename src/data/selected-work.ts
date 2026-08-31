@@ -16,8 +16,8 @@ type WorkItem = {
 };
 
 type ProductionItem = {
-  id: "prod001" | "prod002";
-  title: "Águilas FC" | "La Ola Art Gallery";
+  id: "prod001" | "prod002" | "prod003";
+  title: "Águilas FC" | "La Ola Art Gallery" | "Quinta Bella";
   summary: string;
   techHighlights: string;
   action?: Action;
@@ -54,6 +54,12 @@ export const selectedWork: Record<SelectedWorkLocale, {
       summary: "Ecommerce de arte y decoración.",
       techHighlights: "Laravel · Livewire · MySQL",
       action: { href: "https://www.laolaart.com/", label: "Ver La Ola Art Gallery ↗", external: true },
+    }, {
+      id: "prod003",
+      title: "Quinta Bella",
+      summary: "Web pública y reservas para un camping rural.",
+      techHighlights: "Laravel · Livewire · MySQL",
+      action: { href: "production/quinta-bella/", label: "Ver Quinta Bella ↗" },
     }],
   },
   en: {
@@ -83,6 +89,12 @@ export const selectedWork: Record<SelectedWorkLocale, {
       summary: "Art and décor ecommerce.",
       techHighlights: "Laravel · Livewire · MySQL",
       action: { href: "https://www.laolaart.com/", label: "View La Ola Art Gallery ↗", external: true },
+    }, {
+      id: "prod003",
+      title: "Quinta Bella",
+      summary: "Public website and booking flow for a rural campsite.",
+      techHighlights: "Laravel · Livewire · MySQL",
+      action: { href: "en/production/quinta-bella/", label: "View Quinta Bella ↗" },
     }],
   },
 };

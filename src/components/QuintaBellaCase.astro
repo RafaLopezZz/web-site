@@ -1,0 +1,14 @@
+---
+import ProductionCase from "./ProductionCase.astro";
+import { quintaBellaCase } from "../data/quinta-bella-case";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+---
+
+<ProductionCase
+  locale={locale}
+  caseId="quinta-bella"
+  copy={quintaBellaCase[locale]}
+  repositoryHref="https://github.com/RafaLopezZz/camping-quintabella"
+  publicSiteHref="https://quintabella.com/"
+/>
