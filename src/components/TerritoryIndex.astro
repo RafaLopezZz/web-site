@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+
+interface Props {
+  locale: "es" | "en";
+  territory: "work" | "production";
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  intro: string;
+}
+
+const { locale, territory, title, description, eyebrow, heading, intro } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} lang={locale}>
+  <SiteHeader locale={locale} />
+
+  <main id="main-content" class="territory-index-shell">
+    <section
+      class="territory-index rlp-container"
+      data-territory-index={territory}
+      aria-labelledby="territory-index-title"
+    >
+      <header class="territory-index__header">
+        <p>{eyebrow}</p>
+        <h1 id="territory-index-title">{heading}</h1>
+        <p>{intro}</p>
+      </header>
+
+      <div class="territory-index__records">
+        <slot />
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>
+
+<style>
+  .territory-index-shell { background: var(--theme-canvas); color: var(--theme-text); }
+  .territory-index { display: grid; gap: var(--space-7); padding-block: var(--space-8); }
+  .territory-index__header { display: grid; gap: var(--space-3); max-width: var(--reading-max); }
+  .territory-index__header p { margin: 0; color: var(--theme-text-muted); line-height: 1.6; }
+  .territory-index__header p:first-child { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
+  .territory-index__header h1 { margin: 0; font-family: var(--font-sans); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; }
+  .territory-index__records { display: grid; border-top: 1px solid var(--theme-line); }
+  .territory-index__records :global(.territory-index__record) { display: grid; gap: var(--space-4); padding: var(--space-6) 0; border-inline: 0; border-bottom: 1px solid var(--theme-line); }
+  .territory-index__records :global(.territory-index__record h2) { margin: 0; font-family: var(--font-sans); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.05; }
+  .territory-index__records :global(.territory-index__record > p) { max-width: var(--reading-max); margin: 0; color: var(--theme-text-muted); line-height: 1.6; }
+  .territory-index__records :global(.territory-index__id),
+  .territory-index__records :global(.territory-index__tech) { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
+  .territory-index__records :global(.territory-index__record > .territory-index__id) { color: var(--theme-accent); }
+  .territory-index__records :global(.territory-index__record .action) { justify-self: start; }
+
+  @media (min-width: 768px) {
+    .territory-index { padding-block: var(--space-9); }
+    .territory-index__records :global(.territory-index__record) { grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1.55fr); column-gap: var(--space-7); }
+    .territory-index__records :global(.territory-index__record > :not(.territory-index__id)) { grid-column: 2; }
+  }
+</style>

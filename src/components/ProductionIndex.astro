@@ -1,0 +1,47 @@
+---
+import ActionLink from "./ActionLink.astro";
+import Surface from "./Surface.astro";
+import TerritoryIndex from "./TerritoryIndex.astro";
+import { selectedWork } from "../data/selected-work";
+
+interface Props {
+  locale: "es" | "en";
+}
+
+const { locale } = Astro.props;
+const copy = locale === "en"
+  ? {
+      title: "Production | Rafael López",
+      description: "Production cases by Rafael López.",
+      eyebrow: "RLP / PROD",
+      heading: "Production",
+      intro: "Accountable production cases.",
+    }
+  : {
+      title: "Producción | Rafael López",
+      description: "Casos de producción de Rafael López.",
+      eyebrow: "RLP / PROD",
+      heading: "Producción",
+      intro: "Casos de producción verificables.",
+    };
+---
+
+<TerritoryIndex locale={locale} territory="production" {...copy}>
+  {selectedWork[locale].productionItems.map((item) => (
+    <Surface variant="dossier" class="territory-index__record">
+      <p class="territory-index__id">{copy.eyebrow} / {item.id.slice(-3)}</p>
+      <h2>{item.title}</h2>
+      <p class="territory-index__summary">{item.summary}</p>
+      <p class="territory-index__tech">{item.techHighlights}</p>
+      {item.action && (
+        <ActionLink
+          href={item.action.href}
+          target={item.action.external ? "_blank" : undefined}
+          rel={item.action.external ? "noreferrer" : undefined}
+        >
+          {item.action.label}
+        </ActionLink>
+      )}
+    </Surface>
+  ))}
+</TerritoryIndex>

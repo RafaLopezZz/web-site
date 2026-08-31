@@ -6,7 +6,7 @@ const status = readFileSync("docs/sdd/refactor-rlp-portfolio-v2/STATUS.md", "utf
 const playwrightConfig = readFileSync("playwright.config.ts", "utf8");
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 const selectedWorkSource = readFileSync("src/data/selected-work.ts", "utf8");
-const selectedWorkIndexSource = readFileSync("src/components/SelectedWorkIndex.astro", "utf8");
+const productionIndexSource = readFileSync("src/components/ProductionIndex.astro", "utf8");
 
 test("records B-003 as resolved by current ImportadorDB source evidence", () => {
   for (const document of [m2, status]) {
@@ -32,7 +32,7 @@ test("keeps unproven Production facts out of canonical data and index rendering"
   expect(productionItemType).toBeDefined();
   expect(productionItemType).not.toContain("facts:");
 
-  for (const source of [selectedWorkSource, selectedWorkIndexSource]) {
+  for (const source of [selectedWorkSource, productionIndexSource]) {
     expect(source).not.toContain("HeroSlideResolverTest");
     expect(source).not.toContain("lockForUpdate");
     expect(source).not.toContain("callbacks");
@@ -40,6 +40,6 @@ test("keeps unproven Production facts out of canonical data and index rendering"
     expect(source).not.toContain("Regresión");
   }
 
-  expect(selectedWorkIndexSource).not.toContain(".selected-index__facts");
-  expect(selectedWorkIndexSource).not.toContain("item.facts");
+  expect(productionIndexSource).not.toContain(".territory-index__facts");
+  expect(productionIndexSource).not.toContain("item.facts");
 });

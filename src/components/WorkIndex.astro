@@ -1,0 +1,40 @@
+---
+import ActionLink from "./ActionLink.astro";
+import Surface from "./Surface.astro";
+import TerritoryIndex from "./TerritoryIndex.astro";
+import { selectedWork } from "../data/selected-work";
+
+interface Props {
+  locale: "es" | "en";
+}
+
+const { locale } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const copy = locale === "en"
+  ? {
+      title: "Work | Rafael López",
+      description: "Selected software work by Rafael López.",
+      eyebrow: "RLP / WORK",
+      heading: "Work",
+      intro: "Selected software work.",
+    }
+  : {
+      title: "Trabajo | Rafael López",
+      description: "Trabajo de software seleccionado de Rafael López.",
+      eyebrow: "RLP / WORK",
+      heading: "Trabajo",
+      intro: "Trabajo de software seleccionado.",
+    };
+---
+
+<TerritoryIndex locale={locale} territory="work" {...copy}>
+  {selectedWork[locale].workItems.map((item) => (
+    <Surface variant="artifact" class="territory-index__record">
+      <p class="territory-index__id">{copy.eyebrow} / {item.id.slice(-3)}</p>
+      <h2>{item.title}</h2>
+      <p class="territory-index__summary">{item.summary}</p>
+      <p class="territory-index__tech">{item.techHighlights}</p>
+      <ActionLink href={`${base}${item.action.href}`}>{item.action.label}</ActionLink>
+    </Surface>
+  ))}
+</TerritoryIndex>

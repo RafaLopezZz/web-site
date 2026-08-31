@@ -8,7 +8,7 @@ const workRoutes = [
 test("renders a bilingual Work index with two factual records and only established case actions", async ({ page }) => {
   for (const entry of workRoutes) {
     await page.goto(entry.route);
-    const index = page.locator("main [data-selected-work-index]");
+    const index = page.locator('main [data-territory-index="work"]');
     await expect(index.getByRole("heading", { name: entry.title, exact: true })).toBeVisible();
     await expect(index.getByText("RLP / WORK", { exact: true })).toBeVisible();
     await expect(index.locator("article")).toHaveCount(2);
@@ -18,7 +18,7 @@ test("renders a bilingual Work index with two factual records and only establish
     await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
     await expect(index.getByRole("link", { name: entry.title === "Work" ? "Read the Spanish case →" : "Leer el caso →", exact: true })).toHaveAttribute("href", "/web-site/blog/desarrollo-cosecha-en-cope/");
 
-    await expect(index.locator(".selected-index__facts")).toHaveCount(0);
+    await expect(index.locator(".territory-index__facts")).toHaveCount(0);
     await expect(index).not.toContainText("Java 21");
     await expect(index).not.toContainText("Java 25");
     await expect(index).not.toContainText("Spring Security");
@@ -53,7 +53,7 @@ test("keeps Production public indexes within the approved factual boundary", asy
     { route: "/web-site/en/production/", heading: "Production", action: "View La Ola ↗" },
   ]) {
     await page.goto(entry.route);
-    const index = page.locator("main [data-selected-work-index]");
+    const index = page.locator('main [data-territory-index="production"]');
 
     await expect(index.getByRole("heading", { name: entry.heading, exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
@@ -61,7 +61,7 @@ test("keeps Production public indexes within the approved factual boundary", asy
     await expect(index.locator('[data-surface="dossier"]')).toHaveCount(2);
     await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveAttribute("href", "https://www.laolaart.com/");
 
-    await expect(index.locator(".selected-index__facts")).toHaveCount(0);
+    await expect(index.locator(".territory-index__facts")).toHaveCount(0);
     await expect(index).not.toContainText("HeroSlideResolverTest");
     await expect(index).not.toContainText("lockForUpdate");
     await expect(index).not.toContainText("callbacks");
