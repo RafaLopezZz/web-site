@@ -44,7 +44,10 @@ const { id, itemCount, previousLabel, nextLabel } = Astro.props;
 
     const move = (offset: number) => {
       update(index + offset);
-      track.scrollTo({ left: index * track.clientWidth, behavior: "smooth" });
+      track.scrollTo({
+        left: index * track.clientWidth,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      });
     };
 
     previous?.addEventListener("click", () => move(-1));

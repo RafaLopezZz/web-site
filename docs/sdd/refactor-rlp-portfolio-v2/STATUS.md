@@ -541,3 +541,26 @@ Status: OPEN — bounded parity delivered for the authorized Home and index surf
 ### Work — ImportadorDB detailed case
 
 Status: IMPLEMENTED. B-003 RESOLVED for the current source state: pom.xml declares Java 25, JavaFX 25.0.1, and release 25. The case publishes only source-backed technical capabilities; commercial and measured production claims remain omitted.
+
+### U9.1 — Interaction hovers
+
+Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
+
+- **Scope:** CSS-first hover and focus polish only; no carousel, background, Hero, CMD, reveal, content, route, or geometry changes.
+- **Interaction contract:** All U9.1 motion CSS is centralized in `src/styles/global.css`. It uses `150ms` fast and `200ms` base timings with `ease-out`; no `transition: all` and no animation dependency. Physical hover is fine-pointer-only, targeted reduced-motion rules make state changes instantaneous, and empty evidence placeholders remain static.
+- **Surface distinction:** ArtifactSurface gains a one-pixel lift and accent border; DossierSurface remains stationary and responds through documentary border emphasis. Both remain semantic non-interactive articles with explicit actions.
+- **Header and actions:** Existing Action variants retain native link/button semantics and restrained token-based state transitions. SiteHeader keeps its invariant geometry, current route remains more authoritative than hover, and focus remains visibly stronger.
+- **Evidence:** Genuine RED failed on the absent motion vocabulary. GREEN: focused motion PASS (5/5); named Header/Surface/Action/Locale/Theme regressions PASS (18/18); full E2E PASS (69/69); production build PASS (16 pages); DESIGN lint PASS; `git diff --check` PASS.
+- **Visual status:** Browser review found the bounded hover/focus states readable and overflow-safe in the required Home, WORK, and PROD samples across Light/Dark and desktop/mobile. Maintainer acceptance remains pending; snapshots were not changed.
+- **Acceptance:** The maintainer authorized continuation to U9.2.
+
+### U9.2 — Existing carousel motion
+
+Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
+
+- **Scope:** Refine only the two existing Home evidence carousels; no new carousel, autoplay, loop, state, data, semantics, or geometry.
+- **Architecture:** Existing native horizontal scrolling and CSS scroll snap remain authoritative. `src/styles/global.css` owns the motion styles and reduced-motion override; the existing script explicitly requests smooth control navigation, or instant navigation when `prefers-reduced-motion` is active, after CSS-only behavior proved imperceptible in maintainer review.
+- **Controls:** Previous/next semantics, disabled state, position counter, keyboard operation, and independent WORK/PROD state are unchanged. Enabled controls gain restrained border/color feedback without moving their geometry.
+- **Evidence:** Genuine RED found hardcoded smooth JavaScript and no reduced-motion CSS contract. GREEN: motion PASS (6/6); combined carousel/motion PASS (15/15); named Header/Surface/Action/Locale/Theme regressions PASS (18/18); full E2E PASS (70/70); production build PASS (16 pages); DESIGN lint PASS; `git diff --check` PASS.
+- **Visual status:** Initial maintainer review reported no perceptible carousel movement. Control navigation now requests the intended movement explicitly and the motion test asserts a real intermediate scroll position; final maintainer acceptance remains pending and snapshots were not changed.
+- **Stop:** U9.3 has not started.

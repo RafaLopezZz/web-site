@@ -23,6 +23,9 @@
   /* 46rem preserves a readable editorial line length without narrowing page shells. */
   --reading-max: 46rem;
   --layout-gutter: 1rem;
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --ease-standard: ease-out;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -96,6 +99,9 @@ h-captcha iframe {
 .surface--artifact {
   border: 1px solid var(--theme-line);
   background: var(--theme-surface-raised);
+  transition:
+    transform var(--motion-base) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
 }
 
 .surface--artifact:focus-within {
@@ -105,6 +111,11 @@ h-captcha iframe {
 .surface--dossier {
   border-block: 1px solid var(--theme-line);
   background: var(--theme-surface);
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+
+.surface--dossier:focus-within {
+  border-color: var(--theme-accent);
 }
 
 .timeline {
@@ -227,7 +238,10 @@ a:focus-visible {
   border-radius: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
 }
 
 .action--primary,
@@ -281,6 +295,57 @@ a:focus-visible {
 .action:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.site-header .site-header__link {
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.evidence-carousel__track {
+  scroll-behavior: smooth;
+}
+
+.evidence-carousel__controls button {
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .surface.surface--artifact:hover {
+    border-color: var(--theme-accent);
+    transform: translateY(-1px);
+  }
+
+  .territory-index__records .surface.surface--dossier:hover,
+  .surface.surface--dossier:hover {
+    border-color: var(--theme-accent);
+  }
+
+  .evidence-carousel__controls button:not(:disabled):hover {
+    border-color: var(--theme-accent);
+    color: var(--theme-accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .evidence-carousel__controls button,
+  .site-header .site-header__link,
+  .surface--artifact,
+  .surface--dossier {
+    transition-duration: 0s;
+  }
+
+  .surface.surface--artifact:hover {
+    transform: none;
+  }
+
+  .evidence-carousel__track {
+    scroll-behavior: auto;
+  }
 }
 
 @keyframes timeline-pulse {

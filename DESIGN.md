@@ -135,6 +135,12 @@ Each primitive has one bounded responsibility. Add a component only when a repea
 
 The implementation order is exactly `hovers → carousel motion → technical background → hero micro-motion → later scroll reveals`. This is an ordering principle for progressively adding optional motion, not milestone numbering. Every motion addition remains optional, non-essential, geometry-preserving, and compatible with `prefers-reduced-motion: reduce`; it must never delay reading, move essential content, or carry meaning alone.
 
+### Motion / Interaction
+
+Interaction motion is centralized in `src/styles/global.css` as CSS-first progressive enhancement. Restrained fast and base timings communicate affordance and state without `transition: all` or an animation dependency; physical hover movement is limited to fine pointers and removed for reduced motion. WORK ArtifactSurface may lift by one pixel, while PROD DossierSurface remains stationary and responds through documentary rules or accents. Focus remains more authoritative than hover, and empty evidence placeholders never animate.
+
+Existing bounded carousels keep native horizontal scrolling and CSS scroll snap. Motion styles remain centralized in `src/styles/global.css`; the local navigation script explicitly requests smooth scrolling, or instant scrolling when `prefers-reduced-motion` is active, so control navigation is reliable across browsers. Navigation remains finite, independent by territory, keyboard-operable, and non-autoplaying.
+
 ## Post-GREEN Validation Gate
 
 After every GREEN, run this gate in order:
