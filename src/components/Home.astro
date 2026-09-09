@@ -218,7 +218,8 @@ const portrait: Portrait = {};
     .selected-work__artifact > .selected-work__id, .selected-work__dossier > .selected-work__id { color: var(--theme-accent); }
     .selected-work__engineering { font-family: var(--font-mono); font-size: 0.875rem; }
     .selected-work__media-slot { aspect-ratio: 16 / 9; border: 1px solid var(--theme-line); background: linear-gradient(135deg, var(--theme-surface-raised), var(--theme-canvas)); }
-     .selected-work__dossier { display: grid; gap: var(--space-4); padding-block: var(--space-5); padding-inline: var(--space-4); }
+     .selected-work__dossier { display: grid; gap: var(--space-4); padding-block: var(--space-5); padding-inline: var(--space-5); }
+     .selected-work__dossier .selected-work__media-slot { width: 100%; max-width: 100%; min-width: 0; }
    @media (min-width: 768px) { .home-hero { grid-template-columns: minmax(0, 1.3fr) minmax(16rem, 0.7fr); align-items: center; min-height: calc(100vh - 4.25rem); padding-block: var(--space-9); } }
     @media (min-width: 768px) { .selected-work__dossier { padding-inline: var(--space-5); } }
      @media (min-width: 1024px) {

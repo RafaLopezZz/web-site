@@ -148,6 +148,23 @@ test("keeps carousel footers in a bounded flex row without overlap or overflow",
   }
 });
 
+test("aligns selected Production media breathing with selected Work", async ({ page }) => {
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/web-site/");
+
+    const inset = async (category: "work" | "production") => page.locator(`[data-evidence-category="${category}"] [data-territory-media-slot]`).first().evaluate((element) => {
+      const record = element.closest<HTMLElement>("[data-surface]")!.getBoundingClientRect();
+      const media = element.getBoundingClientRect();
+      return { left: media.left - record.left, right: record.right - media.right };
+    });
+    const [work, production] = await Promise.all([inset("work"), inset("production")]);
+
+    expect(Math.abs(work.left - production.left)).toBeLessThanOrEqual(2);
+    expect(Math.abs(work.right - production.right)).toBeLessThanOrEqual(2);
+  }
+});
+
 test("keeps Work and Production carousel navigation bounded and independent", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/web-site/");

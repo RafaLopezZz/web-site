@@ -59,3 +59,37 @@ test("keeps Work and Production semantics outside the shared visual shell", () =
   expect(dossier).toContain('variant="dossier"');
   expect(production).not.toContain('variant="artifact"');
 });
+
+test("keeps shared horizontal breathing around territory record content", async ({ page }) => {
+  for (const { path } of routes) {
+    for (const [width, minimumInset] of [[320, 16], [375, 16], [390, 16], [768, 16], [1024, 24], [1440, 24]] as const) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path);
+
+      const records = page.locator(".territory-index__record");
+      for (const record of await records.all()) {
+        const geometry = await record.evaluate((element) => {
+          const box = element.getBoundingClientRect();
+          const inset = (selector: string) => {
+            const child = element.querySelector<HTMLElement>(selector)!.getBoundingClientRect();
+            return { left: child.left - box.left, right: box.right - child.right };
+          };
+          return {
+            id: inset(":scope > .territory-index__id"),
+            media: inset(":scope > [data-territory-media-slot]"),
+            title: inset(":scope > h2"),
+          };
+        });
+
+        expect(geometry.id.left).toBeGreaterThanOrEqual(minimumInset - 1);
+        expect(geometry.media.left).toBeGreaterThanOrEqual(minimumInset - 1);
+        expect(geometry.media.right).toBeGreaterThanOrEqual(minimumInset - 1);
+        if (width <= 390) {
+          expect(Math.abs(geometry.id.left - geometry.media.left)).toBeLessThanOrEqual(1);
+          expect(Math.abs(geometry.title.left - geometry.media.left)).toBeLessThanOrEqual(1);
+        }
+      }
+      expect(await page.locator("html").evaluate((element) => element.scrollWidth <= window.innerWidth)).toBe(true);
+    }
+  }
+});

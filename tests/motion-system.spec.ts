@@ -103,3 +103,17 @@ test("uses CSS carousel continuity and makes reduced motion instant", async ({ p
   });
   expect(reducedPosition.left).toBe(reducedPosition.destination);
 });
+
+test("keeps bilingual themed routes overflow-safe at canonical widths", async ({ page }) => {
+  for (const route of [`${root}/work/`, `${root}/en/production/`]) {
+    for (const theme of ["light", "dark"]) {
+      for (const width of [320, 390, 768, 1024, 1440]) {
+        await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(route);
+        expect(await page.locator("html").evaluate((element) => element.scrollWidth <= window.innerWidth)).toBe(true);
+        await expect(page.locator('[data-surface="artifact"], [data-surface="dossier"]').first()).toBeVisible();
+      }
+    }
+  }
+});
