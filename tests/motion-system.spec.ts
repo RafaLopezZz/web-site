@@ -117,3 +117,61 @@ test("keeps bilingual themed routes overflow-safe at canonical widths", async ({
     }
   }
 });
+
+test("shares an active technical background across Home, Work, and Production", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  let sharedContract: Record<string, string> | undefined;
+  for (const { route, shell } of [
+    { route: `${root}/`, shell: "main.home-shell" },
+    { route: `${root}/work/`, shell: "main.territory-index-shell" },
+    { route: `${root}/production/`, shell: "main.territory-index-shell" },
+  ]) {
+    await page.goto(route);
+    const owner = page.locator(shell);
+    await expect(owner.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(await page.locator("html").evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+
+    const before = await owner.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        backgroundImage: style.backgroundImage,
+        backgroundPosition: style.backgroundPosition,
+        backgroundSize: style.backgroundSize,
+        animationDuration: style.animationDuration,
+        animationTimingFunction: style.animationTimingFunction,
+        hasActiveAnimation: element.getAnimations().some((animation) => animation.playState === "running"),
+        hasNonZeroDuration: style.animationDuration.split(",").some((duration) => Number.parseFloat(duration) > 0),
+      };
+    });
+    await page.waitForTimeout(100);
+    const afterPosition = await owner.evaluate((element) => getComputedStyle(element).backgroundPosition);
+
+    expect(before.backgroundImage).not.toBe("none");
+    expect(before.hasActiveAnimation).toBe(true);
+    expect(before.hasNonZeroDuration).toBe(true);
+    expect(afterPosition).not.toBe(before.backgroundPosition);
+
+    const { backgroundImage: _backgroundImage, backgroundPosition: _backgroundPosition, hasActiveAnimation: _hasActiveAnimation, hasNonZeroDuration: _hasNonZeroDuration, ...geometry } = before;
+    if (sharedContract) expect(geometry).toEqual(sharedContract);
+    else sharedContract = geometry;
+  }
+});
+
+test("keeps technical backgrounds inactive and stable for reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+
+  for (const { route, shell } of [
+    { route: `${root}/`, shell: "main.home-shell" },
+    { route: `${root}/work/`, shell: "main.territory-index-shell" },
+    { route: `${root}/production/`, shell: "main.territory-index-shell" },
+  ]) {
+    await page.goto(route);
+    const owner = page.locator(shell);
+    const beforePosition = await owner.evaluate((element) => getComputedStyle(element).backgroundPosition);
+    await page.waitForTimeout(100);
+
+    expect(await owner.evaluate((element) => element.getAnimations().some((animation) => animation.playState === "running"))).toBe(false);
+    await expect(owner).toHaveCSS("background-position", beforePosition);
+  }
+});

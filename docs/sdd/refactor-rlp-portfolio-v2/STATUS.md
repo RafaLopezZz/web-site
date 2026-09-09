@@ -567,9 +567,25 @@ Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
 
 ### U9.3 — Technical background
 
-Status: DESIGN / PROPOSED — READY FOR RED. The two-owner design contract is
-maintainer-approved; implementation, RED, GREEN, and acceptance remain
-unstarted and unclaimed.
+Status: RED ESTABLISHED — IMPLEMENTATION NOT STARTED. The maintainer-approved
+two-owner design contract remains unchanged.
+
+- **Focused test:** `tests/motion-system.spec.ts`.
+- **Corrected rerun:** The runtime-first candidate reran against an owned,
+  healthy preview and stopped after execution.
+- **Result:** Exit 1; aggregate `7 passed, 1 failed, 0 skipped`. All original
+  six Motion tests passed.
+- **Expected / actual product absence:** At
+  `tests/motion-system.spec.ts:150`, `shares an active technical background
+  across Home, Work, and Production` expected computed `backgroundImage` not
+  `none`; received `none`.
+- **Meaning:** The failure remains product-caused and proves the approved
+  production technical-background paint is absent, not an environment failure.
+- **Test boundary:** The runtime check deliberately avoids byte-identical
+  gradient text, animation names, keyframes, exact duration or colors, and
+  frame positions.
+- **Delivery state:** No production implementation, GREEN, acceptance, or
+  commit exists.
 
 #### 1. Goal
 
