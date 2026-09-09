@@ -564,3 +564,192 @@ Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
 - **Evidence:** Genuine RED found hardcoded smooth JavaScript and no reduced-motion CSS contract. GREEN: motion PASS (6/6); combined carousel/motion PASS (15/15); named Header/Surface/Action/Locale/Theme regressions PASS (18/18); full E2E PASS (70/70); production build PASS (16 pages); DESIGN lint PASS; `git diff --check` PASS.
 - **Visual status:** Initial maintainer review reported no perceptible carousel movement. Control navigation now requests the intended movement explicitly and the motion test asserts a real intermediate scroll position; final maintainer acceptance remains pending and snapshots were not changed.
 - **Stop:** U9.3 has not started.
+
+### U9.3 — Technical background
+
+Status: DESIGN / PROPOSED — READY FOR RED. The two-owner design contract is
+maintainer-approved; implementation, RED, GREEN, and acceptance remain
+unstarted and unclaimed.
+
+#### 1. Goal
+
+Define the smallest optional technical-background enhancement that can add
+quiet editorial atmosphere without changing reading, interaction, evidence, or
+route behavior.
+
+#### 2. Context
+
+U9.1 and U9.2 established CSS-first, centralized, reduced-motion-aware motion
+in `src/styles/global.css`. The maintainer approved one sparse
+drafting/coordinate-line decorative field with one slow leftward drift. Current
+source verifies that `html` and `body` paint `--theme-canvas`; `body.bg-ink`
+clears background images; and `BaseLayout` adds no root wrapper. The existing
+`main.home-shell` and shared `main.territory-index-shell` owners already paint
+opaque `--theme-canvas` for Home, Work, and Production.
+
+#### 3. Non-goals
+
+No new routes, content, claims, media, controls, interaction state, layout
+geometry, carousel changes, Hero motion (U9.4), or scroll reveals (U9.5).
+
+#### 4. Design intent
+
+The field is strictly decorative, non-essential, and subordinate to editorial
+reading. It must never imply live data, a network, activity, or technical
+capability.
+
+#### 5. Selected visual direction
+
+Use one sparse drafting/coordinate-line field, with low visual weight and one
+slow, continuous leftward CSS drift. It must not become a cyan field, a grid
+wallpaper, glow, parallax, or a content substitute.
+
+#### 6. Architecture ownership
+
+**Mandatory two-owner visual system:** use only the existing
+`main.home-shell` owner for Home and the existing shared
+`main.territory-index-shell` owner for Work and Production. Both owners must
+share exactly one drafting/coordinate-line pattern, grid/line scale, semantic
+color treatment, slow leftward animation direction, duration, easing, and
+reduced-motion behavior; territory-specific variants are prohibited. Each owner
+already paints opaque `--theme-canvas`; their direct child content is
+transparent, and bounded opaque CMD, surface, and media descendants mask the
+field only within their local bounds. This keeps the field visible on
+surrounding route canvas without wrapper, pseudo-element, stacking, z-index, or
+transparency changes. One owner serves each route, so no intra-route seams are
+expected; Work and Production already share one owner. Cross-owner visual
+continuity is contractual. Route navigation may naturally restart the decorative
+animation and is not a simultaneous continuity defect.
+
+#### 7. CSS strategy
+
+After RED only, add one shared CSS background-paint contract to the two existing
+owners: background color, image, position, and one slow leftward
+`background-position` animation. The shared contract supplies the required
+single pattern, grid/line scale, semantic color treatment, duration, easing,
+and reduced-motion behavior. The background remains CSS-only and independent of
+content layout. Do not add JavaScript, pseudo-elements, interactive DOM, z-index
+changes, wrappers, or transparency changes.
+
+#### 8. Theme behavior
+
+Use existing semantic theme roles only. The shared semantic color treatment may
+adapt contrast-safe line opacity through existing theme roles; neither mode may
+introduce new color authority, cyan dominance, or a separate visual system.
+
+#### 9. Reduced-motion
+
+Under `prefers-reduced-motion: reduce`, both owners remove the shared drift
+completely and retain only the same static field if it remains visually quiet;
+otherwise both render no field. No timing, transform, scroll, or JavaScript
+workaround may remain active.
+
+#### 10. Accessibility
+
+The field is decorative: no semantic content, focus target, accessible name,
+announcement, keyboard behavior, or meaning. It must preserve readable
+contrast, visible focus, selection, landmarks, logical order, and all
+SiteHeader, locale, and theme controls.
+
+#### 11. Performance
+
+CSS is the only permitted runtime. One slow `background-position` animation is
+the maximum intended motion after GREEN. Do not add Canvas,
+WebGL, video, GIF, SVG networks, animation libraries, JavaScript loops,
+listeners, or per-frame layout/paint work.
+
+#### 12. Responsive
+
+The decorative field must yield before content at 320, 390, 768, 1024, and
+1440px. It may crop within its authorized owner but must never cause overflow,
+layout shift, reduced gutters, hidden copy, or altered touch targets.
+
+#### 13. Risks
+
+The primary risk is the field competing with editorial reading or failing its
+mandatory cross-owner continuity. Secondary risks are theme contrast loss,
+visual noise, incorrect local masking, overflow or layout change, and
+reduced-motion leakage. No stacking solution may be introduced to mitigate
+these risks.
+
+#### 14. Rejected alternatives
+
+Reject Canvas, WebGL, video, GIF, SVG networks, animation libraries, JavaScript
+loops/listeners, pseudo-elements, broad z-index refactors, wrapper or
+transparency changes, route-specific layering, Hero motion (U9.4), and scroll
+reveals (U9.5). These either exceed the decorative need or violate the current
+ownership boundary.
+
+#### 15. RED contract
+
+When RED is explicitly claimed: add focused failing checks that prove
+`main.home-shell` owns Home and shared
+`main.territory-index-shell` owns Work and Production; the CSS-only background
+color/image/position contract; one bounded leftward `background-position` drift
+in normal motion; one shared pattern, grid/line scale, semantic color treatment,
+duration, easing, and reduced-motion behavior without territory-specific
+variants; readable content; and no overflow or layout change. RED must also
+prove no JavaScript, pseudo-elements, interactive DOM, z-index changes,
+wrappers, or transparency changes were introduced. It must fail against the
+pre-U9.3 state for the missing authorized contract, not for unrelated route,
+content, carousel, or Hero behavior.
+
+#### 16. GREEN contract
+
+Only after the RED contract: implement the minimum shared CSS in the two
+existing shell owners; pass focused U9.3 checks, named
+Header, Action, Surface, Locale, Theme, Home, Work, Production, and motion
+regressions, full E2E, production build, DESIGN lint, and `git diff --check`.
+GREEN is not a manual-acceptance claim; maintainer visual approval remains
+required.
+
+#### 17. Manual visual matrix/criteria
+
+After automated GREEN, review every cell below in real browsers. For each cell,
+verify the field is visible on the surrounding canvas of its authorized existing
+owner, while bounded opaque CMD, surface, and media descendants mask it locally;
+the exact shared pattern, grid/line scale, semantic color treatment, leftward
+direction, duration, easing, and reduced-motion behavior preserve cross-owner
+visual continuity without territory-specific variants; remains sparse and
+subordinate; drifts slowly left only when motion is allowed; is static or absent
+for reduced motion; and causes no overlay, overflow, layout shift, contrast
+loss, readability loss, focus loss, locale/theme-control regression,
+media-provenance change, claim change, or footer/header disruption.
+
+| Route territory | Locale routes | Themes | Viewports | Reduced motion |
+| --- | --- | --- | --- | --- |
+| Home | `/`, `/en/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+| Work | `/work/`, `/en/work/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+| Production | `/production/`, `/en/production/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+
+#### 18. Likely files
+
+Only after RED, the likely implementation boundary is
+`src/styles/global.css`, the existing `Home.astro` and `TerritoryIndex.astro`
+shell owners, and `tests/motion-system.spec.ts`. This is a planning inventory,
+not approval to edit those files.
+
+#### 19. Protected files
+
+Protect `SiteHeader`, Hero, `ArtifactSurface`/`DossierSurface`,
+`EvidenceCarousel`, responsive breathing, routes, locale/theme controls, media
+provenance, claims, and `SiteFooter`. Do not widen the slice to alter any of
+these responsibilities.
+
+#### 20. Rollback boundary
+
+The authorized U9.3 change must be removable as the one shared background-paint
+contract on the two existing shell owners plus its focused test contract.
+Rollback removes only the decorative field and its keyframes; it must not
+require route, content, stacking, component, token, or theme rollback.
+
+#### 21. Implementation STOP conditions
+
+Stop immediately if the field cannot conform to the approved two-owner visual
+system; the field requires a global or route-specific layer, JavaScript,
+pseudo-elements, interactive DOM, wrapper or transparency changes, or any broad
+z-index/content stacking change; the field overlays content or cannot remain
+visible on the surrounding owner canvas; reduced motion is not static-or-absent;
+CSS-only delivery is insufficient; content is not readable; any protected
+surface changes; or any matrix cell fails. Return to design review rather than
+patching around the boundary.
