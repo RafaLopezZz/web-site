@@ -298,6 +298,15 @@ test("stabilizes desktop carousel stages while preserving natural mobile content
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/web-site/");
 
+    const evidence = page.locator("#featured-evidence");
+    await evidence.scrollIntoViewIfNeeded();
+    await expect.poll(() => evidence.evaluate((element) => {
+      const styles = getComputedStyle(element);
+      const hasActiveMotion = element.getAnimations({ subtree: true })
+        .some((animation) => animation.playState === "running" || animation.playState === "pending");
+      return { opacity: styles.opacity, transform: styles.transform, hasActiveMotion };
+    })).toEqual({ opacity: "1", transform: "none", hasActiveMotion: false });
+
     const before = await geometry();
     expect(Math.abs(before[0].footerTop - before[1].footerTop)).toBeLessThanOrEqual(2);
     for (const item of before) {
