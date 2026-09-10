@@ -2,6 +2,12 @@ import { expect, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
 const root = "/web-site";
+const terminalLines = ["C:\\RLP> whoami", "rlp-sys-admin", "C:\\RLP> █"];
+const terminalBody = terminalLines.join("\n");
+
+const terminalHasNoOverflow = (element: HTMLElement) => element.scrollWidth <= element.clientWidth;
+
+const pageHasNoOverflow = (element: HTMLElement) => element.scrollWidth <= window.innerWidth;
 
 test("defines a centralized restrained CSS-first interaction contract", async () => {
   const [css, header, territoryIndex, packageJson] = await Promise.all([
@@ -173,5 +179,84 @@ test("keeps technical backgrounds inactive and stable for reduced motion", async
 
     expect(await owner.evaluate((element) => element.getAnimations().some((animation) => animation.playState === "running"))).toBe(false);
     await expect(owner).toHaveCSS("background-position", beforePosition);
+  }
+});
+
+test("progresses the CMD identity body without moving its title bar or layout", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`${root}/`);
+
+  const identity = page.locator("#cmd-identity");
+  const title = page.locator(".cmd-identity__titlebar");
+  const terminal = page.locator(".cmd-identity__terminal");
+
+  expect(await title.isVisible()).toBe(true);
+  await expect(terminal.locator(".cmd-identity__titlebar")).toHaveCount(0);
+
+  const initialBox = await identity.evaluate((element) => {
+    const { height, width, x, y } = element.getBoundingClientRect();
+    return { height, width, x, y };
+  });
+  const observedStates = await terminal.evaluate(async (element, finalBody) => {
+    const states: string[] = [];
+    const capture = () => {
+      const state = element.innerText.split("\n").map((line) => line.trim()).filter(Boolean).join("\n");
+      if (states.at(-1) !== state) states.push(state);
+      return state;
+    };
+
+    return new Promise<string[]>((resolve) => {
+      const observer = new MutationObserver(capture);
+      observer.observe(element, { childList: true, characterData: true, subtree: true });
+
+      const observe = () => {
+        if (capture() === finalBody) {
+          observer.disconnect();
+          resolve(states);
+          return;
+        }
+        requestAnimationFrame(observe);
+      };
+
+      observe();
+    });
+  }, terminalBody);
+
+  await expect(terminal).toHaveText(terminalBody);
+  await expect(terminal.locator(":scope > p")).toHaveText(terminalLines);
+  expect(observedStates.filter(Boolean).every((state) => terminalBody.startsWith(state))).toBe(true);
+  expect(observedStates.indexOf(terminalLines[0])).toBeGreaterThanOrEqual(0);
+  expect(observedStates.indexOf(terminalLines.slice(0, 2).join("\n"))).toBeGreaterThan(observedStates.indexOf(terminalLines[0]));
+  expect(observedStates.indexOf(terminalBody)).toBeGreaterThan(observedStates.indexOf(terminalLines.slice(0, 2).join("\n")));
+  expect(await terminal.evaluate(terminalHasNoOverflow)).toBe(true);
+  expect(await page.locator("html").evaluate(pageHasNoOverflow)).toBe(true);
+  expect(await identity.evaluate((element) => {
+    const { height, width, x, y } = element.getBoundingClientRect();
+    return { height, width, x, y };
+  })).toEqual(initialBox);
+});
+
+test("resolves the CMD identity immediately without terminal animation for reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+
+  for (const route of [`${root}/`, `${root}/en/`]) {
+    for (const theme of ["light", "dark"]) {
+      for (const width of [320, 390, 768, 1024, 1440]) {
+        await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(route);
+
+        const terminal = page.locator(".cmd-identity__terminal");
+        const lines = terminal.locator(":scope > p");
+        await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+        await expect(terminal).toBeVisible();
+        expect((await terminal.innerText()).split("\n").map((line) => line.trim()).filter(Boolean).join("\n")).toBe(terminalBody);
+        await expect(lines).toHaveText(terminalLines);
+        for (const line of await lines.all()) await expect(line).toBeVisible();
+        expect(await terminal.evaluate((element) => element.getAnimations({ subtree: true }).some((animation) => animation.playState === "running"))).toBe(false);
+        expect(await terminal.evaluate(terminalHasNoOverflow)).toBe(true);
+        expect(await page.locator("html").evaluate(pageHasNoOverflow)).toBe(true);
+      }
+    }
   }
 });
