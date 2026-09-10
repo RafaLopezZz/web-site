@@ -782,3 +782,27 @@ visible on the surrounding owner canvas; reduced motion is not static-or-absent;
 CSS-only delivery is insufficient; content is not readable; any protected
 surface changes; or any matrix cell fails. Return to design review rather than
 patching around the boundary.
+
+### U9.5 — Scroll reveals
+
+Status: DESIGN / PROPOSED.
+
+- **Route units:** Home uses only post-hero `#featured-evidence`, `#explore`,
+  and `#about`. Work and Production use their existing territory-index records.
+- **Ownership:** One scoped `IntersectionObserver` belongs to each route owner;
+  no global controller or cross-route observer is allowed. A revealed unit is
+  unobserved, and the owner disconnects after its final unit reveals.
+- **Progressive visibility:** Every unit is visible and static by default.
+  Initial viewport content, hash-target content, and focused content never enter
+  a pending state. Missing or unavailable enhancement leaves the visible
+  baseline intact.
+- **Motion boundary:** Normal motion may use only opacity and a minimal
+  transform. Reveal duration, easing, and distance are global tokens in
+  `src/styles/global.css`. No stagger, loop, replay, timers, extra listeners,
+  layout or scroll manipulation, or geometry change is permitted.
+- **Reduced motion:** `prefers-reduced-motion: reduce` is immediately visible
+  and static for every unit.
+- **Protected work:** U9.1 hovers, U9.2 carousel motion, U9.3 technical
+  background, and U9.4 CMD progression retain their settled contracts. Hero,
+  CMD, SiteHeader, SiteFooter, carousel internals, routes, content, and
+  territory boundaries are outside U9.5.

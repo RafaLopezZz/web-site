@@ -139,6 +139,35 @@ The implementation order is exactly `hovers → carousel motion → technical ba
 
 U9.3 is complete and maintainer accepted. The mandatory visual system uses the verified existing `main.home-shell` owner for Home and `main.territory-index-shell` owner for Work and Production. Both owners share exactly one CSS-only drafting/coordinate-line pattern: a `4rem` grid, existing semantic contrast roles, and a diagonal up-left `background-position` drift at `12s linear infinite`; territory-specific or responsive-specific speed variants are prohibited. `prefers-reduced-motion: reduce` applies `animation: none`. The `30s` and `24s` calibration candidates were too subtle; the maintainer selected `12s`. Each owner already paints opaque `--theme-canvas`, while `html`/`body` paint the route canvas, `BaseLayout` adds no root wrapper, and `body.bg-ink` clears background images. No DOM, wrapper, pseudo-element, stacking, z-index, transparency, or JavaScript change is required. Direct child content is transparent; bounded opaque CMD, surface, and media descendants mask the field only locally while it remains visible on surrounding route canvas. No intra-route seams are expected; Work and Production already share one owner, and cross-owner visual continuity is contractual. Canvas, WebGL, video, GIF, SVG networks, animation libraries, JavaScript loops/listeners, route-specific layers, Hero motion, and scroll reveals remain outside this completed slice. Automated final results are not claimed because tests have not run for this settlement.
 
+#### U9.5 Scroll Reveals — DESIGN / PROPOSED
+
+U9.5 adds only optional route-level entry treatment. Home treats the post-hero
+`#featured-evidence`, `#explore`, and `#about` sections as the reveal units.
+Work and Production treat their existing territory-index records as the reveal
+units. Hero, CMD identity, headers, footers, carousel internals, and all other
+territory content remain outside this boundary.
+
+Each route owner owns one scoped `IntersectionObserver`: Home owns its three
+post-hero sections, and each territory-index owner owns its records. There is
+no global controller or cross-route observer. A unit reveals once, is
+unobserved after reveal, and the owner disconnects its observer when no units
+remain.
+
+The baseline is progressively visible and static. JavaScript is an enhancement,
+not a reading prerequisite: initial viewport content, a hash target, and a
+focused unit never enter a pending state. Unsupported, failed, or unavailable
+enhancement leaves every unit visible. Normal-motion pending units may use only
+opacity plus a minimal non-geometric transform, then settle without replay;
+global reveal timing, easing, and distance tokens live in
+`src/styles/global.css`.
+
+`prefers-reduced-motion: reduce` makes all units immediately visible and
+static. U9.5 permits no stagger, loop, replay, timer, additional listener,
+global controller, layout or scroll manipulation, opacity-only hiding of
+meaningful initial content, or motion that changes geometry. U9.1 hovers, U9.2
+carousel motion, U9.3 technical background, and U9.4 CMD progression are
+protected and must retain their current contracts.
+
 ### Motion / Interaction
 
 Interaction motion is centralized in `src/styles/global.css` as CSS-first progressive enhancement. Restrained fast and base timings communicate affordance and state without `transition: all` or an animation dependency; physical hover movement is limited to fine pointers and removed for reduced motion. WORK ArtifactSurface may lift by one pixel, while PROD DossierSurface remains stationary and responds through documentary rules or accents. Focus remains more authoritative than hover, and empty evidence placeholders never animate.
