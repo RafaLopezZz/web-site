@@ -567,25 +567,30 @@ Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
 
 ### U9.3 — Technical background
 
-Status: RED ESTABLISHED — IMPLEMENTATION NOT STARTED. The maintainer-approved
-two-owner design contract remains unchanged.
+Status: COMPLETE — MAINTAINER ACCEPTED.
 
-- **Focused test:** `tests/motion-system.spec.ts`.
-- **Corrected rerun:** The runtime-first candidate reran against an owned,
-  healthy preview and stopped after execution.
-- **Result:** Exit 1; aggregate `7 passed, 1 failed, 0 skipped`. All original
-  six Motion tests passed.
-- **Expected / actual product absence:** At
-  `tests/motion-system.spec.ts:150`, `shares an active technical background
-  across Home, Work, and Production` expected computed `backgroundImage` not
-  `none`; received `none`.
-- **Meaning:** The failure remains product-caused and proves the approved
-  production technical-background paint is absent, not an environment failure.
-- **Test boundary:** The runtime check deliberately avoids byte-identical
-  gradient text, animation names, keyframes, exact duration or colors, and
-  frame positions.
-- **Delivery state:** No production implementation, GREEN, acceptance, or
-  commit exists.
+- **RED lineage:** Committed RED `17418e6` is satisfied by the production CSS
+  implementation.
+- **Owners:** `main.home-shell` owns Home; the shared
+  `main.territory-index-shell` owns Work and Production.
+- **Final shared CSS contract:** Both owners use the same CSS-only
+  drafting/coordinate-line background: a `4rem` grid scale, existing semantic
+  `--theme-canvas` and `--theme-line` values, and a final diagonal up-left
+  `background-position` drift at `12s linear infinite`. No token was added.
+- **Reduced motion:** `prefers-reduced-motion: reduce` applies
+  `animation: none`; the shared field remains static.
+- **Boundary preserved:** No DOM, pseudo-element, stacking, wrapper,
+  transparency, JavaScript, layout, or responsive-specific speed change was
+  introduced.
+- **Calibration history:** `30s` and `24s` were too subtle; the maintainer
+  selected `12s`.
+- **Final automated evidence:** focused technical-background checks PASS (8/8);
+  named regressions PASS (18/18); full E2E PASS (74/74); production build PASS
+  (16 pages); `npx --yes @google/design.md lint DESIGN.md` PASS; and
+  `git diff --check` PASS.
+- **Acceptance authority:** The maintainer explicitly accepted the final visual
+  result. The test runner's generic note that human visual review is required is
+  informational and does not override that acceptance.
 
 #### 1. Goal
 
@@ -597,7 +602,7 @@ route behavior.
 
 U9.1 and U9.2 established CSS-first, centralized, reduced-motion-aware motion
 in `src/styles/global.css`. The maintainer approved one sparse
-drafting/coordinate-line decorative field with one slow leftward drift. Current
+drafting/coordinate-line decorative field with one slow diagonal up-left drift. Current
 source verifies that `html` and `body` paint `--theme-canvas`; `body.bg-ink`
 clears background images; and `BaseLayout` adds no root wrapper. The existing
 `main.home-shell` and shared `main.territory-index-shell` owners already paint
@@ -617,7 +622,7 @@ capability.
 #### 5. Selected visual direction
 
 Use one sparse drafting/coordinate-line field, with low visual weight and one
-slow, continuous leftward CSS drift. It must not become a cyan field, a grid
+slow, continuous diagonal up-left CSS drift. It must not become a cyan field, a grid
 wallpaper, glow, parallax, or a content substitute.
 
 #### 6. Architecture ownership
@@ -626,7 +631,7 @@ wallpaper, glow, parallax, or a content substitute.
 `main.home-shell` owner for Home and the existing shared
 `main.territory-index-shell` owner for Work and Production. Both owners must
 share exactly one drafting/coordinate-line pattern, grid/line scale, semantic
-color treatment, slow leftward animation direction, duration, easing, and
+color treatment, slow diagonal up-left animation direction, duration, easing, and
 reduced-motion behavior; territory-specific variants are prohibited. Each owner
 already paints opaque `--theme-canvas`; their direct child content is
 transparent, and bounded opaque CMD, surface, and media descendants mask the
@@ -640,7 +645,7 @@ animation and is not a simultaneous continuity defect.
 #### 7. CSS strategy
 
 After RED only, add one shared CSS background-paint contract to the two existing
-owners: background color, image, position, and one slow leftward
+owners: background color, image, position, and one slow diagonal up-left
 `background-position` animation. The shared contract supplies the required
 single pattern, grid/line scale, semantic color treatment, duration, easing,
 and reduced-motion behavior. The background remains CSS-only and independent of
@@ -701,7 +706,7 @@ ownership boundary.
 When RED is explicitly claimed: add focused failing checks that prove
 `main.home-shell` owns Home and shared
 `main.territory-index-shell` owns Work and Production; the CSS-only background
-color/image/position contract; one bounded leftward `background-position` drift
+color/image/position contract; one bounded diagonal up-left `background-position` drift
 in normal motion; one shared pattern, grid/line scale, semantic color treatment,
 duration, easing, and reduced-motion behavior without territory-specific
 variants; readable content; and no overflow or layout change. RED must also
@@ -712,25 +717,19 @@ content, carousel, or Hero behavior.
 
 #### 16. GREEN contract
 
-Only after the RED contract: implement the minimum shared CSS in the two
-existing shell owners; pass focused U9.3 checks, named
-Header, Action, Surface, Locale, Theme, Home, Work, Production, and motion
-regressions, full E2E, production build, DESIGN lint, and `git diff --check`.
-GREEN is not a manual-acceptance claim; maintainer visual approval remains
-required.
+The final GREEN settlement implements the minimum shared CSS in the two
+existing shell owners. It passed focused technical-background checks (8/8),
+named regressions (18/18), full E2E (74/74), the 16-page production build,
+DESIGN lint, and `git diff --check`; the maintainer accepted the final visual
+result.
 
-#### 17. Manual visual matrix/criteria
+#### 17. Maintainer visual settlement
 
-After automated GREEN, review every cell below in real browsers. For each cell,
-verify the field is visible on the surrounding canvas of its authorized existing
-owner, while bounded opaque CMD, surface, and media descendants mask it locally;
-the exact shared pattern, grid/line scale, semantic color treatment, leftward
-direction, duration, easing, and reduced-motion behavior preserve cross-owner
-visual continuity without territory-specific variants; remains sparse and
-subordinate; drifts slowly left only when motion is allowed; is static or absent
-for reduced motion; and causes no overlay, overflow, layout shift, contrast
-loss, readability loss, focus loss, locale/theme-control regression,
-media-provenance change, claim change, or footer/header disruption.
+The maintainer accepted the final shared field: it remains sparse and
+subordinate on the authorized owner canvas, uses the same `4rem` semantic grid
+and `12s linear infinite` diagonal up-left drift for both owners, and becomes
+static with `animation: none` for reduced motion. No JavaScript, DOM,
+stacking, or responsive-specific speed variant is part of the settlement.
 
 | Route territory | Locale routes | Themes | Viewports | Reduced motion |
 | --- | --- | --- | --- | --- |
@@ -738,12 +737,10 @@ media-provenance change, claim change, or footer/header disruption.
 | Work | `/work/`, `/en/work/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
 | Production | `/production/`, `/en/production/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
 
-#### 18. Likely files
+#### 18. Final file boundary
 
-Only after RED, the likely implementation boundary is
-`src/styles/global.css`, the existing `Home.astro` and `TerritoryIndex.astro`
-shell owners, and `tests/motion-system.spec.ts`. This is a planning inventory,
-not approval to edit those files.
+The final implementation is CSS-only in `src/styles/global.css`; the existing
+Home and territory shell owners remain unchanged.
 
 #### 19. Protected files
 
@@ -754,10 +751,9 @@ these responsibilities.
 
 #### 20. Rollback boundary
 
-The authorized U9.3 change must be removable as the one shared background-paint
-contract on the two existing shell owners plus its focused test contract.
-Rollback removes only the decorative field and its keyframes; it must not
-require route, content, stacking, component, token, or theme rollback.
+The authorized U9.3 change is removable as one shared background-paint
+contract and its keyframes. Rollback must not require route, content, stacking,
+component, token, or theme rollback.
 
 #### 21. Implementation STOP conditions
 

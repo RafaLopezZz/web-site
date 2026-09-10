@@ -4,20 +4,21 @@
 
 :root {
   color-scheme: light;
-  --color-paper: #F2F0EA;
+  --color-paper: #f2f0ea;
   --color-ink: #111315;
-  --color-terminal: #0C0C0C;
-  --color-rlp-cyan: #059AAF;
+  --color-terminal: #0c0c0c;
+  --color-rlp-cyan: #059aaf;
   --color-graphite: #606568;
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --theme-canvas: #F2F0EA;
-  --theme-surface: #F2F0EA;
-  --theme-surface-raised: #FFFEFA;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --theme-canvas: #f2f0ea;
+  --theme-surface: #f2f0ea;
+  --theme-surface-raised: #fffefa;
   --theme-text: #111315;
   --theme-text-muted: #606568;
-  --theme-line: #9A9993;
-  --theme-accent: #059AAF;
+  --theme-line: #9a9993;
+  --theme-accent: #059aaf;
   --border: var(--theme-line);
   --content-max: 80rem;
   /* 46rem preserves a readable editorial line length without narrowing page shells. */
@@ -39,13 +40,13 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --theme-canvas: #1C1D1D;
+  --theme-canvas: #1c1d1d;
   --theme-surface: #242525;
-  --theme-surface-raised: #2D2E2E;
-  --theme-text: #F2F0EA;
-  --theme-text-muted: #B8B7B0;
-  --theme-line: #85857E;
-  --theme-accent: #5CB6C3;
+  --theme-surface-raised: #2d2e2e;
+  --theme-text: #f2f0ea;
+  --theme-text-muted: #b8b7b0;
+  --theme-line: #85857e;
+  --theme-accent: #5cb6c3;
 }
 
 html {
@@ -64,6 +65,24 @@ body.bg-ink {
   background-image: none;
   background-color: var(--theme-canvas);
   color: var(--theme-text);
+}
+
+.home-shell,
+.territory-index-shell {
+  background-color: var(--theme-canvas);
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--theme-line) 14%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--theme-line) 14%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 4rem 4rem;
+  animation: technical-background-drift 12s linear infinite;
 }
 
 ::selection {
@@ -339,6 +358,11 @@ a:focus-visible {
     transition-duration: 0s;
   }
 
+  .home-shell,
+  .territory-index-shell {
+    animation: none;
+  }
+
   .surface.surface--artifact:hover {
     transform: none;
   }
@@ -371,6 +395,16 @@ a:focus-visible {
     grid-template-columns: 10rem minmax(0, 1fr);
     align-items: start;
     column-gap: 2rem;
+  }
+}
+
+@keyframes technical-background-drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -4rem -4rem;
   }
 }
 
