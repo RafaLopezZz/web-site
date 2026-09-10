@@ -22,6 +22,17 @@ const expectVisibleAndStatic = async (units: Locator) => {
   }
 };
 
+const expectSettled = async (unit: Locator) => {
+  await expect.poll(() => unit.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      opacity: style.opacity,
+      transform: style.transform,
+      hasActiveAnimation: element.getAnimations().some(({ playState }) => playState === "running" || playState === "pending"),
+    };
+  })).toEqual({ opacity: "1", transform: "none", hasActiveAnimation: false });
+};
+
 test("defines a centralized restrained CSS-first interaction contract", async () => {
   const [css, header, territoryIndex, packageJson] = await Promise.all([
     readFile("src/styles/global.css", "utf8"),
@@ -117,10 +128,10 @@ test("keeps route units readable without enhancement and settles Home About once
   })).toBe(true);
 
   await about.scrollIntoViewIfNeeded();
-  await expectVisibleAndStatic(about);
+  await expectSettled(about);
   await page.locator("#featured-evidence").scrollIntoViewIfNeeded();
   await about.scrollIntoViewIfNeeded();
-  await expectVisibleAndStatic(about);
+  await expectSettled(about);
 });
 
 test("uses CSS carousel continuity and makes reduced motion instant", async ({ page }) => {
