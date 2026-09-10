@@ -785,7 +785,18 @@ patching around the boundary.
 
 ### U9.5 — Scroll reveals
 
-Status: DESIGN / PROPOSED.
+Status: RED ESTABLISHED / IMPLEMENTATION NOT STARTED.
+
+- **Design checkpoint:** `826d387` records the approved U9.5 design.
+- **RED evidence:** Baseline PASS (10/10); RED PASS (10) / FAIL (1). The
+  expected normal-motion pending/reveal contract fails at `#about`, which is
+  already `opacity: 1` and `transform: none` before entry.
+- **Safeguards:** SSR with JavaScript off and reduced motion both preserve the
+  visible/static baseline.
+- **Preview diagnosis:** Healthy; the failure is product-caused, not a preview
+  or environment defect.
+- **Delivery boundary:** No production implementation, commit, or U9.6 work has
+  started.
 
 - **Route units:** Home uses only post-hero `#featured-evidence`, `#explore`,
   and `#about`. Work and Production use their existing territory-index records.

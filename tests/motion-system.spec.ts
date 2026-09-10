@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
 const root = "/web-site";
@@ -8,6 +8,19 @@ const terminalBody = terminalLines.join("\n");
 const terminalHasNoOverflow = (element: HTMLElement) => element.scrollWidth <= element.clientWidth;
 
 const pageHasNoOverflow = (element: HTMLElement) => element.scrollWidth <= window.innerWidth;
+
+const expectVisibleAndStatic = async (units: Locator) => {
+  expect(await units.count()).toBeGreaterThan(0);
+  for (const unit of await units.all()) {
+    await expect(unit).toBeVisible();
+    expect(await unit.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return style.opacity === "1"
+        && style.transform === "none"
+        && element.getAnimations().every((animation) => animation.playState !== "running");
+    })).toBe(true);
+  }
+};
 
 test("defines a centralized restrained CSS-first interaction contract", async () => {
   const [css, header, territoryIndex, packageJson] = await Promise.all([
@@ -68,6 +81,46 @@ test("removes non-essential movement for reduced motion", async ({ page }) => {
   await expect(artifact).toHaveCSS("transform", "none");
   await expect(artifact).toHaveCSS("transition-duration", "0s");
   await expect(page.locator("[data-territory-media-slot]").first()).toHaveCSS("animation-name", "none");
+});
+
+test("keeps route units readable without enhancement and settles Home About once", async ({ browser, page }) => {
+  const ssrContext = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
+  const reducedContext = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 900 } });
+
+  try {
+    for (const context of [ssrContext, reducedContext]) {
+      const routePage = await context.newPage();
+
+      await routePage.goto(`${root}/`);
+      const homeUnits = routePage.locator("#featured-evidence, #explore, #about");
+      await expect(homeUnits).toHaveCount(3);
+      await expectVisibleAndStatic(homeUnits);
+
+      for (const route of ["work", "production"]) {
+        await routePage.goto(`${root}/${route}/`);
+        await expectVisibleAndStatic(routePage.locator("article.territory-index__record"));
+      }
+    }
+  } finally {
+    await ssrContext.close();
+    await reducedContext.close();
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`${root}/`);
+  const about = page.locator("#about");
+
+  expect(await about.evaluate((element) => element.getBoundingClientRect().top > window.innerHeight)).toBe(true);
+  expect(await about.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return style.opacity !== "1" || style.transform !== "none";
+  })).toBe(true);
+
+  await about.scrollIntoViewIfNeeded();
+  await expectVisibleAndStatic(about);
+  await page.locator("#featured-evidence").scrollIntoViewIfNeeded();
+  await about.scrollIntoViewIfNeeded();
+  await expectVisibleAndStatic(about);
 });
 
 test("uses CSS carousel continuity and makes reduced motion instant", async ({ page }) => {
