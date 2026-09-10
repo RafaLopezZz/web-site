@@ -594,23 +594,20 @@ Status: COMPLETE — MAINTAINER ACCEPTED.
 
 ### U9.4 — CMD identity body progression
 
-Status: RED ESTABLISHED — IMPLEMENTATION NOT STARTED.
+Status: COMPLETE — MAINTAINER ACCEPTED.
 
-- **Focused evidence:** `tests/motion-system.spec.ts` recorded 9 passed, 1
-  failed, and 0 skipped. All eight existing motion tests and the U9.4
-  reduced-motion test pass.
-- **RED failure:** Normal-motion CMD body progression fails because normalized
-  `observedStates` lacks `C:\RLP> whoami` (index `-1` at
-  `motion-system.spec.ts:228`), proving the terminal starts already resolved
-  and lacks progressive body behavior; the title bar is not the failing surface.
-- **Missing contract:** Keep the static `C:\RLP\identity.exe` title separate
-  from one-time body progression: `whoami` → identity → final cursor.
-  Reduced motion must resolve the body immediately, with no layout, logical
-  order, or overflow disruption.
-- **Causation:** The focused preview was healthy and cleaned after the run, so
-  the failure is product-caused.
-- **Boundary:** No GREEN, implementation, or commit has occurred. U9.5 remains
-  out of scope.
+- **Title:** `C:\RLP\identity.exe` remains static and separate from the body
+  progression.
+- **Body sequence:** Normal motion runs the `whoami` → identity sequence once,
+  character by character, then settles on the final cursor.
+- **Final cursor:** The settled cursor uses a hard blink.
+- **Reduced motion:** The body resolves immediately and remains static, with no
+  progression or cursor blink.
+- **Final automated evidence:** Focused motion checks PASS (10/10); named
+  regressions PASS (18/18); full E2E PASS (76/76); production build PASS (16
+  pages); `npx --yes @google/design.md lint DESIGN.md` PASS; and `git diff
+  --check` PASS.
+- **Boundary:** U9.5 has no implementation.
 
 #### 1. Goal
 

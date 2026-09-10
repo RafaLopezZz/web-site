@@ -98,10 +98,11 @@ const portrait: Portrait = {};
             <span>C:\RLP\identity.exe</span>
             <span class="cmd-identity__controls" aria-hidden="true">_ □ ×</span>
           </div>
-          <div class="cmd-identity__terminal">
-            <p>C:\RLP&gt; whoami</p>
-            <p>rlp-sys-admin</p>
-            <p>C:\RLP&gt; <span class="cmd-identity__cursor">█</span></p>
+          <p class="cmd-identity__accessible">C:\RLP&gt; whoami<br />rlp-sys-admin<br />C:\RLP&gt;</p>
+          <div class="cmd-identity__terminal" data-cmd-stage="whoami" aria-hidden="true">
+            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="command"></span></p>
+            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="output"></span></p>
+            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="prompt"></span><span class="cmd-identity__cursor">█</span></p>
           </div>
         </aside>
       </section>
@@ -186,6 +187,51 @@ const portrait: Portrait = {};
   <SiteFooter locale={locale} />
 </BaseLayout>
 
+<script>
+  const terminal = document.querySelector<HTMLElement>(".cmd-identity__terminal");
+  const commandRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='command']");
+  const outputRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='output']");
+  const promptRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='prompt']");
+
+  function typeCharacters(text: string, target: HTMLElement, delay: number, complete: () => void) {
+    let index = 0;
+    const typeNextCharacter = () => {
+      if (index === text.length) {
+        complete();
+        return;
+      }
+
+      target.textContent += text[index++];
+      window.setTimeout(typeNextCharacter, delay);
+    };
+
+    window.setTimeout(typeNextCharacter, delay);
+  }
+
+  if (terminal && commandRow && outputRow && promptRow) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      commandRow.textContent = "C:\\RLP> whoami";
+      outputRow.textContent = "rlp-sys-admin";
+      promptRow.textContent = "C:\\RLP> ";
+      terminal.dataset.cmdStage = "complete";
+    } else {
+      typeCharacters("C:\\RLP> whoami", commandRow, 70, () => {
+        window.setTimeout(() => {
+          terminal.dataset.cmdStage = "output";
+          typeCharacters("rlp-sys-admin", outputRow, 55, () => {
+            window.setTimeout(() => {
+              terminal.dataset.cmdStage = "final";
+              typeCharacters("C:\\RLP> ", promptRow, 60, () => {
+                terminal.dataset.cmdStage = "complete";
+              });
+            }, 180);
+          });
+        }, 180);
+      });
+    }
+  }
+</script>
+
 <style>
   .home-shell { background-color: var(--theme-canvas); color: var(--theme-text); }
    .home-hero { display: grid; gap: var(--space-7); padding-block: var(--space-8); }
@@ -202,7 +248,14 @@ const portrait: Portrait = {};
   .cmd-identity__controls { white-space: nowrap; }
   .cmd-identity__terminal { min-height: 10rem; padding: var(--space-5); background: var(--color-terminal); color: var(--color-paper); }
   .cmd-identity__terminal p { margin: 0; }
-   .cmd-identity__cursor { color: var(--color-rlp-cyan); }
+  .cmd-identity__accessible { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .cmd-identity__row { min-height: 1.6em; }
+  .cmd-identity__cursor { color: var(--color-rlp-cyan); }
+  @media (prefers-reduced-motion: no-preference) {
+    .cmd-identity__cursor { visibility: hidden; }
+    .cmd-identity__terminal[data-cmd-stage="complete"] .cmd-identity__cursor { visibility: visible; animation: cmd-identity-cursor-blink 900ms steps(1, end) infinite; }
+  }
+  @keyframes cmd-identity-cursor-blink { 0%, 49.999% { opacity: 1; } 50%, 100% { opacity: 0; } }
    .selected-work { display: grid; gap: var(--space-6); padding-block: var(--space-8); border-top: 1px solid var(--theme-line); }
    .selected-work__header { display: grid; gap: var(--space-2); max-width: var(--reading-max); }
     .selected-work__eyebrow, .selected-work__id { margin: 0; color: var(--theme-text-muted); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
