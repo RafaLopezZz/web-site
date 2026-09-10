@@ -567,7 +567,7 @@ Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
 
 ### U9.3 — Technical background
 
-Status: COMPLETE — MAINTAINER ACCEPTED.
+Status: ACCEPTED / COMPLETE.
 
 - **RED lineage:** Committed RED `17418e6` is satisfied by the production CSS
   implementation.
@@ -785,34 +785,36 @@ patching around the boundary.
 
 ### U9.5 — Scroll reveals
 
-Status: RED ESTABLISHED / IMPLEMENTATION NOT STARTED.
+Status: COMPLETE — MAINTAINER ACCEPTED.
 
 - **Design checkpoint:** `826d387` records the approved U9.5 design.
 - **RED evidence:** Baseline PASS (10/10); RED PASS (10) / FAIL (1). The
   expected normal-motion pending/reveal contract fails at `#about`, which is
   already `opacity: 1` and `transform: none` before entry.
-- **Safeguards:** SSR with JavaScript off and reduced motion both preserve the
-  visible/static baseline.
-- **Preview diagnosis:** Healthy; the failure is product-caused, not a preview
-  or environment defect.
-- **Delivery boundary:** No production implementation, commit, or U9.6 work has
-  started.
-
+- **Checkpoint lineage:** `826d387` design; `d2c3817` RED; `fb3fcb34`
+  settled-state synchronization; `879e482` carousel geometry synchronization.
 - **Route units:** Home uses only post-hero `#featured-evidence`, `#explore`,
   and `#about`. Work and Production use their existing territory-index records.
 - **Ownership:** One scoped `IntersectionObserver` belongs to each route owner;
   no global controller or cross-route observer is allowed. A revealed unit is
   unobserved, and the owner disconnects after its final unit reveals.
-- **Progressive visibility:** Every unit is visible and static by default.
+- **Progressive visibility / fail-open:** Every unit is visible and static by default.
   Initial viewport content, hash-target content, and focused content never enter
   a pending state. Missing or unavailable enhancement leaves the visible
   baseline intact.
-- **Motion boundary:** Normal motion may use only opacity and a minimal
-  transform. Reveal duration, easing, and distance are global tokens in
-  `src/styles/global.css`. No stagger, loop, replay, timers, extra listeners,
-  layout or scroll manipulation, or geometry change is permitted.
+- **Motion boundary:** The route-level reveal uses the calibrated 60px / 760ms
+  global contract, with opacity and a minimal transform only. No stagger, loop,
+  replay, timers, extra listeners, layout or scroll manipulation, or geometry
+  change is permitted.
+- **One-shot:** Each unit reveals once, is unobserved, and never replays.
 - **Reduced motion:** `prefers-reduced-motion: reduce` is immediately visible
   and static for every unit.
+- **Carousel synchronization:** Settled-state test synchronization preserves
+  carousel geometry within `<=2px`; no U9.2 production fix was made.
+- **Final evidence:** Focused reveal checks PASS (11/11); named regressions
+  PASS (18/18); full E2E PASS (77/77); production build PASS (16 pages).
+- **Acceptance authority:** The maintainer explicitly accepted the final
+  source-preview result. U9.5 is COMPLETE.
 - **Protected work:** U9.1 hovers, U9.2 carousel motion, U9.3 technical
   background, and U9.4 CMD progression retain their settled contracts. Hero,
   CMD, SiteHeader, SiteFooter, carousel internals, routes, content, and

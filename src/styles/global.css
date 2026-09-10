@@ -26,6 +26,8 @@
   --layout-gutter: 1rem;
   --motion-fast: 150ms;
   --motion-base: 200ms;
+  --motion-reveal: 760ms;
+  --motion-reveal-distance: 60px;
   --ease-standard: ease-out;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -330,6 +332,19 @@ a:focus-visible {
   transition:
     border-color var(--motion-fast) var(--ease-standard),
     color var(--motion-fast) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-route-reveal] {
+    transition:
+      opacity var(--motion-reveal) var(--ease-standard),
+      transform var(--motion-reveal) var(--ease-standard);
+  }
+
+  [data-route-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(var(--motion-reveal-distance));
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

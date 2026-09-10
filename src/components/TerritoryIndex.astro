@@ -40,6 +40,40 @@ const { locale, territory, title, description, eyebrow, heading, intro } = Astro
   <SiteFooter locale={locale} />
 </BaseLayout>
 
+<script>
+  const territory = document.querySelector<HTMLElement>(".territory-index-shell");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (territory && !reducedMotion.matches && "IntersectionObserver" in window) {
+    const units = [...territory.querySelectorAll<HTMLElement>("article.territory-index__record")].filter((unit) => {
+      const { bottom, top } = unit.getBoundingClientRect();
+      return (top >= window.innerHeight || bottom <= 0) && !unit.matches(":focus-within");
+    });
+
+    if (units.length) {
+      let observer: IntersectionObserver | undefined;
+      let remaining = units.length;
+
+      try {
+        observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting || entry.target.getAttribute("data-route-reveal") !== "pending") continue;
+            entry.target.setAttribute("data-route-reveal", "settled");
+            observer?.unobserve(entry.target);
+            remaining -= 1;
+          }
+          if (!remaining) observer?.disconnect();
+        });
+        units.forEach((unit) => observer?.observe(unit));
+        units.forEach((unit) => unit.setAttribute("data-route-reveal", "pending"));
+      } catch {
+        observer?.disconnect();
+        units.forEach((unit) => unit.removeAttribute("data-route-reveal"));
+      }
+    }
+  }
+</script>
+
 <style>
   .territory-index-shell { background-color: var(--theme-canvas); color: var(--theme-text); }
   .territory-index { display: grid; gap: var(--space-7); padding-block: var(--space-8); }

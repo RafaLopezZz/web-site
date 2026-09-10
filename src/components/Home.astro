@@ -12,53 +12,60 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const copy = locale === "en"
-  ? {
-      title: "Rafael López | Software Developer",
-      description: "I build software to solve real-world problems, with a particular interest in backend, data, automation and connected systems.",
-       territory: "Backend · Data · Systems",
-       work: "View work",
-       cv: "Download CV",
-       evidenceTitle: "Selected Work",
-         workCategory: "Work",
-         productionCategory: "Production",
-         previousWork: "Previous work",
-         nextWork: "Next work",
-       previousProduction: "Previous",
+const copy =
+  locale === "en"
+    ? {
+        title: "Rafael López | Software Developer",
+        description:
+          "I build software to solve real-world problems, with a particular interest in backend, data, automation and connected systems.",
+        territory: "Backend · Data · Systems",
+        work: "View work",
+        cv: "Download CV",
+        evidenceTitle: "Selected Work",
+        workCategory: "Work",
+        productionCategory: "Production",
+        previousWork: "Previous work",
+        nextWork: "Next work",
+        previousProduction: "Previous",
         nextProduction: "Next",
-      exploreNavigation: "Explore",
-      exploreWork: "View all work",
-      exploreProduction: "View production cases",
-      aboutTitle: "ABOUT ME",
-      aboutProfile: "[profile.txt]",
-      aboutRole: "Software Developer",
-      aboutTerritory: "Backend · Data · Systems",
-      aboutFirstParagraph: "My approach focuses on creating software that solves real problems, prioritizing technical robustness and operational efficiency. I work across backend environments and data management, treating code as a tool for automation and precision.",
-      aboutSecondParagraph: "I believe in verifiable work and direct-response engineering. My path combines technical curiosity with professional responsibility, seeking the cleanest and most maintainable implementation for each systemic challenge.",
-     }
-  : {
-      title: "Rafael López | Fullstack Developer",
-      description: "Desarrollo software para resolver problemas reales, con especial interés en backend, datos, automatización y sistemas conectados.",
-       territory: "Backend · Datos · Sistemas",
-       work: "Ver trabajo",
-       cv: "Descargar CV",
-       evidenceTitle: "Trabajo seleccionado",
-         workCategory: "Trabajo",
-         productionCategory: "Producción",
-         previousWork: "Trabajo anterior",
-         nextWork: "Trabajo siguiente",
-         previousProduction: "Caso anterior",
+        exploreNavigation: "Explore",
+        exploreWork: "View all work",
+        exploreProduction: "View production cases",
+        aboutTitle: "ABOUT ME",
+        aboutProfile: "[profile.txt]",
+        aboutRole: "Software Developer",
+        aboutTerritory: "Backend · Data · Systems",
+        aboutFirstParagraph:
+          "My approach focuses on creating software that solves real problems, prioritizing technical robustness and operational efficiency. I work across backend environments and data management, treating code as a tool for automation and precision.",
+        aboutSecondParagraph:
+          "I believe in verifiable work and direct-response engineering. My path combines technical curiosity with professional responsibility, seeking the cleanest and most maintainable implementation for each systemic challenge.",
+      }
+    : {
+        title: "Rafael López | Fullstack Developer",
+        description:
+          "Desarrollo software para resolver problemas reales, con especial interés en backend, datos, automatización y sistemas conectados.",
+        territory: "Backend · Datos · Sistemas",
+        work: "Ver trabajo",
+        cv: "Descargar CV",
+        evidenceTitle: "Trabajo seleccionado",
+        workCategory: "Trabajo",
+        productionCategory: "Producción",
+        previousWork: "Trabajo anterior",
+        nextWork: "Trabajo siguiente",
+        previousProduction: "Caso anterior",
         nextProduction: "Caso siguiente",
-      exploreNavigation: "Explorar",
-      exploreWork: "Ver todo el trabajo",
-      exploreProduction: "Ver casos de producción",
-      aboutTitle: "SOBRE MÍ",
-      aboutProfile: "[profile.txt]",
-      aboutRole: "Software Developer",
-      aboutTerritory: "Backend · Datos · Sistemas",
-      aboutFirstParagraph: "Mi enfoque se centra en la creación de software diseñado para resolver problemas reales, priorizando la robustez técnica y la eficiencia operativa. Trabajo en entornos de backend y gestión de datos, entendiendo el código como una herramienta de automatización y precisión.",
-      aboutSecondParagraph: "Creo en el trabajo verificable y en la ingeniería de respuesta directa. Mi trayectoria combina la curiosidad técnica con la responsabilidad profesional, buscando la implementación más limpia y mantenible para cada desafío sistémico.",
-    };
+        exploreNavigation: "Explorar",
+        exploreWork: "Ver todo el trabajo",
+        exploreProduction: "Ver casos de producción",
+        aboutTitle: "SOBRE MÍ",
+        aboutProfile: "[profile.txt]",
+        aboutRole: "Software Developer",
+        aboutTerritory: "Backend · Datos · Sistemas",
+        aboutFirstParagraph:
+          "Mi enfoque se centra en la creación de software diseñado para resolver problemas reales, priorizando la robustez técnica y la eficiencia operativa. Trabajo en entornos de backend y gestión de datos, entendiendo el código como una herramienta de automatización y precisión.",
+        aboutSecondParagraph:
+          "Creo en el trabajo verificable y en la ingeniería de respuesta directa. Mi trayectoria combina la curiosidad técnica con la responsabilidad profesional, buscando la implementación más limpia y mantenible para cada desafío sistémico.",
+      };
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
@@ -80,7 +87,9 @@ const portrait: Portrait = {};
           <p class="home-hero__copy">{copy.description}</p>
 
           <div class="home-hero__actions">
-            <ActionLink href="#featured-evidence" variant="primary">{copy.work}</ActionLink>
+            <ActionLink href="#featured-evidence" variant="primary"
+              >{copy.work}</ActionLink
+            >
             <ActionLink
               href={`${base}cv/lopez-plana-rafael-2026.pdf`}
               download
@@ -93,69 +102,169 @@ const portrait: Portrait = {};
           </div>
         </div>
 
-        <aside id="cmd-identity" class="cmd-identity" aria-label="Technical identity">
+        <aside
+          id="cmd-identity"
+          class="cmd-identity"
+          aria-label="Technical identity"
+        >
           <div class="cmd-identity__titlebar">
             <span>C:\RLP\identity.exe</span>
             <span class="cmd-identity__controls" aria-hidden="true">_ □ ×</span>
           </div>
-          <p class="cmd-identity__accessible">C:\RLP&gt; whoami<br />rlp-sys-admin<br />C:\RLP&gt;</p>
-          <div class="cmd-identity__terminal" data-cmd-stage="whoami" aria-hidden="true">
-            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="command"></span></p>
-            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="output"></span></p>
-            <p class="cmd-identity__row" aria-hidden="true"><span data-cmd-row="prompt"></span><span class="cmd-identity__cursor">█</span></p>
+          <p class="cmd-identity__accessible">
+            C:\RLP&gt; whoami<br />rlp-sys-admin<br />C:\RLP&gt;
+          </p>
+          <div
+            class="cmd-identity__terminal"
+            data-cmd-stage="whoami"
+            aria-hidden="true"
+          >
+            <p class="cmd-identity__row" aria-hidden="true">
+              <span data-cmd-row="command"></span>
+            </p>
+            <p class="cmd-identity__row" aria-hidden="true">
+              <span data-cmd-row="output"></span>
+            </p>
+            <p class="cmd-identity__row" aria-hidden="true">
+              <span data-cmd-row="prompt"></span><span
+                class="cmd-identity__cursor">█</span>
+            </p>
           </div>
         </aside>
       </section>
 
-      <section id="featured-evidence" class="selected-work" aria-labelledby="featured-evidence-title">
+      <section
+        id="featured-evidence"
+        class="selected-work"
+        aria-labelledby="featured-evidence-title"
+      >
         <div class="selected-work__header">
           <p class="selected-work__eyebrow">RLP / EVIDENCE</p>
           <h2 id="featured-evidence-title">{copy.evidenceTitle}</h2>
         </div>
 
         <div class="selected-work__items">
-          <section class="selected-work__category" data-evidence-category="work" aria-label={copy.workCategory}>
-            <EvidenceCarousel id="featured-work" itemCount={workItems.length} previousLabel={copy.previousWork} nextLabel={copy.nextWork}>
-              {workItems.map((item) => (
-                <Surface variant="artifact" class="selected-work__artifact evidence-carousel__item">
-                  <p class="selected-work__id">RLP / WORK / {item.id.slice(-3)}</p>
-                  <div class="selected-work__media-slot" data-territory-media-slot aria-hidden="true"></div>
-                  <h4>{item.title}</h4>
-                   <p>{item.summary}</p>
-                   <p class="selected-work__engineering">{item.techHighlights}</p>
-                  <ActionLink href={`${base}${item.action.href}`}>{item.action.label}</ActionLink>
-                </Surface>
-              ))}
+          <section
+            class="selected-work__category"
+            data-evidence-category="work"
+            aria-label={copy.workCategory}
+          >
+            <EvidenceCarousel
+              id="featured-work"
+              itemCount={workItems.length}
+              previousLabel={copy.previousWork}
+              nextLabel={copy.nextWork}
+            >
+              {
+                workItems.map((item) => (
+                  <Surface
+                    variant="artifact"
+                    class="selected-work__artifact evidence-carousel__item"
+                  >
+                    <p class="selected-work__id">
+                      RLP / WORK / {item.id.slice(-3)}
+                    </p>
+                    <div
+                      class="selected-work__media-slot"
+                      data-territory-media-slot
+                      aria-hidden="true"
+                    />
+                    <h4>{item.title}</h4>
+                    <p>{item.summary}</p>
+                    <p class="selected-work__engineering">
+                      {item.techHighlights}
+                    </p>
+                    <ActionLink href={`${base}${item.action.href}`}>
+                      {item.action.label}
+                    </ActionLink>
+                  </Surface>
+                ))
+              }
             </EvidenceCarousel>
           </section>
 
-          <section class="selected-work__category" data-evidence-category="production" aria-label={copy.productionCategory}>
-            <EvidenceCarousel id="featured-production" itemCount={productionItems.length} previousLabel={copy.previousProduction} nextLabel={copy.nextProduction}>
-              {productionItems.map((item) => (
-                <Surface variant="dossier" class="selected-work__dossier evidence-carousel__item">
-                  <p class="selected-work__id">RLP / PROD / {item.id.slice(-3)}</p>
-                  <div class="selected-work__media-slot" data-territory-media-slot aria-hidden="true"></div>
-                  <h4>{item.title}</h4>
-                  <p>{item.summary}</p>
-                  <p class="selected-work__engineering">{item.techHighlights}</p>
-                  {item.action && (
-                    <ActionLink href={item.action.external ? item.action.href : `${base}${item.action.href}`} target={item.action.external ? "_blank" : undefined} rel={item.action.external ? "noreferrer" : undefined}>{item.action.label}</ActionLink>
-                  )}
-                </Surface>
-              ))}
+          <section
+            class="selected-work__category"
+            data-evidence-category="production"
+            aria-label={copy.productionCategory}
+          >
+            <EvidenceCarousel
+              id="featured-production"
+              itemCount={productionItems.length}
+              previousLabel={copy.previousProduction}
+              nextLabel={copy.nextProduction}
+            >
+              {
+                productionItems.map((item) => (
+                  <Surface
+                    variant="dossier"
+                    class="selected-work__dossier evidence-carousel__item"
+                  >
+                    <p class="selected-work__id">
+                      RLP / PROD / {item.id.slice(-3)}
+                    </p>
+                    <div
+                      class="selected-work__media-slot"
+                      data-territory-media-slot
+                      aria-hidden="true"
+                    />
+                    <h4>{item.title}</h4>
+                    <p>{item.summary}</p>
+                    <p class="selected-work__engineering">
+                      {item.techHighlights}
+                    </p>
+                    {item.action && (
+                      <ActionLink
+                        href={
+                          item.action.external
+                            ? item.action.href
+                            : `${base}${item.action.href}`
+                        }
+                        target={item.action.external ? "_blank" : undefined}
+                        rel={item.action.external ? "noreferrer" : undefined}
+                      >
+                        {item.action.label}
+                      </ActionLink>
+                    )}
+                  </Surface>
+                ))
+              }
             </EvidenceCarousel>
           </section>
         </div>
       </section>
 
-      <section id="explore" class="home-explore" aria-label={copy.exploreNavigation}>
-        <nav class="home-explore__navigation" aria-label={copy.exploreNavigation}>
+      <section
+        id="explore"
+        class="home-explore"
+        aria-label={copy.exploreNavigation}
+      >
+        <nav
+          class="home-explore__navigation"
+          aria-label={copy.exploreNavigation}
+        >
           <a href={`${base}${locale === "en" ? "en/work/" : "work/"}`}>
-            <img data-explore-icon src={`${base}icons/work-folder.svg`} alt="" aria-hidden="true" width="24" height="24" />
+            <img
+              data-explore-icon
+              src={`${base}icons/work-folder.svg`}
+              alt=""
+              aria-hidden="true"
+              width="24"
+              height="24"
+            />
             <span>{copy.exploreWork}</span>
           </a>
-          <a href={`${base}${locale === "en" ? "en/production/" : "production/"}`}>
-            <img data-explore-icon src={`${base}icons/production-case.svg`} alt="" aria-hidden="true" width="24" height="24" />
+          <a
+            href={`${base}${locale === "en" ? "en/production/" : "production/"}`}
+          >
+            <img
+              data-explore-icon
+              src={`${base}icons/production-case.svg`}
+              alt=""
+              aria-hidden="true"
+              width="24"
+              height="24"
+            />
             <span>{copy.exploreProduction}</span>
           </a>
         </nav>
@@ -168,9 +277,13 @@ const portrait: Portrait = {};
         </div>
         <div class="home-about__content">
           <div class="home-about__identity">
-            {portrait.src && portrait.alt && (
-              <figure class="home-about__portrait"><img src={portrait.src} alt={portrait.alt} /></figure>
-            )}
+            {
+              portrait.src && portrait.alt && (
+                <figure class="home-about__portrait">
+                  <img src={portrait.src} alt={portrait.alt} />
+                </figure>
+              )
+            }
             <p>Rafael López</p>
             <p>{copy.aboutRole}</p>
             <p>{copy.aboutTerritory}</p>
@@ -188,12 +301,25 @@ const portrait: Portrait = {};
 </BaseLayout>
 
 <script>
-  const terminal = document.querySelector<HTMLElement>(".cmd-identity__terminal");
-  const commandRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='command']");
-  const outputRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='output']");
-  const promptRow = terminal?.querySelector<HTMLElement>("[data-cmd-row='prompt']");
+  const terminal = document.querySelector<HTMLElement>(
+    ".cmd-identity__terminal",
+  );
+  const commandRow = terminal?.querySelector<HTMLElement>(
+    "[data-cmd-row='command']",
+  );
+  const outputRow = terminal?.querySelector<HTMLElement>(
+    "[data-cmd-row='output']",
+  );
+  const promptRow = terminal?.querySelector<HTMLElement>(
+    "[data-cmd-row='prompt']",
+  );
 
-  function typeCharacters(text: string, target: HTMLElement, delay: number, complete: () => void) {
+  function typeCharacters(
+    text: string,
+    target: HTMLElement,
+    delay: number,
+    complete: () => void,
+  ) {
     let index = 0;
     const typeNextCharacter = () => {
       if (index === text.length) {
@@ -230,78 +356,393 @@ const portrait: Portrait = {};
       });
     }
   }
+
+  const home = document.querySelector<HTMLElement>(".home-shell");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (home && !reducedMotion.matches && "IntersectionObserver" in window) {
+    const units = [
+      ...home.querySelectorAll<HTMLElement>(
+        "#featured-evidence, #explore, #about",
+      ),
+    ].filter((unit) => {
+      const { bottom, top } = unit.getBoundingClientRect();
+      return (
+        (top >= window.innerHeight || bottom <= 0) &&
+        location.hash !== `#${unit.id}` &&
+        !unit.matches(":focus-within")
+      );
+    });
+
+    if (units.length) {
+      let observer: IntersectionObserver | undefined;
+      let remaining = units.length;
+
+      try {
+        observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (
+              !entry.isIntersecting ||
+              entry.target.getAttribute("data-route-reveal") !== "pending"
+            )
+              continue;
+            entry.target.setAttribute("data-route-reveal", "settled");
+            observer?.unobserve(entry.target);
+            remaining -= 1;
+          }
+          if (!remaining) observer?.disconnect();
+        });
+        units.forEach((unit) => observer?.observe(unit));
+        units.forEach((unit) =>
+          unit.setAttribute("data-route-reveal", "pending"),
+        );
+      } catch {
+        observer?.disconnect();
+        units.forEach((unit) => unit.removeAttribute("data-route-reveal"));
+      }
+    }
+  }
 </script>
 
 <style>
-  .home-shell { background-color: var(--theme-canvas); color: var(--theme-text); }
-   .home-hero { display: grid; gap: var(--space-7); padding-block: var(--space-8); }
-  .home-hero__identity { display: grid; align-content: center; gap: var(--space-5); min-width: 0; }
-  .home-hero__role, .home-hero__territory { margin: 0; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .home-hero__role { color: var(--theme-text-muted); font-size: 0.875rem; }
-  h1 { margin: 0; font-family: var(--font-sans); font-size: clamp(3rem, 9vw, 7rem); font-weight: 700; letter-spacing: -0.06em; line-height: 0.9; }
-  .home-hero__territory { font-size: 1rem; }
-  .home-hero__copy { max-width: var(--reading-max); margin: 0; color: var(--theme-text-muted); font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.6; }
-  .home-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .home-hero :global(.action--primary) { border-color: var(--theme-text); }
-  .cmd-identity { align-self: center; min-width: 0; border: 2px solid #606568; box-shadow: inset 1px 1px #ffffff, inset -1px -1px #303437; color: var(--color-paper); font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; }
-  .cmd-identity__titlebar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: 0.25rem 0.375rem; background: #b8b8b8; color: var(--color-ink); font-weight: 500; }
-  .cmd-identity__controls { white-space: nowrap; }
-  .cmd-identity__terminal { min-height: 10rem; padding: var(--space-5); background: var(--color-terminal); color: var(--color-paper); }
-  .cmd-identity__terminal p { margin: 0; }
-  .cmd-identity__accessible { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .cmd-identity__row { min-height: 1.6em; }
-  .cmd-identity__cursor { color: var(--color-rlp-cyan); }
-  @media (prefers-reduced-motion: no-preference) {
-    .cmd-identity__cursor { visibility: hidden; }
-    .cmd-identity__terminal[data-cmd-stage="complete"] .cmd-identity__cursor { visibility: visible; animation: cmd-identity-cursor-blink 900ms steps(1, end) infinite; }
+  .home-shell {
+    background-color: var(--theme-canvas);
+    color: var(--theme-text);
   }
-  @keyframes cmd-identity-cursor-blink { 0%, 49.999% { opacity: 1; } 50%, 100% { opacity: 0; } }
-   .selected-work { display: grid; gap: var(--space-6); padding-block: var(--space-8); border-top: 1px solid var(--theme-line); }
-   .selected-work__header { display: grid; gap: var(--space-2); max-width: var(--reading-max); }
-    .selected-work__eyebrow, .selected-work__id { margin: 0; color: var(--theme-text-muted); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
-    .selected-work__id { color: var(--theme-accent); }
-   .selected-work h2, .selected-work h3, .selected-work h4 { margin: 0; font-family: var(--font-sans); line-height: 1.05; }
-   .selected-work h2 { font-size: clamp(2rem, 4vw, 3rem); }
-   .selected-work h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
-   .selected-work h4 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
-   .selected-work__items { display: grid; gap: var(--space-7); }
-   .selected-work__category { display: grid; gap: var(--space-4); min-width: 0; }
-    .selected-work__artifact { display: grid; gap: var(--space-4); border-inline-start: 2px solid var(--theme-accent); padding: var(--space-5); }
-    .selected-work__artifact > p, .selected-work__dossier p { margin: 0; color: var(--theme-text-muted); line-height: 1.6; }
-    .selected-work__artifact > .selected-work__id, .selected-work__dossier > .selected-work__id { color: var(--theme-accent); }
-    .selected-work__engineering { font-family: var(--font-mono); font-size: 0.875rem; }
-    .selected-work__media-slot { aspect-ratio: 16 / 9; border: 1px solid var(--theme-line); background: linear-gradient(135deg, var(--theme-surface-raised), var(--theme-canvas)); }
-     .selected-work__dossier { display: grid; gap: var(--space-4); padding-block: var(--space-5); padding-inline: var(--space-5); }
-     .selected-work__dossier .selected-work__media-slot { width: 100%; max-width: 100%; min-width: 0; }
-   @media (min-width: 768px) { .home-hero { grid-template-columns: minmax(0, 1.3fr) minmax(16rem, 0.7fr); align-items: center; min-height: calc(100vh - 4.25rem); padding-block: var(--space-9); } }
-    @media (min-width: 768px) { .selected-work__dossier { padding-inline: var(--space-5); } }
-     @media (min-width: 1024px) {
-       .selected-work__items { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: var(--space-7); }
-       .selected-work__category { height: 100%; }
-     }
-  .home-explore { border-block: 1px solid var(--theme-line); padding-block: var(--space-5); }
-  .home-explore__navigation { display: grid; }
-  .home-explore__navigation a { display: grid; min-height: 4.5rem; place-content: center; justify-items: center; gap: var(--space-2); color: var(--theme-text); font-size: 0.75rem; font-weight: 600; text-align: center; text-decoration: none; }
-  .home-explore__navigation a:hover { color: var(--theme-accent); }
-  .home-explore__navigation a + a { border-top: 1px solid var(--theme-line); }
-  .home-explore__navigation img { width: 1.375rem; height: 1.375rem; }
-  :global(html[data-theme="dark"]) .home-explore__navigation img { filter: invert(1); }
-  .home-about { display: grid; gap: var(--space-7); padding-block: var(--space-8); }
-  .home-about__header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-3); }
-  .home-about__header h2, .home-about__header p, .home-about__identity p, .home-about__copy p { margin: 0; }
-  .home-about__header h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
-  .home-about__header p, .home-about__identity p:last-child { color: var(--theme-accent); font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; }
-  .home-about__content { display: grid; gap: var(--space-7); }
-  .home-about__identity { display: grid; align-content: start; gap: var(--space-2); }
-  .home-about__identity p:first-of-type { font-size: 1.125rem; }
-  .home-about__identity p:nth-of-type(2) { color: var(--theme-text-muted); font-size: 0.8125rem; }
-  .home-about__portrait { margin: 0 0 var(--space-3); max-width: 14rem; }
-  .home-about__portrait img { display: block; width: 100%; height: auto; }
-  .home-about__copy { display: grid; gap: var(--space-5); max-width: var(--reading-max); }
-  .home-about__copy p { line-height: 1.6; }
+  .home-hero {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+  .home-hero__identity {
+    display: grid;
+    align-content: center;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+  .home-hero__role,
+  .home-hero__territory {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .home-hero__role {
+    color: var(--theme-text-muted);
+    font-size: 0.875rem;
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+  .home-hero__territory {
+    font-size: 1rem;
+  }
+  .home-hero__copy {
+    max-width: var(--reading-max);
+    margin: 0;
+    color: var(--theme-text-muted);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+  }
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .home-hero :global(.action--primary) {
+    border-color: var(--theme-text);
+  }
+  .cmd-identity {
+    align-self: center;
+    min-width: 0;
+    border: 2px solid #606568;
+    box-shadow:
+      inset 1px 1px #ffffff,
+      inset -1px -1px #303437;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .cmd-identity__titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 0.25rem 0.375rem;
+    background: #b8b8b8;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+  .cmd-identity__controls {
+    white-space: nowrap;
+  }
+  .cmd-identity__terminal {
+    min-height: 10rem;
+    padding: var(--space-5);
+    background: var(--color-terminal);
+    color: var(--color-paper);
+  }
+  .cmd-identity__terminal p {
+    margin: 0;
+  }
+  .cmd-identity__accessible {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .cmd-identity__row {
+    min-height: 1.6em;
+  }
+  .cmd-identity__cursor {
+    color: var(--color-rlp-cyan);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cmd-identity__cursor {
+      visibility: hidden;
+    }
+    .cmd-identity__terminal[data-cmd-stage="complete"] .cmd-identity__cursor {
+      visibility: visible;
+      animation: cmd-identity-cursor-blink 900ms steps(1, end) infinite;
+    }
+  }
+  @keyframes cmd-identity-cursor-blink {
+    0%,
+    49.999% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .selected-work {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--theme-line);
+  }
+  .selected-work__header {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--reading-max);
+  }
+  .selected-work__eyebrow,
+  .selected-work__id {
+    margin: 0;
+    color: var(--theme-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .selected-work__id {
+    color: var(--theme-accent);
+  }
+  .selected-work h2,
+  .selected-work h3,
+  .selected-work h4 {
+    margin: 0;
+    font-family: var(--font-sans);
+    line-height: 1.05;
+  }
+  .selected-work h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .selected-work h3 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+  }
+  .selected-work h4 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .selected-work__items {
+    display: grid;
+    gap: var(--space-7);
+  }
+  .selected-work__category {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+  .selected-work__artifact {
+    display: grid;
+    gap: var(--space-4);
+    border-inline-start: 2px solid var(--theme-accent);
+    padding: var(--space-5);
+  }
+  .selected-work__artifact > p,
+  .selected-work__dossier p {
+    margin: 0;
+    color: var(--theme-text-muted);
+    line-height: 1.6;
+  }
+  .selected-work__artifact > .selected-work__id,
+  .selected-work__dossier > .selected-work__id {
+    color: var(--theme-accent);
+  }
+  .selected-work__engineering {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+  .selected-work__media-slot {
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--theme-line);
+    background: linear-gradient(
+      135deg,
+      var(--theme-surface-raised),
+      var(--theme-canvas)
+    );
+  }
+  .selected-work__dossier {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-5);
+    padding-inline: var(--space-5);
+  }
+  .selected-work__dossier .selected-work__media-slot {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
   @media (min-width: 768px) {
-    .home-explore__navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 36rem; margin-inline: auto; }
-    .home-explore__navigation a + a { border-top: 0; border-left: 1px solid var(--theme-line); }
-    .home-about__content { grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr); }
+    .home-hero {
+      grid-template-columns: minmax(0, 1.3fr) minmax(16rem, 0.7fr);
+      align-items: center;
+      min-height: calc(100vh - 4.25rem);
+      padding-block: var(--space-9);
+    }
+  }
+  @media (min-width: 768px) {
+    .selected-work__dossier {
+      padding-inline: var(--space-5);
+    }
+  }
+  @media (min-width: 1024px) {
+    .selected-work__items {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+      gap: var(--space-7);
+    }
+    .selected-work__category {
+      height: 100%;
+    }
+  }
+  .home-explore {
+    border-block: 1px solid var(--theme-line);
+    padding-block: var(--space-5);
+  }
+  .home-explore__navigation {
+    display: grid;
+  }
+  .home-explore__navigation a {
+    display: grid;
+    min-height: 4.5rem;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-2);
+    color: var(--theme-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+  }
+  .home-explore__navigation a:hover {
+    color: var(--theme-accent);
+  }
+  .home-explore__navigation a + a {
+    border-top: 1px solid var(--theme-line);
+  }
+  .home-explore__navigation img {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+  :global(html[data-theme="dark"]) .home-explore__navigation img {
+    filter: invert(1);
+  }
+  .home-about {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+  .home-about__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .home-about__header h2,
+  .home-about__header p,
+  .home-about__identity p,
+  .home-about__copy p {
+    margin: 0;
+  }
+  .home-about__header h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .home-about__header p,
+  .home-about__identity p:last-child {
+    color: var(--theme-accent);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+  }
+  .home-about__content {
+    display: grid;
+    gap: var(--space-7);
+  }
+  .home-about__identity {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+  }
+  .home-about__identity p:first-of-type {
+    font-size: 1.125rem;
+  }
+  .home-about__identity p:nth-of-type(2) {
+    color: var(--theme-text-muted);
+    font-size: 0.8125rem;
+  }
+  .home-about__portrait {
+    margin: 0 0 var(--space-3);
+    max-width: 14rem;
+  }
+  .home-about__portrait img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .home-about__copy {
+    display: grid;
+    gap: var(--space-5);
+    max-width: var(--reading-max);
+  }
+  .home-about__copy p {
+    line-height: 1.6;
+  }
+  @media (min-width: 768px) {
+    .home-explore__navigation {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 36rem;
+      margin-inline: auto;
+    }
+    .home-explore__navigation a + a {
+      border-top: 0;
+      border-left: 1px solid var(--theme-line);
+    }
+    .home-about__content {
+      grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr);
+    }
   }
 </style>
