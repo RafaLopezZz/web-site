@@ -70,7 +70,8 @@ body.bg-ink {
 }
 
 .home-shell,
-.territory-index-shell {
+.territory-index-shell,
+.case-shell {
   background-color: var(--theme-canvas);
   background-image:
     linear-gradient(
@@ -374,7 +375,8 @@ a:focus-visible {
   }
 
   .home-shell,
-  .territory-index-shell {
+  .territory-index-shell,
+  .case-shell {
     animation: none;
   }
 

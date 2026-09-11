@@ -1,13 +1,13 @@
 ---
 title: "ImportadorDB"
-description: "Herramienta profesional para importar archivos Excel a bases de datos relacionales. Importa archivos .xlsx y .xls a MySQL, PostgreSQL, MariaDB y Firebird con una interfaz moderna y amigable"
+description: "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga."
 techStack:
   - "Java 21"
-  - "JavaFX 21"
-  - "Maven"
+  - "JavaFX"
+  - "JDBC"
 githubUrl: "https://github.com/RafaLopezZz/importador-db"
 image: "importador-db"
 date: "2026-04-12"
 ---
 
-Herramienta de escritorio pensada para importar datos desde archivos Excel a bases de datos relacionales con menos trabajo manual y menos margen de error.
+Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.

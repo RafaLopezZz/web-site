@@ -196,6 +196,7 @@ test("shares an active technical background across Home, Work, and Production", 
     { route: `${root}/`, shell: "main.home-shell" },
     { route: `${root}/work/`, shell: "main.territory-index-shell" },
     { route: `${root}/production/`, shell: "main.territory-index-shell" },
+    { route: `${root}/work/importador-db/`, shell: "main.case-shell" },
   ]) {
     await page.goto(route);
     const owner = page.locator(shell);
@@ -235,6 +236,7 @@ test("keeps technical backgrounds inactive and stable for reduced motion", async
     { route: `${root}/`, shell: "main.home-shell" },
     { route: `${root}/work/`, shell: "main.territory-index-shell" },
     { route: `${root}/production/`, shell: "main.territory-index-shell" },
+    { route: `${root}/work/importador-db/`, shell: "main.case-shell" },
   ]) {
     await page.goto(route);
     const owner = page.locator(shell);

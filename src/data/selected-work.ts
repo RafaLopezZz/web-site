@@ -31,9 +31,9 @@ export const selectedWork: Record<SelectedWorkLocale, {
     workItems: [{
       id: "work001",
       title: "ImportadorDB",
-      summary: "Importador de escritorio: Excel → sistemas relacionales, reduciendo la importación manual.",
-      techHighlights: "Java · JavaFX",
-      facts: "Java 25 · JavaFX 25.0.1 · Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      summary: "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.",
+      techHighlights: "Java 21 · JavaFX · JDBC",
+      facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
       action: { href: "work/importador-db/", label: "Ver caso →" },
     }, {
       id: "work002",
@@ -66,9 +66,9 @@ export const selectedWork: Record<SelectedWorkLocale, {
     workItems: [{
       id: "work001",
       title: "ImportadorDB",
-      summary: "Desktop importer: Excel → relational systems, reducing manual import.",
-      techHighlights: "Java · JavaFX",
-      facts: "Java 25 · JavaFX 25.0.1 · Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      summary: "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow.",
+      techHighlights: "Java 21 · JavaFX · JDBC",
+      facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
       action: { href: "en/work/importador-db/", label: "View case →" },
     }, {
       id: "work002",

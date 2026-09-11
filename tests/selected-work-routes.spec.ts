@@ -20,7 +20,7 @@ test("renders a bilingual Work index with two factual records and only establish
     await expect(index.getByRole("link", { name: entry.action, exact: true }).last()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
 
     await expect(index.locator(".territory-index__facts")).toHaveCount(0);
-    await expect(index).not.toContainText("Java 21");
+    await expect(index).toContainText("Java 21 · JavaFX · JDBC");
     await expect(index).not.toContainText("Java 25");
     await expect(index).not.toContainText("Spring Security");
     await expect(index).not.toContainText("Swagger");
@@ -72,14 +72,16 @@ test("keeps Production public indexes within the approved factual boundary", asy
   }
 });
 
-test("renders the bilingual ImportadorDB engineering case with sourced claims", async ({ page }) => {
-  for (const entry of [{ route: "/web-site/work/importador-db/", heading: "Contexto", evidence: "Evidencia" }, { route: "/web-site/en/work/importador-db/", heading: "Context", evidence: "Evidence" }]) {
+test("renders the bilingual ImportadorDB case with its professional Java 21 contract", async ({ page }) => {
+  for (const entry of [{ route: "/web-site/work/importador-db/", heading: "Qué es", evidence: "Evidencia" }, { route: "/web-site/en/work/importador-db/", heading: "What it is", evidence: "Evidence" }]) {
     await page.goto(entry.route);
     const caseStudy = page.locator("[data-importador-case]");
     await expect(caseStudy.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
     await expect(caseStudy.getByRole("heading", { name: entry.heading, exact: true })).toBeVisible();
     await expect(caseStudy.getByRole("heading", { name: entry.evidence, exact: true })).toBeVisible();
-    await expect(caseStudy).toContainText("Java 25");
+    await expect(caseStudy).toContainText("Java 21 · JavaFX · JDBC");
+    await expect(caseStudy).not.toContainText("Java 25");
+    await expect(caseStudy.locator("figure img")).toHaveCount(1);
     await expect(caseStudy.getByRole("link", { name: /repositorio|repository/i })).toHaveAttribute("href", "https://github.com/RafaLopezZz/importador-db");
   }
 });

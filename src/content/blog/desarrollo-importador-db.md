@@ -1,146 +1,73 @@
 ---
 title: "ImportadorDB: documentando una herramienta real para pasar de Excel a SQL"
-excerpt: "Así desarrollé ImportadorDB, una aplicación de escritorio en Java para importar datos desde Excel a bases de datos relacionales con JavaFX, Apache POI, JDBC y HikariCP, resolviendo un problema operativo real con una herramienta usable y técnicamente sólida."
+excerpt: "Cómo diseñé y desarrollé una aplicación Java 21 de escritorio para revisar, mapear e importar datos Excel a bases de datos relacionales."
 date: "2026-04-12"
 cover: "./images/importador-db_old.png"
-coverAlt: "Portada del proyecto ImportadorDB, una herramienta para importar datos de Excel a SQL"
+coverAlt: "Captura de ImportadorDB con selección de MySQL, opciones de importación y datos de demostración"
 tags:
- - "Java"
- - "JavaFX"
- - "Apache POI"
- - "JDBC"
- - "HikariCP"
- - "Maven"
- - "Herramienta desktop"
- - "Importación de datos"
- - "Excel a SQL"
- - "Caso de estudio"
+  - "Java 21"
+  - "JavaFX"
+  - "Apache POI"
+  - "JDBC"
+  - "Importación de datos"
+  - "Excel a SQL"
+  - "Caso de estudio"
 ---
 
 ## ImportadorDB: cómo desarrollé una herramienta de escritorio para importar datos desde Excel a bases de datos relacionales
 
-Esta aplicación nace de una situación bastante concreta que se repetía con clientes: estábamos perdiendo demasiado tiempo en una tarea tan poco glamurosa como necesaria, importar datos desde Excel a bases de datos SQL. Muchas veces ese proceso acababa resolviéndose de forma manual, con copy-paste, ajustes rápidos, correcciones sobre la marcha o scripts improvisados para salir del paso. El problema no era solo el tiempo que se iba ahí, sino también la cantidad de fricción, errores y dependencia del caso concreto.
+ImportadorDB nació para un trabajo recurrente: incorporar datos que clientes mantenían en Excel a las bases de datos de soluciones implantadas por Leovinci Consulting en proyectos de Kit Digital. Un ejemplo anonimizado es un inventario de libros mantenido en una hoja y preparado para una solución de venta online.
 
-Con **ImportadorDB** quise construir una solución más seria: una aplicación de escritorio capaz de cargar archivos `.xls` y `.xlsx`, permitir una revisión previa de la información, preparar el mapeo de columnas y ejecutar la importación contra motores SQL distintos desde una interfaz gráfica usable.
+Diseñé y desarrollé la aplicación desde cero. Asumí las decisiones, las revisiones y las validaciones. El resultado es una herramienta de escritorio que abre archivos `.xls` y `.xlsx`, permite revisar la información, ajustar el mapeo y ejecutar una carga hacia una base de datos relacional.
 
-## El problema real: Excel sigue estando en medio de muchos flujos de trabajo
+## El problema: los datos no llegan con un esquema perfecto
 
-Aunque a nivel técnico muchas veces pensamos en APIs, pipelines o integraciones automatizadas, la realidad en muchas empresas sigue siendo otra: el dato entra, se corrige o se comparte en Excel.
+Una hoja de cálculo no siempre coincide con el destino. Los nombres de las columnas pueden cambiar, los tipos no encajar y una misma plantilla puede tener hojas o datos que requieren revisión antes de persistirlos. Además, el trabajo ocurre con archivos locales y conexiones a bases de datos, por lo que una aplicación desktop ofrecía un punto de control directo para la persona que prepara la importación.
 
-Eso genera un problema muy concreto cuando luego hay que persistir esa información en una base de datos:
+La secuencia que implementé fue deliberadamente guiada:
 
-- Aparecen errores manuales.
-- El proceso depende demasiado de quien lo ejecuta.
-- Cada importación se convierte en una tarea artesanal.
-- Y no suele existir una herramienta intermedia bien planteada.
+1. Seleccionar el archivo Excel y la hoja.
+2. Revisar una previsualización de los datos.
+3. Inferir y ajustar el mapeo de columnas y tipos.
+4. Configurar la conexión de destino.
+5. Elegir las opciones de importación y ejecutar la carga.
+6. Generar un reporte del resultado.
 
-El proyecto no intenta resolver todo el universo ETL, pero sí una parte importante y muy cotidiana: convertir ficheros Excel en inserciones SQL de forma más controlada, repetible y usable.
+La revisión humana antes de cargar es parte del flujo: la herramienta ayuda a preparar la importación, pero no presupone que el origen y el destino coincidan por completo.
 
-## El objetivo del proyecto: una herramienta desktop útil, no una demo vacía
+## Stack y decisiones de implementación
 
-La meta no era hacer una interfaz bonita sin fondo técnico, ni tampoco una librería sin capa de uso real. El objetivo era construir una herramienta que juntara varios bloques importantes en una sola pieza de software:
+La versión usada profesionalmente se construyó con **Java 21**, **JavaFX** y **JDBC**. JavaFX encajaba con un flujo local de selección, previsualización y configuración; JDBC permitía concentrar la conectividad de los motores en una misma aplicación.
 
-- Lectura de archivos Excel.
-- Interfaz de escritorio.
-- Conexión a distintos motores de base de datos.
-- Importación por lotes.
-- Soporte transaccional.
-- Y generación de reportes del resultado.
+Para leer Excel utilicé Apache POI con su modelo en memoria. Es una elección cómoda cuando se necesita acceder a hojas y celdas durante la previsualización y el mapeo, pero tiene un coste: el libro se carga en memoria. No presento este enfoque como lectura en streaming; para archivos muy grandes habría que evaluar un lector orientado a eventos y otro pipeline de carga.
 
-Eso convierte a ImportadorDB en un proyecto interesante para portfolio porque no se queda en un CRUD genérico ni en una práctica académica aislada. Tiene una intención clara de resolver un problema operativo reconocible.
+La capa de conexión reúne MySQL, MariaDB, PostgreSQL y Firebird mediante JDBC. La abstracción centraliza drivers, URLs y tipos básicos, sin pretender sustituir adaptadores completos para todas las diferencias de dialecto.
 
-## Stack utilizado en ImportadorDB
+## Escritura SQL, lotes y resultados parciales
 
-Para desarrollar el proyecto se utilizó este stack principal:
+La importación genera SQL para la tabla y utiliza `PreparedStatement` para los valores de los `INSERT`. Eso es importante, pero tiene un límite concreto: los valores se parametrizan; los identificadores como tabla y columnas requieren su propia validación y tratamiento por dialecto.
 
-- **Java 25**
-- **JavaFX 25**
-- **MaterialFX**
-- **ControlsFX**
-- **Apache POI**
-- **JDBC**
-- **HikariCP**
-- **Maven**
-- **JUnit 5**
-- **Mockito**
-- **TestFX**
+Los inserts se agrupan en lotes configurables. También existe una opción transaccional alrededor de la fase de inserción. El comportamiento no equivale a prometer atomicidad total: los errores por fila pueden registrarse y permitir que la importación continúe, por lo que una ejecución puede dejar un resultado parcial. Una herramienta de este tipo necesita mostrar ese estado de forma explícita, no resumirlo como un éxito sin matices.
 
-A nivel de motores soportados, el proyecto está preparado para trabajar con:
+El modo de prueba genera el SQL de creación de tabla y requiere una conexión, pero no simula toda la carga ni valida todas las filas de inserción. Es útil como parte de la revisión, no como sustituto de la ejecución completa.
 
-- **MySQL**
-- **PostgreSQL**
-- **MariaDB**
-- **Firebird**
+## Motores y alcance de validación
 
-Y está diseñado para ser extensible a otros motores relacionales con relativa facilidad, siempre que tengan un driver JDBC disponible.
+MySQL y Firebird se utilizaron profesionalmente con clientes. MariaDB y PostgreSQL también se implementaron y se validaron manualmente contra bases de datos de prueba. Esa diferencia importa: que un motor esté incluido en el código no significa que haya tenido el mismo contexto de uso o el mismo nivel de validación.
 
-## La parte interesante: integrar interfaz, ficheros y base de datos con criterio
+La aplicación genera reportes en TXT, JSON y HTML para registrar el resultado de cada importación. Son mecanismos del flujo implementado; no los convierto en una afirmación de rendimiento, reducción de errores o mejora cuantificada porque no dispongo de métricas verificadas para ello.
 
-Lo valioso de este proyecto no está solo en la lista de tecnologías, sino en cómo se conectan entre sí.
+## Lo que aprendí al construirla
 
-Por un lado, la aplicación ofrece una **interfaz de escritorio con JavaFX**, lo que permite trabajar el flujo desde una capa visual pensada para uso real. Por otro, la lectura de Excel se apoya en **Apache POI**, que es la pieza que permite abrir, interpretar y recorrer la información de entrada.
+ImportadorDB me dejó varias lecciones prácticas:
 
-A partir de ahí, el proyecto construye la parte más importante: el paso de esos datos a la base de datos mediante **JDBC**, con pool de conexiones gestionado con **HikariCP** y una lógica de inserción basada en `PreparedStatement`, lotes, transacciones y rollback.
+- Parametrizar valores SQL no resuelve el tratamiento de identificadores.
+- Implementar, validar manualmente y usar un motor en un contexto profesional son niveles distintos.
+- Una carga que admite resultados parciales debe comunicar sus estados con precisión.
+- El acceso cómodo de Apache POI tiene que equilibrarse con el coste de memoria de su modelo.
 
-Ese punto es clave, porque ya no estamos hablando solo de “leer un Excel”, sino de montar una cadena de trabajo relativamente completa:
+Es una herramienta centrada en un flujo reconocible: convertir una hoja revisada por una persona en una carga relacional controlada, con sus decisiones y límites visibles.
 
-1. Cargar el fichero.
-2. Revisar su estructura.
-3. Preparar el mapeo.
-4. Decidir opciones de importación.
-5. Ejecutar la escritura.
-6. Y devolver un resultado con trazabilidad.
+<a href="/web-site/work/importador-db/" class="action action--text">Ver el caso de ImportadorDB →</a>
 
-## Decisiones técnicas que le dan valor al proyecto
-
-Uno de los aspectos más interesantes es que ImportadorDB no se limita a un flujo rígido. En su diseño aparecen varias decisiones útiles para escenarios reales:
-
-- Posibilidad de **crear la tabla** si hace falta.
-- Opción de **sobrescribir** o **añadir** datos.
-- Soporte de **dry-run** para validar antes de escribir.
-- Uso de **batch inserts** para mejorar rendimiento.
-- Soporte de **transacciones** para reducir incoherencias.
-- Y generación de reportes en **TXT, JSON y HTML**.
-
-Estas decisiones no convierten el proyecto en una plataforma enterprise ni pretenden hacerlo, pero sí muestran una forma de pensar el software bastante más útil que el típico prototipo que solo demuestra que “algo funciona”.
-
-## Arquitectura y organización
-
-A nivel estructural, el proyecto está organizado por capas bastante claras, con separación entre:
-
-- `controller/`
-- `model/`
-- `service/`
-- `resources/`
-
-Dentro de esa estructura aparecen servicios específicos para:
-
-- lectura de Excel,
-- conexión a base de datos,
-- importación,
-- generación de reportes,
-- y cifrado de credenciales.
-
-No es una arquitectura rebuscada, y precisamente ahí está parte de su virtud: para una herramienta desktop de este tipo, el proyecto mantiene una organización suficientemente clara como para seguir creciendo sin convertirse enseguida en una maraña difícil de tocar.
-
-## Lo que demuestra este proyecto
-
-ImportadorDB refleja varias capacidades que me interesa enseñar:
-
-- Convertir un problema operativo real en una herramienta concreta.
-- Diseñar una aplicación desktop con utilidad profesional.
-- Integrar parsing de ficheros, lógica de negocio y persistencia.
-- Trabajar con distintos motores relacionales.
-- Y construir una solución que no depende solo de una tecnología, sino del encaje entre varias capas.
-
-No es el proyecto más vistoso del mundo en términos de moda tecnológica, y quizá precisamente por eso me parece más valioso. Es una herramienta que intenta resolver algo real, con una base técnica coherente y con decisiones que apuntan a usabilidad, mantenibilidad y ejecución práctica.
-
-## Conclusión
-
-Desarrollar **ImportadorDB** ha sido una forma muy clara de trabajar un tipo de software que a veces no luce tanto en redes, pero sí dice bastante sobre cómo piensa uno al construir.
-
-Porque aquí no se trataba solo de abrir un Excel o conectar una base de datos. Se trataba de construir una herramienta intermedia, usable y técnica a la vez, capaz de reducir fricción en una tarea que sigue existiendo en muchísimos contextos reales.
-
-Y para mí, ahí está precisamente su interés.
-
-[Pincha aquí para ver en GitHub](https://github.com/RafaLopezZz/importador-db)
+[Ver en GitHub](https://github.com/RafaLopezZz/importador-db)

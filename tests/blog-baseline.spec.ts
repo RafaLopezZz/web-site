@@ -5,9 +5,9 @@ const articles = [
     slug: "desarrollo-importador-db",
     title: "ImportadorDB: documentando una herramienta real para pasar de Excel a SQL",
     deepHeading:
-      "El problema real: Excel sigue estando en medio de muchos flujos de trabajo",
+      "El problema: los datos no llegan con un esquema perfecto",
     coverAlt:
-      "Portada del proyecto ImportadorDB, una herramienta para importar datos de Excel a SQL",
+      "Captura de ImportadorDB con selección de MySQL, opciones de importación y datos de demostración",
   },
   {
     slug: "desarrollo-cosecha-en-cope",
@@ -79,3 +79,19 @@ for (const article of articles) {
     );
   });
 }
+
+test("keeps the ImportadorDB article connected to its case route without overstated stack claims", async ({ page }) => {
+  await page.goto("/web-site/blog/desarrollo-importador-db/");
+
+  const article = page.getByRole("article");
+  await expect(article.getByRole("link", { name: "Ver el caso de ImportadorDB →", exact: true })).toHaveAttribute("href", "/web-site/work/importador-db/");
+  await expect(article).toContainText("Diseñé y desarrollé la aplicación desde cero.");
+  await expect(article).not.toContainText("agente de IA");
+  await expect(article).not.toContainText("AI agent");
+  await expect(article).not.toContainText("GPT");
+  await expect(article).not.toContainText("Copilot");
+  await expect(article).not.toContainText("generative");
+  await expect(article).not.toContainText("Java 25");
+  await expect(article).not.toContainText("AES-256");
+  await expect(article).not.toContainText("SXSSFWorkbook");
+});

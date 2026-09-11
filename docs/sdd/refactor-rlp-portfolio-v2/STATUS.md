@@ -98,10 +98,11 @@ with its cyan-plus-bottom-rule current treatment.
 
 ### B-003 — CLOSED
 
-Resolved by the source-backed ImportadorDB detailed case. The current public
-master `pom.xml` is authoritative for present technical state and declares
-Java 25, JavaFX 25.0.1, and compiler release 25. The older long-form article is
-historical context only; no migration claim is inferred from the difference.
+Resolved by the maintained ImportadorDB public-content authority. Java 21 is
+the professional version; Java 17 is historical; and the later Java 25 /
+JavaFX 25.0.1 repository update is not presented as a professional product
+decision. MySQL and Firebird had professional use; MariaDB and PostgreSQL are
+limited to manual test-database validation.
 
 Historical milestone records below may state that B-003 was then preserved or
 out of scope. Those statements describe their checkpoint only and do not reopen
@@ -540,7 +541,28 @@ Status: OPEN — bounded parity delivered for the authorized Home and index surf
 
 ### Work — ImportadorDB detailed case
 
-Status: IMPLEMENTED. B-003 RESOLVED for the current source state: pom.xml declares Java 25, JavaFX 25.0.1, and release 25. The case publishes only source-backed technical capabilities; commercial and measured production claims remain omitted.
+Status: IMPLEMENTED. Superseded by U10 for current public copy and evidence.
+
+### U10 — ImportadorDB public-content integration
+
+Status: IMPLEMENTED — GREEN, maintainer visual review accepted.
+
+- **Authority integrated:** bilingual Work index and detail now present Java 21,
+  JavaFX, and JDBC as the professional stack. The detail distinguishes
+  professional MySQL/Firebird use from MariaDB/PostgreSQL manual validation
+  with test databases.
+- **Content boundary:** copy covers the implemented review, mapping, loading,
+  batching, transactional options, reporting, and limited dry-run behavior. It
+  omits encryption, unqualified security claims, streaming, blanket rollback,
+  append, create-if-not-exists, and unmeasured outcomes.
+- **Evidence and route:** the existing approved ImportadorDB documentary
+  screenshot is rendered as a figure; the Spanish article route remains
+  `/blog/desarrollo-importador-db/` and is reconciled with the detail through
+  reciprocal actions.
+- **Verification:** focused ImportadorDB/Work/Blog suites, `verify:green`,
+  full E2E (78/78), production build, and `git diff --check` all passed;
+  maintainer visual review accepted first-person voice, screenshot, and the
+  reused U9.3 grid on the case shell. U9 remains closed and unchanged.
 
 ### U9.1 — Interaction hovers
 

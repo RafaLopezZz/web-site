@@ -25,6 +25,7 @@ test("composes the bilingual Work index as two evidence-led artifact records", a
         await expect(records).toContainText(["ImportadorDB", "Cosecha en Cope"]);
         await expect(index.locator(".territory-index__record[data-surface=\"artifact\"]")).toHaveCount(2);
         await expect(records.locator("[data-territory-media-slot]")).toHaveCount(2);
+        await expect(records.first()).toContainText("Java 21 · JavaFX · JDBC");
         await expect(index).not.toContainText("Java 25");
         await expect(index.locator("img, picture, video")).toHaveCount(0);
         await expect(page.locator("html")).toHaveJSProperty("scrollWidth", width);

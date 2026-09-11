@@ -68,12 +68,12 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     const english = home.endsWith("/en/");
 
     await expect(work).toContainText(english
-      ? "Desktop importer: Excel → relational systems, reducing manual import."
-      : "Importador de escritorio: Excel → sistemas relacionales, reduciendo la importación manual.");
+      ? "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow."
+      : "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.");
     await expect(work).toContainText(english
       ? "Marketplace for producers and consumers: catalog, authentication, and purchase."
       : "Marketplace para productores y consumidores: catálogo, autenticación y compra.");
-    await expect(work).toContainText("Java · JavaFX");
+    await expect(work).toContainText("Java 21 · JavaFX · JDBC");
     await expect(work).toContainText("Java · Angular · PostgreSQL");
     await expect(work).not.toContainText("Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
     await expect(work).not.toContainText("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
@@ -103,7 +103,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
   }
 
   const selectedWorkSource = await readFile("src/data/selected-work.ts", "utf8");
-  expect(selectedWorkSource).toContain("Java 25 · JavaFX 25.0.1 · Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
+  expect(selectedWorkSource).toContain("Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
   expect(selectedWorkSource).toContain("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
   expect(selectedWorkSource).not.toContain("HeroSlideResolverTest");
   expect(selectedWorkSource).not.toContain("lockForUpdate");
