@@ -587,6 +587,26 @@ Status: IMPLEMENTED — GREEN; maintainer acceptance pending.
 - **Delivery state:** maintainer acceptance, commit, push, and PR remain
   pending. This section does not mark acceptance.
 
+### U10.3 — LAB doctrine for Glea-Nexo
+
+Status: ACCEPTED — documentation only; territory LAB.
+
+- `LAB.md` records the accepted LAB purpose, WORK/LAB distinction, canonical
+  public states, `/work/` index/detail information architecture, evidence and
+  media rules, bilingual semantic examples, future AI/Big Data and academic
+  qualifiers, the reused RLP visual/surface system, explicit non-goals, and the
+  bounded next implementation slice.
+- The doctrine follows the canonical Glea-Nexo authority packet and preserves
+  its non-claims: no Production, exactly-once, complete resilience/security,
+  semantic dedupe, real sensor/data deployment, current AI/ML, Big Data
+  pipeline, academic approval, or unverified metrics/benchmarks.
+- Home is explicitly excluded. Future implementation remains under `/work/`,
+  reuses the existing WorkCase/shared Surface foundation, and must reconcile
+  legacy Glea content only within that implementation slice.
+- This is a delegated-direct documentation change, not an OpenSpec phase. No
+  source, route, test, media, Home, authority-packet, or other
+  non-documentation file was changed by this doctrine record.
+
 ### U9.1 — Interaction hovers
 
 Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
