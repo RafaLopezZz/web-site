@@ -564,6 +564,29 @@ Status: IMPLEMENTED — GREEN, maintainer visual review accepted.
   maintainer visual review accepted first-person voice, screenshot, and the
   reused U9.3 grid on the case shell. U9 remains closed and unchanged.
 
+### U10.2 — Cosecha en Cope public-content integration
+
+Status: IMPLEMENTED — GREEN; maintainer acceptance pending.
+
+- **Authority baseline:** `docs/audit-packet-authority/CosechaEnCope_Authority_Packet_Audit.md`.
+- **Integrated public surfaces:** ES/EN Work case routes and the preserved
+  Spanish article `/blog/desarrollo-cosecha-en-cope/`, with reciprocal links.
+- **Rendered media:** existing Cosecha cover and architecture diagram only.
+- **Content boundary:** the article was reconciled to remove unsupported
+  distributor, production, SEO, scalability, robust-security, and test-metric
+  claims.
+- **Verification:** focused Cosecha suite PASS (7); `verify:green` PASS with
+  7 focused checks, 18 regressions, and 83 full E2E tests; production build,
+  DESIGN lint, and `git diff --check` all passed.
+- **Visual review:** healthy reusable preview at
+  `http://127.0.0.1:4321/web-site/` (PID 19708); visual review completed.
+- **Remaining limitations:** media licensing/provenance, endpoint
+  authorization proof, reproducible full-stack test evidence, and README
+  13-table reconciliation. Review-only risks are existing empty Work index
+  media frames and 0.15s reduced-motion transitions.
+- **Delivery state:** maintainer acceptance, commit, push, and PR remain
+  pending. This section does not mark acceptance.
+
 ### U9.1 — Interaction hovers
 
 Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
