@@ -22,10 +22,10 @@ const copy =
         work: "View work",
         cv: "Download CV",
         evidenceTitle: "Selected Work",
-        workCategory: "Work",
+        workCategory: "Selected work",
         productionCategory: "Production",
-        previousWork: "Previous work",
-        nextWork: "Next work",
+        previousWork: "Previous selected work",
+        nextWork: "Next selected work",
         previousProduction: "Previous",
         nextProduction: "Next",
         exploreNavigation: "Explore",
@@ -48,10 +48,10 @@ const copy =
         work: "Ver trabajo",
         cv: "Descargar CV",
         evidenceTitle: "Trabajo seleccionado",
-        workCategory: "Trabajo",
+        workCategory: "Trabajo seleccionado",
         productionCategory: "Producción",
-        previousWork: "Trabajo anterior",
-        nextWork: "Trabajo siguiente",
+        previousWork: "Trabajo seleccionado anterior",
+        nextWork: "Trabajo seleccionado siguiente",
         previousProduction: "Caso anterior",
         nextProduction: "Caso siguiente",
         exploreNavigation: "Explorar",
@@ -161,14 +161,14 @@ const portrait: Portrait = {};
                     variant="artifact"
                     class="selected-work__artifact evidence-carousel__item"
                   >
-                    <p class="selected-work__id">
-                      RLP / WORK / {item.id.slice(-3)}
-                    </p>
-                    <div
-                      class="selected-work__media-slot"
-                      data-territory-media-slot
-                      aria-hidden="true"
-                    />
+                    <p class="selected-work__id">{item.eyebrow}</p>
+                    {item.showMediaSlot && (
+                      <div
+                        class="selected-work__media-slot"
+                        data-territory-media-slot
+                        aria-hidden="true"
+                      />
+                    )}
                     <h4>{item.title}</h4>
                     <p>{item.summary}</p>
                     <p class="selected-work__engineering">

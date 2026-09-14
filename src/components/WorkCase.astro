@@ -11,31 +11,34 @@ type CaseCopy = {
   eyebrow: string;
   subtitle: string;
   stack: string;
-  contextTitle: string;
-  context: string;
-  engineeringTitle: string;
-  decisions: readonly (readonly [string, string])[];
+  contextTitle?: string;
+  context?: string;
+  engineeringTitle?: string;
+  decisions?: readonly (readonly [string, string])[];
   sections?: readonly (readonly [string, string])[];
-  evidenceTitle: string;
-  evidence: readonly string[];
-  outcomeTitle: string;
-  outcome: string;
+  evidenceTitle?: string;
+  evidence?: readonly string[];
+  outcomeTitle?: string;
+  outcome?: string;
   source: string;
   blog: string;
+  relatedLinks?: readonly { href: string; label: string }[];
 };
 
 type Media = { src: string; alt: string; caption: string };
 
 interface Props {
   locale: "es" | "en";
-  caseId: "importador-db" | "cosecha-en-cope";
+  caseId: "importador-db" | "cosecha-en-cope" | "glea-nexo";
   copy: CaseCopy;
   sourceHref: string;
   blogHref: string;
+  relatedLinks?: readonly { href: string; label: string }[];
+  blogExternal?: boolean;
   media?: readonly Media[];
 }
 
-const { locale, caseId, copy, sourceHref, blogHref, media = [] } = Astro.props;
+const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExternal = false, media = [] } = Astro.props;
 ---
 
 <BaseLayout title={`${copy.title} | Rafael López`} description={copy.description} lang={locale}>
@@ -75,14 +78,14 @@ const { locale, caseId, copy, sourceHref, blogHref, media = [] } = Astro.props;
           </section>
         )) : <>
           <section>
-            <h2>{copy.contextTitle}</h2>
-            <p>{copy.context}</p>
+            <h2>{copy.contextTitle ?? ""}</h2>
+            <p>{copy.context ?? ""}</p>
           </section>
 
           <section>
             <h2>{copy.engineeringTitle}</h2>
             <div class="case__decisions">
-              {copy.decisions.map(([title, text]) => (
+              {(copy.decisions ?? []).map(([title, text]) => (
                 <article>
                   <h3>{title}</h3>
                   <p>{text}</p>
@@ -92,20 +95,23 @@ const { locale, caseId, copy, sourceHref, blogHref, media = [] } = Astro.props;
           </section>
 
           <section>
-            <h2>{copy.evidenceTitle}</h2>
-            <ul>{copy.evidence.map((item) => <li>{item}</li>)}</ul>
+            <h2>{copy.evidenceTitle ?? ""}</h2>
+            <ul>{(copy.evidence ?? []).map((item) => <li>{item}</li>)}</ul>
           </section>
 
           <section>
-            <h2>{copy.outcomeTitle}</h2>
-            <p>{copy.outcome}</p>
+            <h2>{copy.outcomeTitle ?? ""}</h2>
+            <p>{copy.outcome ?? ""}</p>
           </section>
         </>}
       </div>
 
       <nav class="case__actions" aria-label={locale === "es" ? "Fuentes del caso" : "Case sources"}>
         <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noreferrer">{copy.source}</ActionLink>
-        <ActionLink href={blogHref}>{copy.blog}</ActionLink>
+        <ActionLink href={blogHref} target={blogExternal ? "_blank" : undefined} rel={blogExternal ? "noreferrer" : undefined}>{copy.blog}</ActionLink>
+        {relatedLinks.map((link) => (
+          <ActionLink href={link.href} target="_blank" rel="noreferrer">{link.label}</ActionLink>
+        ))}
       </nav>
     </Surface>
   </main>

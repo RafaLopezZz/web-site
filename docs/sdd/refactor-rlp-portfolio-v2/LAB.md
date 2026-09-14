@@ -168,10 +168,11 @@ LAB reuses the existing RLP system. It is not a new aesthetic or a second theme.
 
 ## Routing and Home boundary
 
-LAB is routed under `/work/`, alongside selected WORK artifacts. The existing
-Home remains excluded: it must not acquire a Glea-Nexo LAB card, LAB carousel
-entry, new Home section, or LAB-specific navigation shortcut as part of this
-doctrine.
+LAB is routed under `/work/`, alongside selected WORK artifacts. Selected LAB
+cases may also appear in the existing Home Selected Work carousel when they are
+declaratively selected; Glea-Nexo is the selected LAB entry for this correction.
+Home remains a discovery/access surface and this does not change LAB territory,
+its `/work/` routes, or its editorial boundaries.
 
 This documentation change does not add or alter routes. A future implementation
 must preserve established Spanish Blog URLs and may link to the relevant
@@ -209,7 +210,8 @@ The future LAB surface is acceptable only if it satisfies all of the following:
 - keeps AI/Big Data and academic language qualified as future and unapproved;
 - provides equivalent ES/EN meaning, hierarchy, labels, destinations, and action
   priority;
-- stays under `/work/` and does not add the artifact to Home;
+- stays under `/work/`; Home may expose the selected artifact only through its
+  existing Selected Work discovery/access surface;
 - reuses the existing WorkCase/shared Surface foundation and RLP visual system;
 - uses documentary media only when provenance, alternative text, caption, and
   sanitization are satisfied; and
@@ -232,7 +234,7 @@ This doctrine does not authorize or claim:
   metrics, benchmarks, or Production KPIs that have not been verified;
 - fabricated media, screenshots, commits, outcomes, or collaborators; or
 - a new aesthetic, dependency, route, source change, test change, media asset,
-  Home change, or authority-packet change.
+  Home section, LAB-specific navigation shortcut, or authority-packet change.
 
 ## Bounded next implementation slice
 
@@ -251,9 +253,8 @@ bounded to:
 6. verify route compatibility, semantic status boundaries, bilingual parity,
    evidence limits, and responsive/accessibility behavior before acceptance.
 
-No broader LAB catalog, Home integration, new visual language, AI/Big Data
-implementation, academic claim, or media-production program belongs in that
-slice.
+No broader LAB catalog, new visual language, AI/Big Data implementation,
+academic claim, or media-production program belongs in that slice.
 
 ## Legacy-content reconciliation requirement
 

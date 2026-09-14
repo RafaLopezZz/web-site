@@ -6,9 +6,11 @@ const blog = "/web-site/blog";
 const territorialRoutes = [
   { route: "/web-site/work/", label: "Trabajo", href: "/web-site/work/" },
   { route: "/web-site/work/importador-db/", label: "Trabajo", href: "/web-site/work/" },
+  { route: "/web-site/work/glea-nexo/", label: "Trabajo", href: "/web-site/work/" },
   { route: "/web-site/production/", label: "Producción", href: "/web-site/production/" },
   { route: "/web-site/en/work/", label: "Work", href: "/web-site/en/work/" },
   { route: "/web-site/en/work/importador-db/", label: "Work", href: "/web-site/en/work/" },
+  { route: "/web-site/en/work/glea-nexo/", label: "Work", href: "/web-site/en/work/" },
   { route: "/web-site/en/production/", label: "Production", href: "/web-site/en/production/" },
 ] as const;
 

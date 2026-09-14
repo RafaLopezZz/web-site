@@ -1,0 +1,18 @@
+---
+import WorkCase from "./WorkCase.astro";
+import { gleaNexoCase } from "../data/glea-nexo-case";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+const copy = gleaNexoCase[locale];
+---
+
+<WorkCase
+  locale={locale}
+  caseId="glea-nexo"
+  copy={copy}
+  sourceHref="https://github.com/RafaLopezZz/glea-nexo"
+  blogHref="https://github.com/RafaLopezZz/glea-nexo/pull/4"
+  blogExternal
+  relatedLinks={copy.relatedLinks}
+  media={[]}
+/>

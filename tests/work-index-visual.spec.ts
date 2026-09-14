@@ -7,7 +7,7 @@ const workRoutes = [
 
 const widths = [320, 390, 768, 1024, 1440] as const;
 
-test("composes the bilingual Work index as two evidence-led artifact records", async ({ page }) => {
+test("composes the bilingual Work index as two work and one LAB artifact records", async ({ page }) => {
   for (const { route, heading } of workRoutes) {
     for (const theme of ["light", "dark"]) {
       for (const width of widths) {
@@ -21,10 +21,12 @@ test("composes the bilingual Work index as two evidence-led artifact records", a
         const index = page.locator('[data-territory-index="work"]');
         const records = index.locator(".territory-index__record");
         await expect(index.getByRole("heading", { name: heading, exact: true })).toBeVisible();
-        await expect(records).toHaveCount(2);
-        await expect(records).toContainText(["ImportadorDB", "Cosecha en Cope"]);
-        await expect(index.locator(".territory-index__record[data-surface=\"artifact\"]")).toHaveCount(2);
-        await expect(records.locator("[data-territory-media-slot]")).toHaveCount(2);
+        await expect(records).toHaveCount(3);
+        await expect(records).toContainText(["ImportadorDB", "Cosecha en Cope", "Glea-Nexo"]);
+        await expect(records.filter({ hasText: "Glea-Nexo" })).toContainText(route.includes("/en/") ? "Current work" : "Trabajo actual");
+        await expect(records.filter({ hasText: "Glea-Nexo" })).toContainText("RLP / LAB / 001");
+        await expect(index.locator(".territory-index__record[data-surface=\"artifact\"]")).toHaveCount(3);
+        await expect(records.locator("[data-territory-media-slot]")).toHaveCount(3);
         await expect(records.first()).toContainText("Java 21 · JavaFX · JDBC");
         await expect(index).not.toContainText("Java 25");
         await expect(index.locator("img, picture, video")).toHaveCount(0);
@@ -43,7 +45,7 @@ test("shares the production index composition while preserving Work reading and 
   const workRecords = work.locator(".territory-index__records");
 
   await expect(workRecords).toHaveCSS("grid-template-columns", /.+ .+/);
-  expect(await work.locator("h2").allTextContents()).toEqual(["ImportadorDB", "Cosecha en Cope"]);
+  expect(await work.locator("h2").allTextContents()).toEqual(["ImportadorDB", "Cosecha en Cope", "Glea-Nexo"]);
 
   const firstAction = work.getByRole("link", { name: "Ver caso →" }).first();
   await firstAction.focus();

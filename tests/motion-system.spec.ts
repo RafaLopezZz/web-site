@@ -58,7 +58,7 @@ test("keeps actions and territory surfaces natively semantic", async ({ page }) 
   await page.goto(`${root}/`);
 
   await expect(page.getByRole("link", { name: "Ver trabajo", exact: true })).toHaveCSS("outline-style", "none");
-  await expect(page.locator('article[data-surface="artifact"]')).toHaveCount(2);
+  await expect(page.locator('article[data-surface="artifact"]')).toHaveCount(3);
   expect(await page.locator('article[data-surface="dossier"]').count()).toBeGreaterThan(0);
   await expect(page.locator('a[data-surface], button[data-surface]')).toHaveCount(0);
 

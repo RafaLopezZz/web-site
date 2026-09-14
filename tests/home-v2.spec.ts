@@ -30,7 +30,7 @@ test("presents the bounded M2.1 Home identity shell", async ({ page }) => {
   await expect(cmd).not.toContainText(/status|initializ|build|network|log/i);
 
   await expect(page.locator("#proyectos, #sobre-mi, #experiencia, #formacion, #cv, #contacto, [data-home-skills]")).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: /Glea Nexo/ })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Glea-Nexo", exact: true })).toBeVisible();
   await expect(page.getByRole("form")).toHaveCount(0);
 
   const desktop = await hero.evaluate((element) => {

@@ -7,11 +7,14 @@ type Action = {
 };
 
 type WorkItem = {
-  id: "work001" | "work002";
-  title: "ImportadorDB" | "Cosecha en Cope";
+  id: "work001" | "work002" | "lab001";
+  category: "work" | "lab";
+  eyebrow: string;
+  title: "ImportadorDB" | "Cosecha en Cope" | "Glea-Nexo";
   summary: string;
   techHighlights: string;
-  facts: string;
+  facts?: string;
+  showMediaSlot: boolean;
   action: Action;
 };
 
@@ -30,18 +33,33 @@ export const selectedWork: Record<SelectedWorkLocale, {
   es: {
     workItems: [{
       id: "work001",
+      category: "work",
+      eyebrow: "RLP / WORK / 001",
       title: "ImportadorDB",
       summary: "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.",
       techHighlights: "Java 21 · JavaFX · JDBC",
       facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      showMediaSlot: true,
       action: { href: "work/importador-db/", label: "Ver caso →" },
     }, {
       id: "work002",
+      category: "work",
+      eyebrow: "RLP / WORK / 002",
       title: "Cosecha en Cope",
       summary: "Marketplace para productores y consumidores: catálogo, autenticación y compra.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
+      showMediaSlot: true,
       action: { href: "work/cosecha-en-cope/", label: "Ver caso →" },
+    }, {
+      id: "lab001",
+      category: "lab",
+      eyebrow: "RLP / LAB / 001",
+      title: "Glea-Nexo",
+      summary: "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.",
+      techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
+      showMediaSlot: false,
+      action: { href: "work/glea-nexo/", label: "Ver caso →" },
     }],
     productionItems: [{
       id: "prod001",
@@ -65,18 +83,33 @@ export const selectedWork: Record<SelectedWorkLocale, {
   en: {
     workItems: [{
       id: "work001",
+      category: "work",
+      eyebrow: "RLP / WORK / 001",
       title: "ImportadorDB",
       summary: "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow.",
       techHighlights: "Java 21 · JavaFX · JDBC",
       facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
+      showMediaSlot: true,
       action: { href: "en/work/importador-db/", label: "View case →" },
     }, {
       id: "work002",
+      category: "work",
+      eyebrow: "RLP / WORK / 002",
       title: "Cosecha en Cope",
       summary: "Marketplace for producers and consumers: catalog, authentication, and purchase.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
+      showMediaSlot: true,
       action: { href: "en/work/cosecha-en-cope/", label: "View case →" },
+    }, {
+      id: "lab001",
+      category: "lab",
+      eyebrow: "RLP / LAB / 001",
+      title: "Glea-Nexo",
+      summary: "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries.",
+      techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
+      showMediaSlot: false,
+      action: { href: "en/work/glea-nexo/", label: "View case →" },
     }],
     productionItems: [{
       id: "prod001",

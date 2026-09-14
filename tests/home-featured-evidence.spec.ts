@@ -15,20 +15,29 @@ test("presents pure selected-work category carousels with verified records", asy
     const production = evidence.locator('[data-evidence-category="production"]');
     await expect(work).toHaveCount(1);
     await expect(production).toHaveCount(1);
-    await expect(work).toHaveAccessibleName(home.endsWith("/en/") ? "Work" : "Trabajo");
+    await expect(work).toHaveAccessibleName(home.endsWith("/en/") ? "Selected work" : "Trabajo seleccionado");
     await expect(production).toHaveAccessibleName(home.endsWith("/en/") ? "Production" : "Producción");
     await expect(work.getByRole("heading", { name: home.endsWith("/en/") ? "Work" : "Trabajo", exact: true })).toHaveCount(0);
     await expect(production.getByRole("heading", { name: home.endsWith("/en/") ? "Production" : "Producción", exact: true })).toHaveCount(0);
-    await expect(work.locator('[data-evidence-track] article[data-surface="artifact"]')).toHaveCount(2);
+    await expect(work.locator('[data-evidence-track] article[data-surface="artifact"]')).toHaveCount(3);
     await expect(work.locator("[data-territory-media-slot]")).toHaveCount(2);
     await expect(work.getByText("RLP / WORK / 001", { exact: true })).toBeVisible();
     await expect(work.getByText("RLP / WORK / 002", { exact: true })).toBeVisible();
+    await expect(work.getByText("RLP / LAB / 001", { exact: true })).toBeVisible();
     await expect(work.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
     await expect(work.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
+    const glea = work.locator("article").filter({ hasText: "Glea-Nexo" });
+    await expect(glea).toHaveCount(1);
+    await expect(glea.getByRole("heading", { name: "Glea-Nexo", exact: true })).toBeVisible();
+    await expect(glea.locator("[data-territory-media-slot], img, picture, video")).toHaveCount(0);
+    await expect(glea).toContainText(home.endsWith("/en/")
+      ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries."
+      : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
+    await expect(glea).not.toContainText(/AI|Big Data|Production|real agricultural sensor|real agricultural dataset/i);
     const workActions = work.getByRole("link", { name: home.endsWith("/en/") ? "View case →" : "Ver caso →", exact: true });
-    await expect(workActions).toHaveCount(2);
-    await expect(workActions.last()).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
-    await expect(work.getByRole("heading", { name: /Glea Nexo/i })).toHaveCount(0);
+    await expect(workActions).toHaveCount(3);
+    await expect(workActions.nth(1)).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
+    await expect(workActions.nth(2)).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
     await expect(work.getByText(/RLP \/ PROD \/ 002/)).toHaveCount(0);
     await expect(work.getByRole("button")).toHaveCount(2);
     await expect(work.locator("[data-evidence-footer]")).toHaveCount(1);
@@ -75,6 +84,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
       : "Marketplace para productores y consumidores: catálogo, autenticación y compra.");
     await expect(work).toContainText("Java 21 · JavaFX · JDBC");
     await expect(work).toContainText("Java · Angular · PostgreSQL");
+    await expect(work).toContainText(english ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries." : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
     await expect(work).not.toContainText("Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
     await expect(work).not.toContainText("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
 
@@ -90,7 +100,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     await expect(production).not.toContainText("pagado_sin_stock");
 
     const identifiers = evidence.locator(".selected-work__id");
-    await expect(identifiers).toHaveCount(5);
+    await expect(identifiers).toHaveCount(6);
     expect(await identifiers.evaluateAll((nodes) => nodes.every((node) => {
       const styles = getComputedStyle(node);
       const probe = document.createElement("span");
@@ -174,25 +184,32 @@ test("keeps Work and Production carousel navigation bounded and independent", as
   const workTrack = work.locator("[data-evidence-track]");
   const productionTrack = production.locator("[data-evidence-track]");
 
-  const previousWork = work.getByRole("button", { name: "Trabajo anterior" });
-  const nextWork = work.getByRole("button", { name: "Trabajo siguiente" });
+   const previousWork = work.getByRole("button", { name: "Trabajo seleccionado anterior" });
+   const nextWork = work.getByRole("button", { name: "Trabajo seleccionado siguiente" });
   const previousProduction = production.getByRole("button", { name: "Caso anterior" });
   const nextProduction = production.getByRole("button", { name: "Caso siguiente" });
   await expect(previousWork).toBeDisabled();
   await expect(nextWork).toBeEnabled();
-  await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 02");
+   await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 03");
   await expect(previousProduction).toBeDisabled();
   await expect(nextProduction).toBeEnabled();
 
   await nextWork.click();
   await expect.poll(() => workTrack.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-  await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 02");
-  await expect(nextWork).toBeDisabled();
-  await expect(previousWork).toBeEnabled();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
-  await previousWork.click();
-  await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 02");
-  await expect(previousWork).toBeDisabled();
+  await expect.poll(() => workTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth) <= 1)).toBe(true);
+   await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
+   await expect(nextWork).toBeEnabled();
+   await expect(previousWork).toBeEnabled();
+   await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
+    await nextWork.click();
+    await expect.poll(() => workTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 2) <= 1)).toBe(true);
+   await expect(work.locator("[data-evidence-position]")).toHaveText("03 / 03");
+   await expect(nextWork).toBeDisabled();
+   await expect(previousWork).toBeEnabled();
+    await previousWork.click();
+    await expect.poll(() => workTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth) <= 1)).toBe(true);
+   await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
+   await expect(previousWork).toBeEnabled();
 
   await nextProduction.click();
   await expect.poll(() => productionTrack.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
@@ -204,7 +221,7 @@ test("keeps Work and Production carousel navigation bounded and independent", as
   await expect(nextProduction).toBeDisabled();
   await previousProduction.click();
   await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
-  await expect(work.locator("[data-evidence-position]")).toHaveText("01 / 02");
+   await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
 });
 
 test("uses bounded native English carousel controls and hides only the scrollbar", async ({ page }) => {
@@ -214,8 +231,8 @@ test("uses bounded native English carousel controls and hides only the scrollbar
   const work = page.locator('[data-evidence-category="work"]');
   const production = page.locator('[data-evidence-category="production"]');
   const track = production.locator("[data-evidence-track]");
-  await expect(work.getByRole("button", { name: "Previous work" })).toBeDisabled();
-  await expect(work.getByRole("button", { name: "Next work" })).toBeEnabled();
+   await expect(work.getByRole("button", { name: "Previous selected work" })).toBeDisabled();
+   await expect(work.getByRole("button", { name: "Next selected work" })).toBeEnabled();
   await expect(production.getByRole("button", { name: "Previous" })).toBeDisabled();
   await expect(production.getByRole("button", { name: "Next" })).toBeEnabled();
   await expect(production.getByRole("button", { name: "Previous" })).toHaveText("←");
@@ -244,9 +261,9 @@ test("does not autoplay either selected-work carousel", async ({ page }) => {
   await page.goto("/web-site/");
 
   const positions = page.locator("[data-evidence-position]");
-  await expect(positions).toHaveText(["01 / 02", "01 / 03"]);
-  await page.waitForTimeout(500);
-  await expect(positions).toHaveText(["01 / 02", "01 / 03"]);
+   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
+   await page.waitForTimeout(500);
+   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
 });
 
 test("keeps Production controls in its footer after its dossier body", async ({ page }) => {
@@ -317,7 +334,8 @@ test("stabilizes desktop carousel stages while preserving natural mobile content
     }
 
     await page.locator('[data-evidence-category="work"] [data-evidence-next]').click();
-    await expect(page.locator('[data-evidence-category="work"] [data-evidence-position]')).toHaveText("02 / 02");
+    await expect(page.locator('[data-evidence-category="work"] [data-evidence-position]')).toHaveText("02 / 03");
+    await expect(page.locator('[data-evidence-category="work"] [data-evidence-next]')).toBeEnabled();
     await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 03");
     await page.locator('[data-evidence-category="production"] [data-evidence-next]').click();
     const after = await geometry();

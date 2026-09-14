@@ -5,19 +5,22 @@ const workRoutes = [
   { route: "/web-site/en/work/", title: "Work", workLabel: "Work", action: "View case →" },
 ];
 
-test("renders a bilingual Work index with two factual records and only established case actions", async ({ page }) => {
+test("renders a bilingual Work index with two work records, one LAB record, and only established actions", async ({ page }) => {
   for (const entry of workRoutes) {
     await page.goto(entry.route);
     const index = page.locator('main [data-territory-index="work"]');
     await expect(index.getByRole("heading", { name: entry.title, exact: true })).toBeVisible();
     await expect(index.getByText("RLP / WORK", { exact: true })).toBeVisible();
-    await expect(index.locator("article")).toHaveCount(2);
-    await expect(index.locator('[data-surface="artifact"]')).toHaveCount(2);
+    await expect(index.locator("article")).toHaveCount(3);
+    await expect(index.locator('[data-surface="artifact"]')).toHaveCount(3);
     await expect(index.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
+    await expect(index.getByRole("heading", { name: "Glea-Nexo", exact: true })).toBeVisible();
+    await expect(index.getByText("RLP / LAB / 001", { exact: true })).toBeVisible();
+    await expect(index.locator("[data-lab-record]")).toContainText(entry.title === "Work" ? "Current work" : "Trabajo actual");
     await expect(index.getByRole("link", { name: entry.action, exact: true }).first()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
-    await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveCount(2);
-    await expect(index.getByRole("link", { name: entry.action, exact: true }).last()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
+    await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveCount(3);
+    await expect(index.getByRole("link", { name: entry.action, exact: true }).nth(1)).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
 
     await expect(index.locator(".territory-index__facts")).toHaveCount(0);
     await expect(index).toContainText("Java 21 · JavaFX · JDBC");

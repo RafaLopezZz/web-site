@@ -2,6 +2,7 @@
 import ActionLink from "./ActionLink.astro";
 import Surface from "./Surface.astro";
 import TerritoryIndex from "./TerritoryIndex.astro";
+import { gleaNexoIndex } from "../data/glea-nexo-case";
 import { selectedWork } from "../data/selected-work";
 
 interface Props {
@@ -16,21 +17,21 @@ const copy = locale === "en"
       description: "Selected software work by Rafael López.",
       eyebrow: "RLP / WORK",
       heading: "Work",
-      intro: "Selected software work.",
+      intro: "Selected software work and lab artifacts.",
     }
   : {
       title: "Trabajo | Rafael López",
       description: "Trabajo de software seleccionado de Rafael López.",
       eyebrow: "RLP / WORK",
       heading: "Trabajo",
-      intro: "Trabajo de software seleccionado.",
+      intro: "Trabajo de software seleccionado y artefactos de laboratorio.",
     };
 ---
 
 <TerritoryIndex locale={locale} territory="work" {...copy}>
-  {selectedWork[locale].workItems.map((item) => (
+  {selectedWork[locale].workItems.filter((item) => item.category === "work").map((item) => (
     <Surface variant="artifact" class="territory-index__record">
-      <p class="territory-index__id">{copy.eyebrow} / {item.id.slice(-3)}</p>
+      <p class="territory-index__id">{item.eyebrow}</p>
       <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
       <h2>{item.title}</h2>
       <p class="territory-index__summary">{item.summary}</p>
@@ -38,4 +39,13 @@ const copy = locale === "en"
       <ActionLink href={`${base}${item.action.href}`}>{item.action.label}</ActionLink>
     </Surface>
   ))}
+  <Surface variant="artifact" class="territory-index__record" data-lab-record>
+    <p class="territory-index__id">{gleaNexoIndex[locale].eyebrow}</p>
+    <p class="territory-index__status">{gleaNexoIndex[locale].status}</p>
+    <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
+    <h2>{gleaNexoIndex[locale].title}</h2>
+    <p class="territory-index__summary">{gleaNexoIndex[locale].summary}</p>
+    <p class="territory-index__tech">{gleaNexoIndex[locale].techHighlights}</p>
+    <ActionLink href={`${base}${gleaNexoIndex[locale].action.href}`}>{gleaNexoIndex[locale].action.label}</ActionLink>
+  </Surface>
 </TerritoryIndex>

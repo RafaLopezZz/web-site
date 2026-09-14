@@ -607,6 +607,19 @@ Status: ACCEPTED — documentation only; territory LAB.
   source, route, test, media, Home, authority-packet, or other
   non-documentation file was changed by this doctrine record.
 
+### U10.4 — Glea-Nexo LAB implementation and maintainer-review correction
+
+Status: ACCEPTED — maintainer visual/editorial review complete.
+
+- Legacy `src/content/projects/glea-nexo.md` was removed after confirming no live collection consumer.
+- `RLP / LAB / 001` remains under Work with ES/EN routes and is now one declaratively selected item in the existing Home Selected Work carousel; Home remains discovery/access and no new LAB surface or media was introduced.
+- Spanish rendered Glea surfaces use only `Implementado`, `Validado`, `Trabajo actual`, `Planificado`, and `Límite / pregunta abierta`, with natural Spanish technical prose. English retains its equivalent editorial vocabulary and meaning.
+- Home copy remains concise and evidence-bounded: no AI/Big Data, Production, real-sensor, dataset, or fabricated-media claims; Work and Production entries remain retained.
+- `LAB.md` now permits selected LAB cases in Home Selected Work, names Glea-Nexo as the selected LAB entry, and preserves `/work/` LAB territory.
+- Status prose and the future AI/academic/evidence boundaries respect `LAB.md` and the Glea authority packet.
+- Verification: focused Glea checks 6/6, shared regressions 18/18, and full E2E 89/89 passed; production build, DESIGN check, and `git diff --check` passed.
+- All authority packets remain unchanged. The maintainer accepted the refreshed visual/editorial review; commit remains pending.
+
 ### U9.1 — Interaction hovers
 
 Status: AUTOMATED GREEN — MANUAL VISUAL PENDING MAINTAINER.
