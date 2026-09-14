@@ -169,7 +169,15 @@ const portrait: Portrait = {};
                         aria-hidden="true"
                       />
                     )}
-                    <h4>{item.title}</h4>
+                    {
+                      item.action && !item.action.external ? (
+                        <a class="selected-work__title-link" href={`${base}${item.action.href}`}>
+                          <h4>{item.title}</h4>
+                        </a>
+                      ) : (
+                        <h4>{item.title}</h4>
+                      )
+                    }
                     <p>{item.summary}</p>
                     <p class="selected-work__engineering">
                       {item.techHighlights}
@@ -208,7 +216,15 @@ const portrait: Portrait = {};
                       data-territory-media-slot
                       aria-hidden="true"
                     />
-                    <h4>{item.title}</h4>
+                    {
+                      item.action && !item.action.external ? (
+                        <a class="selected-work__title-link" href={`${base}${item.action.href}`}>
+                          <h4>{item.title}</h4>
+                        </a>
+                      ) : (
+                        <h4>{item.title}</h4>
+                      )
+                    }
                     <p>{item.summary}</p>
                     <p class="selected-work__engineering">
                       {item.techHighlights}
@@ -564,6 +580,13 @@ const portrait: Portrait = {};
   .selected-work h4 {
     font-size: clamp(1.5rem, 3vw, 2.25rem);
   }
+  .selected-work__title-link {
+    color: var(--theme-text);
+    text-decoration: none;
+  }
+  .selected-work__title-link:hover {
+    color: var(--theme-accent);
+  }
   .selected-work__items {
     display: grid;
     gap: var(--space-7);
@@ -576,7 +599,6 @@ const portrait: Portrait = {};
   .selected-work__artifact {
     display: grid;
     gap: var(--space-4);
-    border-inline-start: 2px solid var(--theme-accent);
     padding: var(--space-5);
   }
   .selected-work__artifact > p,

@@ -88,3 +88,31 @@ test("renders the bilingual ImportadorDB case with its professional Java 21 cont
     await expect(caseStudy.getByRole("link", { name: /repositorio|repository/i })).toHaveAttribute("href", "https://github.com/RafaLopezZz/importador-db");
   }
 });
+
+test("places a focused locale-correct Work backlink before every Work and LAB case identity", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/work/importador-db/", href: "/web-site/work/", label: "← Volver a Trabajo" },
+    { path: "/web-site/work/cosecha-en-cope/", href: "/web-site/work/", label: "← Volver a Trabajo" },
+    { path: "/web-site/work/glea-nexo/", href: "/web-site/work/", label: "← Volver a Trabajo" },
+    { path: "/web-site/en/work/importador-db/", href: "/web-site/en/work/", label: "← Back to Work" },
+    { path: "/web-site/en/work/cosecha-en-cope/", href: "/web-site/en/work/", label: "← Back to Work" },
+    { path: "/web-site/en/work/glea-nexo/", href: "/web-site/en/work/", label: "← Back to Work" },
+  ]) {
+    await page.goto(route.path);
+    const caseStudy = page.locator("[data-work-case]");
+    const backlink = caseStudy.locator(":scope > .case-back-link");
+
+    await expect(backlink).toHaveCount(1);
+    await expect(backlink).toHaveText(route.label);
+    await expect(backlink).toHaveAttribute("href", route.href);
+    await expect(caseStudy.locator("a a")).toHaveCount(0);
+    expect(await backlink.evaluate((element) => {
+      const heading = element.parentElement?.querySelector("h1");
+      return Boolean(heading && (element.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING));
+    })).toBe(true);
+
+    await backlink.focus();
+    await expect(backlink).toBeFocused();
+    await expect(backlink).toHaveCSS("outline-style", "solid");
+  }
+});

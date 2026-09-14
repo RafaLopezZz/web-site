@@ -1,5 +1,6 @@
 ---
 import ActionLink from "./ActionLink.astro";
+import CaseBackLink from "./CaseBackLink.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFooter from "./SiteFooter.astro";
 import SiteHeader from "./SiteHeader.astro";
@@ -52,6 +53,7 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
       data-importador-case={caseId === "importador-db" ? "" : undefined}
       data-cosecha-case={caseId === "cosecha-en-cope" ? "" : undefined}
     >
+      <CaseBackLink locale={locale} territory="work" />
       <header class="case__hero">
         <p>{copy.eyebrow}</p>
         <h1>{copy.title}</h1>

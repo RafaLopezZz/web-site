@@ -50,3 +50,27 @@ test("keeps source actions responsive, themed, and keyboard reachable", async ({
     }
   }
 });
+
+test("places a focused locale-correct Production backlink before dossier identity", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/production/quinta-bella/", href: "/web-site/production/", label: "← Volver a Producción" },
+    { path: "/web-site/en/production/quinta-bella/", href: "/web-site/en/production/", label: "← Back to Production" },
+  ]) {
+    await page.goto(route.path);
+    const dossier = page.locator('[data-production-case="quinta-bella"]');
+    const backlink = dossier.locator(":scope > .case-back-link");
+
+    await expect(backlink).toHaveCount(1);
+    await expect(backlink).toHaveText(route.label);
+    await expect(backlink).toHaveAttribute("href", route.href);
+    await expect(dossier.locator("a a")).toHaveCount(0);
+    expect(await backlink.evaluate((element) => {
+      const heading = element.parentElement?.querySelector("h1");
+      return Boolean(heading && (element.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING));
+    })).toBe(true);
+
+    await backlink.focus();
+    await expect(backlink).toBeFocused();
+    await expect(backlink).toHaveCSS("outline-style", "solid");
+  }
+});

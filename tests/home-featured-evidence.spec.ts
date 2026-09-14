@@ -125,6 +125,152 @@ test("keeps Home evidence product-first and compact while retaining approved sou
   expect(selectedWorkSource).not.toContain("evidence:");
 });
 
+test("normalizes every Home carousel card to the shared surface interaction contract", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  const css = await readFile("src/styles/global.css", "utf8");
+  expect(css.match(/\.selected-work \.surface:hover:not\(:focus-within\)/g)).toHaveLength(2);
+  expect(css).not.toContain(".selected-work .surface--dossier:hover");
+
+  const cards = page.locator("#featured-evidence [data-evidence-track] [data-surface]");
+
+  for (const theme of ["light", "dark"]) {
+    await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
+    await page.goto("/web-site/");
+    await expect(cards).toHaveCount(6);
+    await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+
+    const colors = await page.evaluate(() => {
+      const probe = document.createElement("span");
+      probe.style.border = "1px solid var(--theme-line)";
+      probe.style.borderLeftColor = "var(--theme-accent)";
+      document.body.append(probe);
+      const style = getComputedStyle(probe);
+      const values = { line: style.borderTopColor, accent: style.borderLeftColor };
+      probe.remove();
+      return values;
+    });
+    const baseBoxes = await cards.evaluateAll((elements) => elements.map((element) => {
+      const style = getComputedStyle(element);
+      return {
+        borderWidths: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth],
+        borderStyles: [style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle],
+        borderColors: [style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor],
+        borderRadius: style.borderRadius,
+        transitionProperty: style.transitionProperty,
+        transitionDuration: style.transitionDuration,
+        transitionTimingFunction: style.transitionTimingFunction,
+        boxShadow: style.boxShadow,
+        width: element.getBoundingClientRect().width,
+        height: element.getBoundingClientRect().height,
+      };
+    }));
+
+    const sharedBaseStyles = baseBoxes.map(({ width: _width, height: _height, ...styles }) => styles);
+    expect(sharedBaseStyles.every((styles) => JSON.stringify(styles) === JSON.stringify(sharedBaseStyles[0]))).toBe(true);
+    expect(baseBoxes[0]).toMatchObject({
+      borderWidths: ["1px", "1px", "1px", "1px"],
+      borderStyles: ["solid", "solid", "solid", "solid"],
+      borderColors: [colors.line, colors.line, colors.line, colors.accent],
+      borderRadius: "0px",
+      transitionProperty: "transform, border-color",
+      transitionDuration: "0.2s, 0.15s",
+      transitionTimingFunction: "ease-out, ease-out",
+      boxShadow: "none",
+    });
+
+    const transparent = await page.evaluate(() => {
+      const probe = document.createElement("span");
+      probe.style.border = "1px solid transparent";
+      document.body.append(probe);
+      const value = getComputedStyle(probe).borderTopColor;
+      probe.remove();
+      return value;
+    });
+    const hoverStyles = [];
+    for (const card of await cards.all()) {
+      await card.hover();
+      await page.waitForTimeout(250);
+      hoverStyles.push(await card.evaluate((element) => {
+        const style = getComputedStyle(element);
+        const box = element.getBoundingClientRect();
+        return {
+          borderWidths: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth],
+          borderStyles: [style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle],
+          borderColors: [style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor],
+          transform: style.transform,
+          boxShadow: style.boxShadow,
+          width: box.width,
+          height: box.height,
+        };
+      }));
+    }
+
+    const sharedHoverStyles = hoverStyles.map(({ width: _width, height: _height, ...styles }) => styles);
+    expect(sharedHoverStyles.every((styles) => JSON.stringify(styles) === JSON.stringify(sharedHoverStyles[0]))).toBe(true);
+    expect(hoverStyles.every((styles, index) => styles.width === baseBoxes[index].width && styles.height === baseBoxes[index].height)).toBe(true);
+    expect(hoverStyles[0]).toMatchObject({
+      borderWidths: baseBoxes[0].borderWidths,
+      borderStyles: baseBoxes[0].borderStyles,
+      borderColors: [transparent, transparent, transparent, transparent],
+      transform: "matrix(1, 0, 0, 1, 0, -1)",
+      boxShadow: "none",
+      width: baseBoxes[0].width,
+      height: baseBoxes[0].height,
+    });
+
+    const titleLinks = page.locator("#featured-evidence .selected-work__title-link");
+    await expect(titleLinks).toHaveCount(4);
+    for (const title of await titleLinks.all()) {
+      await title.focus();
+      await expect(title).toBeFocused();
+      await expect(title).toHaveCSS("outline-style", "solid");
+    }
+
+    await titleLinks.first().focus();
+    await expect(cards.first()).toHaveCSS("border-top-color", colors.accent);
+  }
+});
+
+test("keeps Home carousel card motion explicit under reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/web-site/");
+
+  const card = page.locator("#featured-evidence [data-evidence-track] [data-surface]").first();
+  await card.hover();
+  await expect(card).toHaveCSS("transform", "none");
+  expect(await card.evaluate((element) => getComputedStyle(element).transitionDuration.split(",").every((duration) => Number.parseFloat(duration) === 0))).toBe(true);
+});
+
+test("links only routable Home project titles without fake or nested anchors", async ({ page }) => {
+  for (const home of ["/web-site/", "/web-site/en/"]) {
+    await page.goto(home);
+    const evidence = page.locator("#featured-evidence");
+    const titleLinks = evidence.locator(".selected-work__title-link");
+    const english = home.endsWith("/en/");
+
+    await expect(titleLinks).toHaveCount(4);
+    await expect(titleLinks.nth(0)).toHaveAttribute("href", english ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
+    await expect(titleLinks.nth(1)).toHaveAttribute("href", english ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
+    await expect(titleLinks.nth(2)).toHaveAttribute("href", english ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
+    await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
+    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(1);
+    await expect(evidence.locator("a[href='#'], a[href='']")).toHaveCount(0);
+    await expect(evidence.locator("a a, article a article")).toHaveCount(0);
+
+    for (const title of ["Águilas FC", "La Ola Art Gallery"]) {
+      const heading = evidence.getByRole("heading", { name: title, exact: true });
+      expect(await heading.evaluate((element) => element.closest("a") === null)).toBe(true);
+    }
+
+    await titleLinks.first().focus();
+    await expect(titleLinks.first()).toBeFocused();
+    await expect(titleLinks.first()).toHaveCSS("outline-style", "solid");
+    await expect(titleLinks.first()).not.toHaveCSS("color", "rgb(0, 0, 238)");
+  }
+});
+
 test("keeps carousel footers in a bounded flex row without overlap or overflow", async ({ page }) => {
   for (const width of [320, 390, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });

@@ -897,3 +897,43 @@ Status: COMPLETE — MAINTAINER ACCEPTED.
   background, and U9.4 CMD progression retain their settled contracts. Hero,
   CMD, SiteHeader, SiteFooter, carousel internals, routes, content, and
   territory boundaries are outside U9.5.
+
+### Candidate — bounded cross-surface refinement
+
+Status: CANDIDATE — implementation complete; automated/browser acceptance
+blocked by `PREVIEW_REQUIRED`.
+
+- **Audit:** Home renders three WORK/LAB cards in each locale (`ImportadorDB`,
+  `Cosecha en Cope`, `Glea-Nexo`) and three PRODUCTION cards (`Águilas FC`,
+  `La Ola Art Gallery`, `Quinta Bella`). Real internal detail routes exist for
+  all three Work/LAB cases and Quinta Bella in both ES/EN. Águilas has no detail
+  route; La Ola has only its external live-site destination. Their Home titles
+  therefore remain static, while the existing truthful CTAs remain unchanged.
+- **Audit:** Implemented public detail routes are
+  `/work/importador-db/`, `/work/cosecha-en-cope/`, `/work/glea-nexo/`,
+  `/production/quinta-bella/` and their `/en/` counterparts. Work/LAB detail
+  backlinks target `/work/` or `/en/work/`; Production detail backlinks target
+  `/production/` or `/en/production/`.
+- **Implementation:** Home cards use one shared Home-scoped surface mechanics
+  rule for 1px solid semantic borders, square radius, existing motion tokens and
+  easing, matching hover lift/border behavior, unchanged no-shadow behavior,
+  and shared focus-within behavior. Work/LAB and Production remain semantic
+  surface variants; no generic Card or new motion primitive was added.
+- **Visual-review correction:** Home WORK/LAB/PRODUCTION cards now keep the
+  semantic accent only on the default left border and make all card borders
+  transparent on fine-pointer hover without changing geometry or lift; focus and
+  reduced-motion behavior remain explicit.
+- **Implementation:** Routable Home titles are normal anchors using the
+  existing internal action destinations; non-routable Production titles remain
+  headings. `CaseBackLink.astro` owns only locale, territory label, href, and
+  anchor markup; it is rendered before identity/title in shared WorkCase and
+  ProductionCase foundations.
+- **TDD:** Home mechanics/title, Work/LAB/Production backlink, and shared
+  border-state tests cover the candidate contract.
+- **Current checks:** `npm run verify:green -- tests/home-featured-evidence.spec.ts`
+  PASS: focused Home E2E (13/13), shared regression E2E (18/18), full E2E
+  (94/94), production build (18 pages), DESIGN, and diff-check. A parent-owned
+  preview is healthy at `http://127.0.0.1:4321/web-site/`; maintainer visual
+  acceptance remains pending. No authority packet was changed.
+- **Skills:** Future Skills implementation remains deferred; this slice does
+  not start or alter that territory.

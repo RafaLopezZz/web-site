@@ -72,6 +72,16 @@ Use semantic navigation and `aria-current` for the current destination. Current 
 
 Home is intentionally short: **Header / Hero / Featured Evidence / Explore / Footer**. Featured Evidence contains a small selected set of WORK plus one PROD entry. Home must not reproduce full Experience, Education, Notes, About, or a Contact form.
 
+Home carousel surfaces share one canonical square border, radius, hover/focus,
+transition, and shadow treatment across WORK, LAB, and PRODUCTION; their
+territory distinction remains semantic and editorial. A project title becomes a
+normal locale-correct anchor only when a real detail route exists; otherwise the
+title remains static and the existing truthful CTA is retained.
+
+Public WORK/LAB and PRODUCTION detail routes begin with a compact in-flow
+semantic backlink to their locale-correct territory index before identity and
+title.
+
 The dedicated route IA is `/` (short orientation and featured evidence), `/work/` (selected WORK and LAB artifacts), `/production/` (accountable production dossiers), `/experience/` (career record), `/education/` (education and qualifications), `/notes/` (notes index), `/notes/[slug]/` (one readable note), `/about/` (identity and working context), and `/contact/` (contact destinations and form). The English locale provides complete equivalent routes under `/en`: `/en/`, `/en/work/`, `/en/production/`, `/en/experience/`, `/en/education/`, `/en/notes/`, `/en/notes/[slug]/`, `/en/about/`, and `/en/contact/`, with equal meaning, facts, hierarchy, labels, destinations, and action priority. The established public Spanish Blog URLs `/blog/`, `/blog/desarrollo-importador-db/`, `/blog/desarrollo-cosecha-en-cope/`, and `/blog/historia-transición/` remain valid and must never become 404 as a result of the RLP v2 refactor. The new Notes IA does not break established Blog URLs.
 
 ### Global Action System
