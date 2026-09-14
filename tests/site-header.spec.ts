@@ -12,6 +12,10 @@ const territorialRoutes = [
   { route: "/web-site/en/work/importador-db/", label: "Work", href: "/web-site/en/work/" },
   { route: "/web-site/en/work/glea-nexo/", label: "Work", href: "/web-site/en/work/" },
   { route: "/web-site/en/production/", label: "Production", href: "/web-site/en/production/" },
+  { route: "/web-site/experience/", label: "Trayectoria", href: "/web-site/experience/" },
+  { route: "/web-site/en/experience/", label: "Career", href: "/web-site/en/experience/" },
+  { route: "/web-site/skills/", label: "Habilidades", href: "/web-site/skills/" },
+  { route: "/web-site/en/skills/", label: "Skills", href: "/web-site/en/skills/" },
 ] as const;
 
 test("provides the durable home navigation contract", async ({ page }) => {
@@ -24,11 +28,27 @@ test("provides the durable home navigation contract", async ({ page }) => {
   await expect(navigation.getByRole("link", { name: "Inicio", exact: true })).toHaveAttribute("href", home);
   await expect(navigation.getByRole("link", { name: "Trabajo", exact: true })).toHaveAttribute("href", "/web-site/work/");
   await expect(navigation.getByRole("link", { name: "Producción", exact: true })).toHaveAttribute("href", "/web-site/production/");
+  await expect(navigation.getByRole("link", { name: "Trayectoria", exact: true })).toHaveAttribute("href", "/web-site/experience/");
+  await expect(navigation.getByRole("link", { name: "Habilidades", exact: true })).toHaveAttribute("href", "/web-site/skills/");
   await expect(navigation.getByRole("link", { name: "Notas", exact: true })).toHaveAttribute("href", `${blog}/`);
   await expect(navigation.getByRole("link", { name: "Inicio", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(navigation.locator('#site-navigation [aria-current]')).toHaveCount(1);
+});
 
-  await expect(header.locator('a[href^="/production"], a[href^="/experience"], a[href^="/education"], a[href^="/notes"], a[href^="/about"], a[href^="/contact"]')).toHaveCount(0);
+test("exposes one combined Career destination without separate Experience or Education links", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/", label: "Trayectoria", href: "/web-site/experience/", count: 6 },
+    { path: "/web-site/en/", label: "Career", href: "/web-site/en/experience/", count: 5 },
+    { path: "/web-site/education/", label: "Trayectoria", href: "/web-site/experience/", count: 6 },
+    { path: "/web-site/en/education/", label: "Career", href: "/web-site/en/experience/", count: 5 },
+  ] as const) {
+    await page.goto(route.path);
+    const links = page.locator("#site-navigation > ul > li > a");
+    await expect(links).toHaveCount(route.count);
+    await expect(links.filter({ hasText: route.label })).toHaveAttribute("href", route.href);
+    await expect(links.filter({ hasText: /^(Experiencia|Experience|Formación|Education)$/ })).toHaveCount(0);
+    await expect(links.filter({ hasText: route.label })).toHaveCount(1);
+  }
 });
 
 test("marks exactly one real territorial destination across index and detail routes", async ({ page }) => {
@@ -93,6 +113,8 @@ test("exposes the complete navigation from a real mobile menu", async ({ page })
 
   const closeToggle = page.getByRole("button", { name: "Close navigation" });
   await expect(closeToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(menu.getByRole("link", { name: "Habilidades", exact: true })).toBeVisible();
+  await expect(menu.getByRole("link", { name: "Trayectoria", exact: true })).toBeVisible();
   await expect(menu.getByRole("link", { name: "Notas", exact: true })).toBeVisible();
 });
 
@@ -143,9 +165,13 @@ test("keeps the closed header compact and usable across canonical widths", async
       const [localeBox, themeBox, toggleBox] = await Promise.all([locale.boundingBox(), theme.boundingBox(), toggle.boundingBox()]);
       expect(localeBox && themeBox && toggleBox && localeBox.x + localeBox.width <= themeBox.x && themeBox.x + themeBox.width <= toggleBox.x).toBe(true);
       await toggle.click();
+      await expect(menu.getByRole("link", { name: "Habilidades", exact: true })).toBeVisible();
+      await expect(menu.getByRole("link", { name: "Trayectoria", exact: true })).toBeVisible();
       await expect(menu.getByRole("link", { name: "Notas", exact: true })).toBeVisible();
     } else {
       await expect(toggle).toBeHidden();
+      await expect(menu.getByRole("link", { name: "Habilidades", exact: true })).toBeVisible();
+      await expect(menu.getByRole("link", { name: "Trayectoria", exact: true })).toBeVisible();
       await expect(menu.getByRole("link", { name: "Notas", exact: true })).toBeVisible();
       const [localeBox, themeBox, notesBox] = await Promise.all([locale.boundingBox(), theme.boundingBox(), menu.getByRole("link", { name: "Notas", exact: true }).boundingBox()]);
       expect(localeBox && themeBox && notesBox && localeBox.x > notesBox.x && themeBox.x > localeBox.x).toBe(true);

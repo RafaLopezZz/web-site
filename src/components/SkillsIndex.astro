@@ -1,0 +1,142 @@
+---
+import { getSkillDomains, type SkillsLocale } from "../data/skills";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+import Surface from "./Surface.astro";
+import TechnologyMark from "./TechnologyMark.astro";
+
+interface Props {
+  locale: SkillsLocale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === "en"
+  ? {
+      title: "Skills | Rafael López",
+      description: "Evidence-led capability areas of Rafael López.",
+      eyebrow: "RLP / CAPABILITIES",
+      heading: "Skills",
+      intro: "Capability areas built through professional work, study, and traceable engineering practice.",
+      capabilities: "Capabilities",
+      technologies: "Supporting technologies",
+      evidence: "Evidence",
+    }
+  : {
+      title: "Habilidades | Rafael López",
+      description: "Áreas de capacidad de Rafael López con evidencia.",
+      eyebrow: "RLP / CAPACIDADES",
+      heading: "Habilidades",
+      intro: "Áreas de capacidad construidas mediante trabajo profesional, formación y práctica de ingeniería trazable.",
+      capabilities: "Capacidades",
+      technologies: "Tecnologías de apoyo",
+      evidence: "Evidencia",
+    };
+const domains = getSkillDomains(locale);
+---
+
+<BaseLayout title={copy.title} description={copy.description} lang={locale}>
+  <SiteHeader locale={locale} />
+
+  <main id="main-content" class="skills-shell">
+    <section class="skills-page rlp-container" aria-labelledby="skills-title">
+      <header class="skills-page__header">
+        <p class="skills-page__eyebrow">{copy.eyebrow}</p>
+        <h1 id="skills-title">{copy.heading}</h1>
+        <p>{copy.intro}</p>
+      </header>
+
+      <div class="skills-grid">
+        {
+          domains.map((domain) => (
+            <Surface variant="artifact" class="skills-domain" data-skill-domain={domain.id}>
+              <header class="skills-domain__header">
+                <p class="skills-domain__kicker">{domain.kicker}</p>
+                <h2>{domain.title}</h2>
+                <p>{domain.description}</p>
+              </header>
+
+              <section class="skills-domain__section" aria-labelledby={`skills-${domain.id}-capabilities`}>
+                <h3 id={`skills-${domain.id}-capabilities`}>{copy.capabilities}</h3>
+                <ul class="skills-domain__capabilities">
+                  {domain.capabilities.map((capability) => <li>{capability}</li>)}
+                </ul>
+              </section>
+
+              {domain.technologies.length > 0 && (
+                <section class="skills-domain__section" aria-labelledby={`skills-${domain.id}-technologies`}>
+                  <h3 id={`skills-${domain.id}-technologies`}>{copy.technologies}</h3>
+                  <ul class="skills-domain__technologies">
+                    {domain.technologies.map((technology) => <li data-technology><TechnologyMark technology={technology} /></li>)}
+                  </ul>
+                </section>
+              )}
+
+              {domain.evidence && (
+                <section class="skills-domain__evidence" data-skill-evidence aria-labelledby={`skills-${domain.id}-evidence`}>
+                  <h3 id={`skills-${domain.id}-evidence`}>{copy.evidence}</h3>
+                  <p>{domain.evidence.intro}</p>
+                  <ul>
+                    {domain.evidence.statements.map((statement) => <li>{statement}</li>)}
+                  </ul>
+                  <a
+                    href="https://github.com/RafaLopezZz/codex-workstation-baseline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {domain.evidence.linkLabel}
+                  </a>
+                </section>
+              )}
+            </Surface>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>
+
+<style>
+  .skills-shell { color: var(--theme-text); }
+  .skills-page { display: grid; gap: var(--space-8); padding-block: var(--space-8); }
+  .skills-page__header { display: grid; gap: var(--space-3); max-width: var(--reading-max); }
+  .skills-page__header h1 { margin: 0; font-family: var(--font-sans); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; }
+  .skills-page__header p { margin: 0; color: var(--theme-text-muted); line-height: 1.65; }
+  .skills-page__eyebrow,
+  .skills-domain__kicker,
+  .skills-domain__technologies { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .skills-page__eyebrow,
+  .skills-domain__technologies { color: var(--theme-text-muted); }
+  .skills-domain__kicker { margin: 0; color: var(--theme-accent) !important; }
+  .skills-grid { display: grid; gap: var(--space-5); align-items: start; }
+  .skills-domain { display: grid; align-content: start; gap: var(--space-5); padding: var(--space-5); }
+  .skills-domain__header,
+  .skills-domain__section,
+  .skills-domain__evidence { display: grid; gap: var(--space-3); }
+  .skills-domain__header h2 { margin: 0; font-family: var(--font-sans); font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.05; }
+  .skills-domain__header p,
+  .skills-domain__evidence p { margin: 0; color: var(--theme-text-muted); line-height: 1.6; }
+  .skills-domain__section h3,
+  .skills-domain__evidence h3 { margin: 0; }
+  .skills-domain__section h3,
+  .skills-domain__evidence h3 { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 700; }
+  .skills-domain__capabilities,
+  .skills-domain__evidence ul { display: grid; gap: var(--space-2); margin: 0; padding-left: 1.25rem; color: var(--theme-text-muted); line-height: 1.55; }
+  .skills-domain__capabilities li::marker,
+  .skills-domain__evidence li::marker { color: var(--theme-accent); }
+  .skills-domain__technologies { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: 0; padding: 0; list-style: none; color: var(--theme-text-muted); line-height: 1.5; }
+  .skills-domain__technologies li { border-left: 2px solid var(--theme-accent); padding-left: var(--space-2); }
+  .skills-domain__evidence { border-top: 1px solid var(--theme-line); padding-top: var(--space-4); }
+  .skills-domain__evidence a { width: fit-content; color: var(--theme-text); text-decoration: underline; text-decoration-color: var(--theme-accent); text-underline-offset: 0.25em; }
+  .skills-domain__evidence a:hover { color: var(--theme-accent); }
+
+  @media (min-width: 768px) {
+    .skills-page { padding-block: var(--space-9); }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

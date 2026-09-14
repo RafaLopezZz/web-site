@@ -937,3 +937,63 @@ blocked by `PREVIEW_REQUIRED`.
   acceptance remains pending. No authority packet was changed.
 - **Skills:** Future Skills implementation remains deferred; this slice does
   not start or alter that territory.
+
+### U10.5 — Career / Education / Skills
+
+Status: CANDIDATE GREEN — visual correction in progress; maintainer acceptance pending. Not accepted.
+
+- **Authorized scope:** Add real bilingual `/experience/`, `/en/experience/`,
+  `/education/`, `/en/education/`, `/skills/`, and `/en/skills/` routes, and
+  add exactly one combined `Trayectoria` / `Career` primary-nav destination
+  targeting `/experience/` and `/en/experience/`; Education remains a working
+  route without separate primary-nav exposure. No other deferred territory is
+  added.
+- **Chronology contract:** Experience, Education, certification, and project
+  records use one typed normalized bilingual source. The implemented project
+  milestones are Cosecha en Cope (`12/2025`, tied to the DAM final project),
+  ImportadorDB (`01/2026`, after DAM and before the AI/Big Data specialization),
+  and Glea-Nexo, placed relatively as Leovinci Consulting -> Glea-Nexo -> FP
+  specialization in Artificial Intelligence and Big Data, with no exact date,
+  only recent growth, AI/Big-Data direction, and LAB context. They remain small
+  secondary items on related timeline sides, with locale-correct Work detail
+  links; `RLP / PROD` projects are excluded.
+- **Presentation contract:** One shared CareerTimeline uses stable desktop
+  semantics: Experience on the left, Education/certification on the right,
+  and a central axis with nodes/connectors. Mobile uses one left-axis column.
+  Record headings use a plain-language `h3` title with label, organization,
+  period, and factual context subordinate to it. Skills uses four equal peer
+  areas with a small visible `RLP / SKILLS / 00N` kicker followed by separate
+  semantic headings (`Backend`, `Data`, `Systems`, `IA aplicada`; English uses
+  `Applied AI`), with no combined or duplicate identity, scoring, progress, stars, tag cloud,
+  dashboard, glow, gradients, glass, ribbons, or generic AI panel.
+  Descriptions, secondary copy, lists, and project references remain naturally
+  readable and are not forced into the timeline side emphasis.
+- **Local logo contract:** A small curated set of Simple Icons CC0-compatible
+  SVG marks is stored locally in `public/icons/tech/` for OpenJDK, Python,
+  Docker, Git, and Angular. Marks are decorative and rendered beside visible
+  technology names through one restrained shared pattern; other technologies
+  remain typography-only. No remote logo URL, logo wall, tile, circle, gradient,
+  animation, or special logo hover is used.
+- **Applied AI boundary:** Public copy preserves agent-assisted engineering
+  workflows, explicit routing, responsibility boundaries, the full SDD
+  lifecycle, automated validation, traceability/attempt evidence, and controls
+  against silent fallbacks. Evidence is linked to
+  `https://github.com/RafaLopezZz/codex-workstation-baseline` and reports only
+  the supplied concise evidence: 36 explicit routes, 150 assertions, routing
+  7/7, and full SDD lifecycle. The no-silent-fallback claim is bounded to that
+  supplied validation.
+- **Foundation:** Reuse the current RLP Surface, semantic tokens, typography,
+  and motion. Timeline pulse remains reduced-motion safe; existing header,
+  locale, theme, mobile, and responsive geometry remain unchanged.
+- **TDD boundary:** Add focused Playwright coverage before implementation for
+  chronology, overlap, undated project handling, mobile semantics, theme and
+  motion; Skills domains/copy/evidence/metrics/absence of scoring; ES/EN route
+  parity, header current state, and canonical responsive widths.
+- **Current checks:** `npm run build` PASS (24 pages); focused Career/Skills
+  E2E PASS (10/10); Header/Locale/Motion/Theme plus relevant Work, project, and
+  checkpoint regressions PASS (34/34); full E2E PASS (105/105); DESIGN lint
+  PASS; and `git diff --check` PASS. No acceptance is implied by automated
+  GREEN.
+- **Acceptance:** Maintainer visual/editorial review remains pending. No
+  acceptance, commit, push, merge, PR, or persistent preview is authorized in
+  this slice.

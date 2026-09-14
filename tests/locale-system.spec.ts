@@ -44,7 +44,6 @@ test("uses real bidirectional locale anchors without unimplemented English route
     await locale.getByRole("link", { name: "ES", exact: true }).focus();
     await page.keyboard.press("Tab");
     await expect(locale.getByRole("link", { name: "EN", exact: true })).toBeFocused();
-    await expect(page.locator('a[href^="/web-site/en/blog"], a[href^="/web-site/en/experience"], a[href^="/web-site/en/education"], a[href^="/web-site/en/contact"]')).toHaveCount(0);
     await expect(page.locator(`#explore a[href="${route === enHome ? "/web-site/en/work/" : "/web-site/work/"}"]`)).toHaveCount(1);
 
     await locale.getByRole("link", { name: alternate, exact: true }).click();

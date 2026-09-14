@@ -71,7 +71,9 @@ body.bg-ink {
 
 .home-shell,
 .territory-index-shell,
-.case-shell {
+.case-shell,
+.career-shell,
+.skills-shell {
   background-color: var(--theme-canvas);
   background-image:
     linear-gradient(
@@ -410,7 +412,14 @@ a:focus-visible {
 
   .home-shell,
   .territory-index-shell,
-  .case-shell {
+  .case-shell,
+  .career-shell,
+  .skills-shell {
+    animation: none;
+  }
+
+  .timeline-dot,
+  .career-record__marker {
     animation: none;
   }
 

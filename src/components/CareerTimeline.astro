@@ -1,0 +1,181 @@
+---
+import { getCareerRecords, type CareerLocale, type CareerRecordKind } from "../data/career";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+
+interface Props {
+  locale: CareerLocale;
+  focus: "experience" | "education";
+}
+
+const { locale, focus } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const copy = locale === "en"
+  ? {
+      title: focus === "experience" ? "Experience | Rafael López" : "Education | Rafael López",
+      description: focus === "experience" ? "Career record of Rafael López." : "Education and qualifications of Rafael López.",
+      eyebrow: focus === "experience" ? "RLP / CAREER.LOG" : "RLP / EDUCATION.LOG",
+      heading: focus === "experience" ? "Experience" : "Education",
+       intro: "A shared chronological story of work, study, and qualifications. The periods show where professional and academic life overlap.",
+      storyLabel: "Career chronology",
+       linkLabel: "Open project reference ↗",
+      labels: { experience: "EXPERIENCE", education: "EDUCATION", certification: "CERTIFICATION", project: "PROJECT" },
+    }
+  : {
+      title: focus === "experience" ? "Experiencia | Rafael López" : "Formación | Rafael López",
+      description: focus === "experience" ? "Trayectoria profesional de Rafael López." : "Formación y cualificaciones de Rafael López.",
+      eyebrow: focus === "experience" ? "RLP / CAREER.LOG" : "RLP / EDUCATION.LOG",
+      heading: focus === "experience" ? "Experiencia" : "Formación",
+       intro: "Una historia cronológica compartida de trabajo, estudios y cualificaciones. Los periodos muestran dónde coinciden la vida profesional y académica.",
+      storyLabel: "Cronología profesional",
+       linkLabel: "Abrir referencia del proyecto ↗",
+      labels: { experience: "EXPERIENCIA", education: "FORMACIÓN", certification: "CERTIFICACIÓN", project: "PROYECTO" },
+    };
+
+const records = getCareerRecords(locale)
+  .sort((left, right) => Number(Boolean(right.ongoing)) - Number(Boolean(left.ongoing)) || (right.startYear ?? 0) - (left.startYear ?? 0));
+for (const record of records.filter(({ relativeAfter }) => relativeAfter)) {
+  const currentIndex = records.indexOf(record);
+  const anchorIndex = records.findIndex(({ id }) => id === record.relativeAfter);
+  if (currentIndex === -1 || anchorIndex === -1) continue;
+  records.splice(currentIndex, 1);
+  records.splice(records.findIndex(({ id }) => id === record.relativeAfter) + 1, 0, record);
+}
+const labelFor = (kind: CareerRecordKind) => copy.labels[kind];
+const linkHref = (href: string) => href.startsWith("http") ? href : `${base}${href}`;
+---
+
+<BaseLayout title={copy.title} description={copy.description} lang={locale}>
+  <SiteHeader locale={locale} />
+
+  <main id="main-content" class="career-shell">
+    <section
+      class="career-page rlp-container"
+      data-career-timeline
+      data-career-focus={focus}
+      aria-labelledby="career-title"
+    >
+      <header class="career-page__header">
+        <p class="career-page__eyebrow">{copy.eyebrow}</p>
+        <h1 id="career-title">{copy.heading}</h1>
+        <p>{copy.intro}</p>
+      </header>
+
+       <section class="career-story" data-career-story aria-label={copy.storyLabel}>
+        <div class="career-timeline" data-career-axis>
+          <span class="career-timeline__rail" aria-hidden="true"></span>
+          {
+            records.map((record) => (
+              <article
+                class:list={["career-record", record.kind === focus && "is-focus", record.kind === "project" && "is-project"]}
+                data-career-record
+                data-record-kind={record.kind}
+                data-career-side={record.side}
+                data-project-record={record.kind === "project" ? "" : undefined}
+                data-period={record.period ?? undefined}
+              >
+                <div class="career-record__axis">
+                  <span class="career-record__marker" data-career-node aria-hidden="true"></span>
+                  <span class="career-record__connector" data-career-connector aria-hidden="true"></span>
+                </div>
+                <div class="career-record__body">
+                  {record.period && <p class="career-record__period" data-career-period>{record.period}</p>}
+                  <p class="career-record__label">{labelFor(record.kind)}</p>
+                  <h3>{record.title}</h3>
+                  <p class="career-record__organization">{record.organization}</p>
+                  {record.marks && <p class="career-record__marks">{record.marks}</p>}
+                  {record.context && <p class="career-record__context">{record.context}</p>}
+                  {record.summary && <p class="career-record__summary">{record.summary}</p>}
+                  {record.details.length > 0 && (
+                    <ul class="career-record__details">
+                      {record.details.map((detail) => <li>{detail}</li>)}
+                    </ul>
+                  )}
+                  {record.links && (
+                    <ul class="career-record__links" aria-label={locale === "en" ? "Related websites" : "Webs relacionados"}>
+                      {record.links.map((link) => (
+                        <li><a href={linkHref(link.href)} target={link.external ? "_blank" : undefined} rel={link.external ? "noreferrer" : undefined}>{link.label}</a></li>
+                      ))}
+                    </ul>
+                  )}
+                  {record.certificate && (
+                    <a class="career-record__certificate" href={`${base}${record.certificate.file}`} target="_blank" rel="noreferrer">
+                      {record.certificate.label} ↗
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>
+
+<style>
+  .career-shell { color: var(--theme-text); }
+  .career-page { display: grid; gap: var(--space-8); padding-block: var(--space-8); }
+  .career-page__header { display: grid; gap: var(--space-3); max-width: var(--reading-max); }
+  .career-page__header p,
+  .career-record__context,
+  .career-record__marks,
+  .career-record__summary { margin: 0; color: var(--theme-text-muted); line-height: 1.65; }
+  .career-page__header h1 { margin: 0; font-family: var(--font-sans); line-height: 1.05; }
+  .career-page__header h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+  .career-page__eyebrow,
+  .career-record__label,
+  .career-record__period,
+  .career-record__context { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .career-page__eyebrow { color: var(--theme-accent) !important; }
+  .career-story { display: grid; gap: var(--space-5); }
+  .career-timeline { position: relative; display: grid; gap: var(--space-6); }
+  .career-timeline__rail { position: absolute; top: 0.4rem; bottom: 0.4rem; left: 0.625rem; width: 2px; background: var(--theme-accent); }
+  .career-record { position: relative; display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); column-gap: var(--space-3); border-bottom: 1px solid var(--theme-line); padding-bottom: var(--space-6); }
+  .career-record:last-child { border-bottom: 0; }
+  .career-record__axis { position: relative; z-index: 1; display: flex; justify-content: center; }
+  .career-record__marker { width: 0.85rem; height: 0.85rem; margin-top: 0.2rem; border-radius: 999px; background: var(--color-rlp-cyan); animation: timeline-pulse 2.4s ease-out infinite; }
+  .career-record__connector { position: absolute; top: 0.6rem; left: 0.625rem; width: var(--space-3); height: 1px; background: var(--theme-accent); }
+  .career-record__period { margin: 0; color: var(--theme-text-muted); }
+  .career-record__body { display: grid; gap: var(--space-3); min-width: 0; }
+  .career-record__body h3 { margin: 0; font-family: var(--font-sans); font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.1; }
+  .career-record__label { margin: 0; color: var(--theme-accent) !important; }
+  .career-record__organization,
+  .career-record__marks,
+  .career-record__summary,
+  .career-record__details { margin: 0; color: var(--theme-text-muted); line-height: 1.65; }
+  .career-record__organization { font-weight: 600; color: var(--theme-text); }
+  .career-record__details { display: grid; gap: var(--space-2); padding-left: 1.25rem; }
+  .career-record__details li::marker { color: var(--theme-accent); }
+  .career-record__links { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: 0; padding: 0; list-style: none; }
+  .career-record__links a,
+  .career-record__certificate { color: var(--theme-text); text-decoration: underline; text-decoration-color: var(--theme-accent); text-underline-offset: 0.25em; }
+  .career-record__links a:hover,
+  .career-record__certificate:hover { color: var(--theme-accent); }
+  .career-record__certificate { width: fit-content; }
+  .career-record.is-project { border-bottom-style: dashed; padding-bottom: var(--space-4); }
+  .career-record.is-project .career-record__body { gap: var(--space-2); }
+  .career-record.is-project .career-record__body h3 { font-size: 1.25rem; }
+  .career-record.is-project .career-record__details { font-size: 0.9375rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .career-timeline .career-record__marker { animation: none; }
+  }
+
+  @media (min-width: 768px) {
+    .career-page { padding-block: var(--space-9); }
+    .career-timeline { grid-template-columns: minmax(0, 1fr); }
+    .career-timeline__rail { left: 50%; transform: translateX(-50%); }
+    .career-record { grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr); column-gap: var(--space-4); }
+    .career-record__axis { grid-column: 2; grid-row: 1; }
+     .career-record[data-career-side="experience"] .career-record__body { grid-column: 1; grid-row: 1; }
+     .career-record[data-career-side="experience"] .career-record__details { padding-right: 0; padding-left: 1.25rem; list-style-position: outside; }
+    .career-record[data-career-side="education"] .career-record__body { grid-column: 3; grid-row: 1; }
+    .career-record[data-career-side="experience"] .career-record__connector { right: -0.5rem; left: auto; }
+    .career-record[data-career-side="education"] .career-record__connector { left: -0.5rem; }
+    .career-record.is-project .career-record__body h3 { font-size: 1.35rem; }
+  }
+</style>

@@ -64,7 +64,7 @@ Use a light editorial canvas, clear reading column, deliberate whitespace, and e
 
 ### SiteHeader and Global Navigation
 
-`SiteHeader` is the one invariant visual navigation system on every route: RLP brand, common header height, Paper or Windows-grey surface, bottom line, consistent type hierarchy, active treatment, visible focus, ES/EN locale access, and content-fit responsiveness. Territory grammar begins below this header. Do not introduce `RLP // SYSTEM`, `C:\RLP\ROOT`, or route-specific replacement headers.
+`SiteHeader` is the one invariant visual navigation system on every route: RLP brand, common header height, Paper or Windows-grey surface, bottom line, consistent type hierarchy, active treatment, visible focus, ES/EN locale access, and content-fit responsiveness. Its primary destinations include the real locale-correct Home, Work, Production, the combined Career/Trayectoria destination for Experience and Education, Skills, and the established Spanish Blog where current navigation semantics require it. Territory grammar begins below this header. Do not introduce `RLP // SYSTEM`, `C:\RLP\ROOT`, or route-specific replacement headers.
 
 Use semantic navigation and `aria-current` for the current destination. Current state uses bounded RLP Cyan plus a visible non-color underline or line; route backgrounds are prohibited. At 320--390px, show a real keyboard-operable menu with RLP, the full navigation, and locale access. At 768px, a truthful `Más`/overflow control is acceptable. At >=1024px, show the complete navigation as space permits. Breakpoints follow content fit, not device labels.
 
@@ -82,7 +82,7 @@ Public WORK/LAB and PRODUCTION detail routes begin with a compact in-flow
 semantic backlink to their locale-correct territory index before identity and
 title.
 
-The dedicated route IA is `/` (short orientation and featured evidence), `/work/` (selected WORK and LAB artifacts), `/production/` (accountable production dossiers), `/experience/` (career record), `/education/` (education and qualifications), `/notes/` (notes index), `/notes/[slug]/` (one readable note), `/about/` (identity and working context), and `/contact/` (contact destinations and form). The English locale provides complete equivalent routes under `/en`: `/en/`, `/en/work/`, `/en/production/`, `/en/experience/`, `/en/education/`, `/en/notes/`, `/en/notes/[slug]/`, `/en/about/`, and `/en/contact/`, with equal meaning, facts, hierarchy, labels, destinations, and action priority. The established public Spanish Blog URLs `/blog/`, `/blog/desarrollo-importador-db/`, `/blog/desarrollo-cosecha-en-cope/`, and `/blog/historia-transición/` remain valid and must never become 404 as a result of the RLP v2 refactor. The new Notes IA does not break established Blog URLs.
+The dedicated route IA is `/` (short orientation and featured evidence), `/work/` (selected WORK and LAB artifacts), `/production/` (accountable production dossiers), `/experience/` (career record), `/education/` (education and qualifications), `/skills/` (capability areas and evidence), `/notes/` (notes index), `/notes/[slug]/` (one readable note), `/about/` (identity and working context), and `/contact/` (contact destinations and form). The English locale provides complete equivalent routes under `/en`: `/en/`, `/en/work/`, `/en/production/`, `/en/experience/`, `/en/education/`, `/en/skills/`, `/en/notes/`, `/en/notes/[slug]/`, `/en/about/`, and `/en/contact/`, with equal meaning, facts, hierarchy, labels, destinations, and action priority. The established public Spanish Blog URLs `/blog/`, `/blog/desarrollo-importador-db/`, `/blog/desarrollo-cosecha-en-cope/`, and `/blog/historia-transición/` remain valid and must never become 404 as a result of the RLP v2 refactor. The new Notes IA does not break established Blog URLs.
 
 ### Global Action System
 
@@ -183,6 +183,65 @@ protected and must retain their current contracts.
 Interaction motion is centralized in `src/styles/global.css` as CSS-first progressive enhancement. Restrained fast and base timings communicate affordance and state without `transition: all` or an animation dependency; physical hover movement is limited to fine pointers and removed for reduced motion. WORK ArtifactSurface may lift by one pixel, while PROD DossierSurface remains stationary and responds through documentary rules or accents. Focus remains more authoritative than hover, and empty evidence placeholders never animate.
 
 Existing bounded carousels keep native horizontal scrolling and CSS scroll snap. Motion styles remain centralized in `src/styles/global.css`; the local navigation script explicitly requests smooth scrolling, or instant scrolling when `prefers-reduced-motion` is active, so control navigation is reliable across browsers. Navigation remains finite, independent by territory, keyboard-operable, and non-autoplaying.
+
+## U10.5 Candidate — Career / Education / Skills
+
+U10.5 is a candidate, not an accepted settlement. Experience and Education
+share one normalized bilingual chronological source and one semantic career
+story, while their existing public routes remain available. Primary navigation
+exposes exactly one locale-correct `Trayectoria` / `Career` destination at
+`/experience/` and `/en/experience/`; Education remains reachable without a
+separate primary-nav item. `aria-current` and the existing header/mobile,
+locale, theme, and responsive geometry remain authoritative.
+
+CareerTimeline uses RecordSurface grammar with stable desktop semantics:
+Experience records are on the left, Education and certification records on the
+right, and one central axis carries the nodes and connectors. Mobile falls back
+to one readable left-axis column. Record headings use a consistent plain-
+language `h3` title, with the record label, organization, period, and factual
+context subordinate to it. Labels such as `EXPERIENCIA`, `FORMACIÓN`,
+`CERTIFICACIÓN`, and `PROYECTO` remain semantic text, not color-only meaning.
+Descriptions, secondary copy, lists, and project references keep natural
+reading alignment rather than inheriting the side emphasis of a title block.
+The timeline uses current RLP tokens and motion; its accent pulse is disabled
+under `prefers-reduced-motion: reduce`. No per-record Windows/card treatment,
+accordion, ribbon, or forced card equality is allowed.
+
+Only maintainer-authorized project milestones appear in the chronology as small
+secondary items on a related existing side: Cosecha en Cope is dated `12/2025`
+and tied to the DAM final project; ImportadorDB is dated `01/2026`, after DAM
+and before the AI and Big Data specialization; the undated Glea-Nexo milestone
+is placed relatively as Leovinci Consulting -> Glea-Nexo -> FP specialization
+in Artificial Intelligence and Big Data, using only recent-growth,
+AI/Big-Data-direction, and LAB-context wording. Each milestone links to its
+locale-correct Work detail. `RLP / PROD` projects are excluded from the career
+source and timeline.
+
+Skills presents four peer capability areas. Each record uses the visible kicker
+`RLP / SKILLS / 00N` followed by a separate semantic plain-language `h2`:
+`Backend`, `Data`, `Systems`, and Spanish `IA aplicada` (English `Applied AI`).
+No combined or duplicate title is rendered.
+Technologies remain secondary to capabilities and evidence, never scores,
+percentages, stars, progress bars, badge clouds, or a dashboard. A small
+curated set of recognizable marks is stored locally under `public/icons/tech/`.
+The SVGs were sourced from the Simple Icons repository's CC0-compatible
+vectors (`https://github.com/simple-icons/simple-icons`, raw files for
+OpenJDK, Python, Docker, Git, and Angular); every mark is decorative
+(`aria-hidden`, empty `alt`) and is rendered beside visible technology text
+through one restrained shared pattern. Technologies without a safely sourced
+mark remain typography-only; no remote logo URL, logo wall, tile, circle,
+gradient, animation, or special logo hover is allowed.
+
+Applied AI remains an equal capability peer. Its public copy preserves
+agent-assisted engineering workflows, explicit routing, responsibility
+boundaries, the SDD lifecycle, automated validation, traceability and attempt
+evidence, and controls against silent fallbacks. The evidence artifact is
+[`codex-workstation-baseline`](https://github.com/RafaLopezZz/codex-workstation-baseline),
+with concise evidence of 36 explicit routes, 150 assertions, routing 7/7, and
+the full SDD lifecycle; the no-silent-fallback claim is bounded to the supplied
+validation. U10.5 adds only the real bilingual Skills, Experience, and Education
+routes and does not add a KPI dashboard, glow, gradients, glass, ribbons,
+generic AI panels, or deferred territories.
 
 ## Post-GREEN Validation Gate
 
