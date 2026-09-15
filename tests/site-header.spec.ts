@@ -37,10 +37,10 @@ test("provides the durable home navigation contract", async ({ page }) => {
 
 test("exposes one combined Career destination without separate Experience or Education links", async ({ page }) => {
   for (const route of [
-    { path: "/web-site/", label: "Trayectoria", href: "/web-site/experience/", count: 6 },
-    { path: "/web-site/en/", label: "Career", href: "/web-site/en/experience/", count: 5 },
-    { path: "/web-site/education/", label: "Trayectoria", href: "/web-site/experience/", count: 6 },
-    { path: "/web-site/en/education/", label: "Career", href: "/web-site/en/experience/", count: 5 },
+    { path: "/web-site/", label: "Trayectoria", href: "/web-site/experience/", count: 7 },
+    { path: "/web-site/en/", label: "Career", href: "/web-site/en/experience/", count: 6 },
+    { path: "/web-site/education/", label: "Trayectoria", href: "/web-site/experience/", count: 7 },
+    { path: "/web-site/en/education/", label: "Career", href: "/web-site/en/experience/", count: 6 },
   ] as const) {
     await page.goto(route.path);
     const links = page.locator("#site-navigation > ul > li > a");

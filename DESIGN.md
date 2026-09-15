@@ -243,6 +243,40 @@ validation. U10.5 adds only the real bilingual Skills, Experience, and Education
 routes and does not add a KPI dashboard, glow, gradients, glass, ribbons,
 generic AI panels, or deferred territories.
 
+## U11 Candidate — Contact
+
+U11 is a candidate, not an accepted settlement. Contact is a real bilingual
+territory at `/contact/` and `/en/contact/`, using the editorial RLP surface,
+IBM Plex typography, current semantic theme tokens, and the existing shared
+technical-grid background motion. Contact is a primary navigation destination
+with one locale-correct link, and its approved tone is open and editorial.
+Desktop may compose the conversation and form side by side; mobile becomes one
+logical column. No generic SaaS card system, CRM extras, dark-only treatment, or
+invented server-side verification is allowed.
+
+The form owns an explicit finite state machine: `IDLE`, `VALIDATING`,
+`CAPTCHA`, `SUBMITTING`, `SUCCESS`, and `ERROR`. Every CAPTCHA, network, JSON
+parse, reset, abort, and timeout path must settle in recoverable `ERROR` or
+truthful `SUCCESS`; sending may never remain visually or semantically busy.
+Web3Forms and hCaptcha remain direct client-side provider infrastructure. The
+static site does not claim to verify either service server-side. Submission is
+successful only when the response is HTTP-OK and its parsed `success` value is
+exactly `true`.
+
+The four user fields are name, email, subject, and message, with existing HTML
+limits of 100, 150, 150, and 2,000 characters. Errors are field-associated,
+keyboard-reachable, announced, and never color-only. Values remain on failure;
+retry clears and safely re-acquires CAPTCHA before another submission. A bounded
+20-second `AbortController` timeout prevents infinite sending. The direct email,
+GitHub, and LinkedIn destinations remain visible as practical fallback, and the
+footer gains only the truthful locale-correct Contact link.
+
+Focused browser tests must mock the Web3Forms transport and use a deterministic
+DOM/event CAPTCHA seam; they must not require the remote hCaptcha runtime or
+claim provider delivery beyond the accepted response. Theme, focus, route parity,
+no-secret rendering, duplicate-submit prevention, timeout recovery, and the
+absence of fake actions remain part of the U11 review surface.
+
 ## Post-GREEN Validation Gate
 
 After every GREEN, run this gate in order:

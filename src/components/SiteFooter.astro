@@ -8,6 +8,8 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const navigationLabel = locale === "en" ? "Footer navigation" : "Navegación del pie";
+const contactHref = locale === "en" ? `${base}en/contact/` : `${base}contact/`;
+const contactLabel = locale === "en" ? "Contact" : "Contacto";
 ---
 
 <footer class="site-footer py-8 md:py-10">
@@ -19,6 +21,7 @@ const navigationLabel = locale === "en" ? "Footer navigation" : "Navegación del
       <a href="mailto:rlp.murcia@gmail.com" class="transition"
         >Email</a
       >
+      <a href={contactHref} class="transition">{contactLabel}</a>
       <a
         href="https://github.com/RafaLopezZz"
         target="_blank"

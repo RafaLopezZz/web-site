@@ -14,6 +14,7 @@ const production = locale === "en" ? `${base}en/production/` : `${base}productio
 const career = locale === "en" ? `${base}en/experience/` : `${base}experience/`;
 const education = locale === "en" ? `${base}en/education/` : `${base}education/`;
 const skills = locale === "en" ? `${base}en/skills/` : `${base}skills/`;
+const contact = locale === "en" ? `${base}en/contact/` : `${base}contact/`;
 const isWork = Astro.url.pathname.startsWith(work);
 const isProduction = Astro.url.pathname.startsWith(production);
 const isCareer = Astro.url.pathname.startsWith(career) || Astro.url.pathname.startsWith(education);
@@ -26,6 +27,7 @@ const links = locale === "en" ? [
   { href: production, label: "Production", current: isProduction },
   { href: career, label: "Career", current: isCareer },
   { href: skills, label: "Skills", current: isSkills },
+  { href: contact, label: "Contact", current: Astro.url.pathname.startsWith(contact) },
 ] : [
   { href: home, label: "Inicio", current: isHome },
   { href: work, label: "Trabajo", current: isWork },
@@ -33,6 +35,7 @@ const links = locale === "en" ? [
   { href: career, label: "Trayectoria", current: isCareer },
   { href: skills, label: "Habilidades", current: isSkills },
   { href: `${base}blog/`, label: "Notas", current: isBlog },
+  { href: contact, label: "Contacto", current: Astro.url.pathname.startsWith(contact) },
 ];
 ---
 

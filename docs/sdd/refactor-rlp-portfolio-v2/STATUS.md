@@ -997,3 +997,41 @@ Status: CANDIDATE GREEN — visual correction in progress; maintainer acceptance
 - **Acceptance:** Maintainer visual/editorial review remains pending. No
   acceptance, commit, push, merge, PR, or persistent preview is authorized in
   this slice.
+
+### U11 — Contact
+
+Status: GREEN — maintainer review pending. Not accepted.
+
+- **Authorized scope:** Add real `/contact/` and `/en/contact/` routes around a
+  locale-aware editorial Contact form. Keep the existing direct Email, GitHub,
+  LinkedIn, and CV fallback and add only the truthful locale-correct Contact
+  footer link plus one truthful locale-correct primary-navigation Contact link.
+- **Behavior boundary:** Use the explicit `IDLE`, `VALIDATING`, `CAPTCHA`,
+  `SUBMITTING`, `SUCCESS`, and `ERROR` states. Keep values on failure, prevent
+  duplicates, recover from CAPTCHA/provider/reset/parse/abort paths, and bound
+  Web3Forms transport with a practical 20-second timeout. Claim success only
+  for HTTP-OK plus parsed `success === true`; the static app performs no
+  server-side verification.
+- **Presentation boundary:** Reuse v2 IBM Plex/editorial controls, semantic
+  theme tokens, shared technical-grid motion, direct fallback, accessible field
+  errors, and responsive conversation/form composition. The final UI copy uses
+  an open/editorial invitation and removes CRM, filtering, and process language.
+  No CRM extras, generic SaaS visuals, fake action, private secret, or new
+  dependency is introduced.
+- **Testing boundary:** `tests/contact-form.spec.ts` uses a mocked Web3Forms
+  route and deterministic DOM/event CAPTCHA seam. It must not require the
+  external hCaptcha runtime.
+- **TDD:** Genuine RED covered the missing primary Contact link, approved
+  editorial copy, and shared background-motion ownership; GREEN now covers all
+  seven focused Contact checks without changing the form state machine.
+- **Final automated evidence:** `npm run verify:green --
+  tests/contact-form.spec.ts` PASS; Contact focused E2E PASS (7/7), named
+  header/Surface/Action/Locale/Theme regressions PASS (19/19), full E2E PASS
+  (112/112), motion regression PASS (11/11), and production build PASS (26
+  pages). The gate owned and tore down its ephemeral test preview.
+- **Final static checks:** `npx --yes @google/design.md lint DESIGN.md` PASS
+  (exit 0, no output); `git diff --check` PASS (only existing LF/CRLF warnings).
+  No automated result claims provider delivery or server-side verification.
+- **Acceptance:** Maintainer visual/editorial review remains pending; U11 is not
+  accepted. No commit, push, merge, PR, or persistent preview was made or is
+  authorized.
