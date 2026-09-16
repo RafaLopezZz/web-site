@@ -27,8 +27,8 @@ Portfolio personal estático construido con Astro 6 y Tailwind CSS. Presenta per
 
 ## Requisitos
 
-- Node.js `24` o superior
-- npm
+- Node.js `24.15` o superior
+- npm `12.0.2`
 
 ## Configuración local
 
