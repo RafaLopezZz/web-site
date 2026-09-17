@@ -82,6 +82,10 @@ Public WORK/LAB and PRODUCTION detail routes begin with a compact in-flow
 semantic backlink to their locale-correct territory index before identity and
 title.
 
+WORK/LAB/PRODUCTION detail shells keep the shared route canvas visible through
+transparent outer case containers; bounded inner Artifact/Dossier surfaces
+remain opaque.
+
 The dedicated route IA is `/` (short orientation and featured evidence), `/work/` (selected WORK and LAB artifacts), `/production/` (accountable production dossiers), `/experience/` (career record), `/education/` (education and qualifications), `/skills/` (capability areas and evidence), `/notes/` (notes index), `/notes/[slug]/` (one readable note), `/about/` (identity and working context), and `/contact/` (contact destinations and form). The English locale provides complete equivalent routes under `/en`: `/en/`, `/en/work/`, `/en/production/`, `/en/experience/`, `/en/education/`, `/en/skills/`, `/en/notes/`, `/en/notes/[slug]/`, `/en/about/`, and `/en/contact/`, with equal meaning, facts, hierarchy, labels, destinations, and action priority. The established public Spanish Blog URLs `/blog/`, `/blog/desarrollo-importador-db/`, `/blog/desarrollo-cosecha-en-cope/`, and `/blog/historia-transición/` remain valid and must never become 404 as a result of the RLP v2 refactor. The new Notes IA does not break established Blog URLs.
 
 ### Global Action System
@@ -118,6 +122,13 @@ Production cases have equal editorial dignity by default: `RLP / PROD / 001 — 
 Use screenshots, code, tests, diagrams, commits, and live links only when they are real. Never fabricate evidence, runtime claims, commits, outcomes, screenshots, or production status. Screenshots are documentary evidence with source and explanation, not marketing heroes.
 
 ### Responsive Home
+
+The Home About section uses the exact existing `src/assets/foto-perfil4.jpg`
+portrait through Astro's image pipeline, with explicit 1280×960 source
+dimensions, localized alternative text, and a restrained rectangular treatment.
+Its identity order is Rafael López, Software Developer, and the locale territory;
+the technical subtitle is `[profile.log]` in both locales; on mobile the reading
+order is heading, subtitle, portrait, identity, then prose.
 
 Responsive targets are 320px, 390px, 768px, and >=1024px. At 320--390px, Home is one column: CMD follows the hero, featured evidence stacks, navigation remains usable, and WORK and PROD remain distinct. At 768px, the hero may become two columns with CMD on the right, featured evidence remains stacked when that protects readability, and the header may use a truthful `Más` overflow. At >=1024px, hero and featured evidence may each use two columns and the complete navigation appears as space permits. Preserve semantic content, labels, destinations, primary-action priority, landmarks, readable measure, visible focus, and practical touch targets at every target. Remove decorative chrome before content; do not hide meaning, require hover, or create horizontal scrolling.
 

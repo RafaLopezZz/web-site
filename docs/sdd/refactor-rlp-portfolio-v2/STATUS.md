@@ -684,7 +684,7 @@ Status: COMPLETE — MAINTAINER ACCEPTED.
 - **Final automated evidence:** Focused motion checks PASS (10/10); named
   regressions PASS (18/18); full E2E PASS (76/76); production build PASS (16
   pages); `npx --yes @google/design.md lint DESIGN.md` PASS; and `git diff
-  --check` PASS.
+--check` PASS.
 - **Boundary:** U9.5 has no implementation.
 
 #### 1. Goal
@@ -826,11 +826,11 @@ and `12s linear infinite` diagonal up-left drift for both owners, and becomes
 static with `animation: none` for reduced motion. No JavaScript, DOM,
 stacking, or responsive-specific speed variant is part of the settlement.
 
-| Route territory | Locale routes | Themes | Viewports | Reduced motion |
-| --- | --- | --- | --- | --- |
-| Home | `/`, `/en/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
-| Work | `/work/`, `/en/work/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
-| Production | `/production/`, `/en/production/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+| Route territory | Locale routes                     | Themes      | Viewports                   | Reduced motion                               |
+| --------------- | --------------------------------- | ----------- | --------------------------- | -------------------------------------------- |
+| Home            | `/`, `/en/`                       | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+| Work            | `/work/`, `/en/work/`             | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
+| Production      | `/production/`, `/en/production/` | Light, Dark | 320, 390, 768, 1024, 1440px | Required at every viewport/theme/locale cell |
 
 #### 18. Final file boundary
 
@@ -1025,7 +1025,7 @@ Status: GREEN — maintainer review pending. Not accepted.
   editorial copy, and shared background-motion ownership; GREEN now covers all
   seven focused Contact checks without changing the form state machine.
 - **Final automated evidence:** `npm run verify:green --
-  tests/contact-form.spec.ts` PASS; Contact focused E2E PASS (7/7), named
+tests/contact-form.spec.ts` PASS; Contact focused E2E PASS (7/7), named
   header/Surface/Action/Locale/Theme regressions PASS (19/19), full E2E PASS
   (112/112), motion regression PASS (11/11), and production build PASS (26
   pages). The gate owned and tore down its ephemeral test preview.
@@ -1035,3 +1035,44 @@ Status: GREEN — maintainer review pending. Not accepted.
 - **Acceptance:** Maintainer visual/editorial review remains pending; U11 is not
   accepted. No commit, push, merge, PR, or persistent preview was made or is
   authorized.
+
+### Slice A.2 — About portrait and identity
+
+Status: IMPLEMENTED — bounded slice; visual acceptance remains pending.
+
+- The Home About section now renders the existing
+  `src/assets/foto-perfil4.jpg` through Astro Image with explicit 1280×960
+  dimensions, responsive WebP output, and locale-specific alternative text.
+- After the shared `[profile.log]` subtitle, the factual identity order is
+  Rafael López, Software Developer, and the locale territory. Desktop retains
+  the two-column identity/prose layout; mobile reads heading, subtitle,
+  portrait, identity, then prose in one column.
+- Work and Production detail outer case containers remain transparent around
+  their opaque inner Artifact/Dossier surfaces. No Production dossier prose,
+  Authority Packet, route, theme, motion, or About prose was changed.
+- Focused semantic coverage belongs to
+  `tests/m2-6-explore-about.spec.ts`; existing Explore assertions remain.
+
+### Correction slice — Production public action and shared detail canvas
+
+Status: IMPLEMENTED — bounded slice; visual acceptance remains pending.
+
+- `ProductionCase` now accepts and renders only the localized public/live-site
+  action. Private GitHub/repository actions are not rendered.
+- Production detail shells use the existing shared technical background owner;
+  the Águilas FC public action remains `https://aguilasfc.es/` with a new tab
+  and `noopener noreferrer`.
+
+  ### Final RLP Portfolio V2 release candidate
+
+Status: ACCEPTED — release candidate ready for integration.
+
+- Maintainer visual review completed.
+- Manual editorial review completed.
+- Final responsive, theme, locale, motion, accessibility and content polish accepted.
+- Full E2E suite: 124/124 PASS.
+- Production build: PASS, 28 static pages.
+- Focused GREEN gates: PASS.
+- `git diff --check`: PASS.
+- Authority Packets unchanged.
+- Scope is frozen. Only release-blocking defects may be changed before integration.
