@@ -72,10 +72,12 @@ body.bg-ink {
 .home-shell,
 .territory-index-shell,
 .case-shell,
+.production-case-shell,
+.notes-shell,
 .career-shell,
 .skills-shell,
 .contact-shell {
-  background-color: var(--theme-canvas);
+  background-color: transparent;
   background-image:
     linear-gradient(
       to right,
@@ -402,6 +404,10 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .action,
   .evidence-carousel__controls button,
   .site-header .site-header__link,
@@ -414,6 +420,8 @@ a:focus-visible {
   .home-shell,
   .territory-index-shell,
   .case-shell,
+  .production-case-shell,
+  .notes-shell,
   .career-shell,
   .skills-shell,
   .contact-shell {

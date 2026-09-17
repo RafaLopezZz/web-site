@@ -1,8 +1,22 @@
 import { expect, test } from "@playwright/test";
 
 const homes = [
-  { route: "/web-site/", labels: ["Ver todo el trabajo", "Ver casos de producción"] },
-  { route: "/web-site/en/", labels: ["View all work", "View production cases"] },
+  {
+    route: "/web-site/",
+    labels: ["Ver todo el trabajo", "Ver casos de producción"],
+    aboutTitle: "SOBRE MI",
+    aboutProfile: "[profile.log]",
+    portraitAlt: "Retrato de Rafael López",
+    territory: "Backend · Datos · Sistemas",
+  },
+  {
+    route: "/web-site/en/",
+    labels: ["View all work", "View production cases"],
+    aboutTitle: "ABOUT ME",
+    aboutProfile: "[profile.log]",
+    portraitAlt: "Portrait of Rafael López",
+    territory: "Backend · Data · Systems",
+  },
 ];
 
 for (const home of homes) {
@@ -40,9 +54,25 @@ for (const home of homes) {
 
     const aboutDesktop = await page.locator(".home-about__content").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" ").length);
     expect(aboutDesktop).toBe(2);
-    await expect(page.locator("#about-title")).toBeVisible();
-    await expect(page.locator(".home-about__header").getByText("[profile.txt]", { exact: true })).toBeVisible();
-    await expect(page.locator(".home-about__portrait")).toHaveCount(0);
+    await expect(page.locator("#about-title")).toHaveText(home.aboutTitle);
+    await expect(page.locator(".home-about__eyebrow")).toHaveText("RLP / ABOUT");
+    await expect(page.locator(".home-about__subtitle")).toHaveText(home.aboutProfile);
+    const portrait = page.locator(".home-about__portrait");
+    const portraitImage = portrait.locator("img");
+    await expect(portrait).toHaveCount(1);
+    await expect(portraitImage).toHaveAttribute("alt", home.portraitAlt);
+    await expect(portraitImage).toHaveAttribute("src", /\/_astro\/foto-perfil4\.[^/]+\.webp$/);
+    await expect(portraitImage).toHaveAttribute("srcset", /foto-perfil4\.[^,]+\.webp/);
+    const identity = page.locator(".home-about__identity > p");
+    await expect(identity).toHaveText(["Rafael López", "Software Developer", home.territory]);
+    const portraitStyle = await portrait.evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return { borderRadius: styles.borderRadius, borderWidth: styles.borderTopWidth, borderColor: styles.borderTopColor };
+    });
+    expect(portraitStyle).toEqual({ borderRadius: "0px", borderWidth: "1px", borderColor: "rgb(5, 154, 175)" });
+    expect((await portrait.boundingBox())?.width).toBeGreaterThanOrEqual(240);
+    await portrait.hover();
+    await expect(portrait).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
 
     await page.setViewportSize({ width: 320, height: 900 });
     const mobile = await page.locator(".home-explore__navigation").evaluate((element) => {
@@ -56,6 +86,18 @@ for (const home of homes) {
     expect(mobile).toEqual({ columns: 1, divider: "1px" });
     const aboutMobile = await page.locator(".home-about__content").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" ").length);
     expect(aboutMobile).toBe(1);
+    const mobileOrder = await page.locator("#about").evaluate((section) =>
+      [...section.querySelectorAll("h2, .home-about__subtitle, .home-about__portrait img, .home-about__identity > p, .home-about__copy > p")].map((element) => {
+        if (element.matches("h2")) return "heading";
+        if (element.matches(".home-about__subtitle")) return "subtitle";
+        if (element.matches("img")) return "portrait";
+        if (element.parentElement?.matches(".home-about__identity")) return "identity";
+        return "prose";
+      }),
+    );
+    expect(mobileOrder).toEqual(["heading", "subtitle", "portrait", "identity", "identity", "identity", "prose", "prose"]);
+    const mobilePortrait = await portrait.boundingBox();
+    expect(mobilePortrait?.width).toBeGreaterThanOrEqual(120);
     expect(await page.locator("html").evaluate((element) => element.scrollWidth <= window.innerWidth)).toBe(true);
   });
 }

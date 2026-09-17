@@ -8,7 +8,6 @@ export type ProductionCaseCopy = {
   stack: string;
   sections: readonly { title: string; body: string }[];
   sourcesTitle: string;
-  repository: string;
   publicSite: string;
 };
 
@@ -29,7 +28,6 @@ export const quintaBellaCase: Record<ProductionCaseLocale, ProductionCaseCopy> =
       { title: "Evidencia", body: "Repositorio público, pruebas de flujo y sitio publicado. No se muestran administración, datos reales ni checkout." },
     ],
     sourcesTitle: "Fuentes del caso",
-    repository: "Repositorio público ↗",
     publicSite: "Sitio público ↗",
   },
   en: {
@@ -48,7 +46,6 @@ export const quintaBellaCase: Record<ProductionCaseLocale, ProductionCaseCopy> =
       { title: "Evidence", body: "Public repository, flow tests, and live site. No administration, real data, or checkout is shown." },
     ],
     sourcesTitle: "Case sources",
-    repository: "Public repository ↗",
     publicSite: "Public site ↗",
   },
 };

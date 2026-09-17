@@ -5,8 +5,8 @@ const homes = [
     route: "/web-site/",
     labels: ["Ver todo el trabajo", "Ver casos de producción"],
     hrefs: ["/web-site/work/", "/web-site/production/"],
-    aboutTitle: "SOBRE MÍ",
-    profile: "[profile.txt]",
+    aboutTitle: "SOBRE MI",
+    portraitAlt: "Retrato de Rafael López",
     territory: "Backend · Datos · Sistemas",
   },
   {
@@ -14,7 +14,7 @@ const homes = [
     labels: ["View all work", "View production cases"],
     hrefs: ["/web-site/en/work/", "/web-site/en/production/"],
     aboutTitle: "ABOUT ME",
-    profile: "[profile.txt]",
+    portraitAlt: "Portrait of Rafael López",
     territory: "Backend · Data · Systems",
   },
 ];
@@ -35,12 +35,15 @@ test("replaces Home Explore with two bilingual destination links and follows it 
 
     const about = page.locator("#about");
     await expect(about.getByRole("heading", { name: home.aboutTitle, exact: true })).toBeVisible();
-    await expect(about.getByText(home.profile, { exact: true })).toBeVisible();
+    const portrait = about.locator(".home-about__portrait img");
+    await expect(portrait).toHaveCount(1);
+    await expect(portrait).toHaveAttribute("alt", home.portraitAlt);
+    await expect(portrait).toHaveAttribute("src", /\/_astro\/foto-perfil4\.[^/]+\.webp$/);
     await expect(about.getByText("Rafael López", { exact: true })).toBeVisible();
     await expect(about.getByText("Software Developer", { exact: true })).toBeVisible();
     await expect(about.getByText(home.territory, { exact: true })).toBeVisible();
     await expect(about.locator(".home-about__copy > p")).toHaveCount(2);
-    await expect(about.locator("img")).toHaveCount(0);
+    await expect(about.locator("img")).toHaveCount(1);
 
     const order = await page.locator("body > header, #hero, #featured-evidence, #explore, #about, body > footer").evaluateAll(
       (elements) => elements.map((element) => element.matches("header") ? "header" : element.matches("footer") ? "footer" : element.id),

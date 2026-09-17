@@ -6,6 +6,8 @@ import Surface from "./Surface.astro";
 import EvidenceCarousel from "./EvidenceCarousel.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { selectedWork } from "../data/selected-work";
+import { Image } from "astro:assets";
+import portrait from "../assets/foto-perfil4.jpg";
 
 interface Props {
   locale: "es" | "en";
@@ -32,16 +34,17 @@ const copy =
         exploreWork: "View all work",
         exploreProduction: "View production cases",
         aboutTitle: "ABOUT ME",
-        aboutProfile: "[profile.txt]",
+        aboutProfile: "[profile.log]",
+        aboutPortraitAlt: "Portrait of Rafael López",
         aboutRole: "Software Developer",
         aboutTerritory: "Backend · Data · Systems",
         aboutFirstParagraph:
           "My approach focuses on creating software that solves real problems, prioritizing technical robustness and operational efficiency. I work across backend environments and data management, treating code as a tool for automation and precision.",
         aboutSecondParagraph:
-          "I believe in verifiable work and direct-response engineering. My path combines technical curiosity with professional responsibility, seeking the cleanest and most maintainable implementation for each systemic challenge.",
+          "I believe in verifiable work and direct-response engineering. My path combines technical curiosity with professional responsibility, seeking the cleanest and most maintainable implementation for each challenge.",
       }
     : {
-        title: "Rafael López | Fullstack Developer",
+        title: "Rafael López | Software Developer",
         description:
           "Desarrollo software para resolver problemas reales, con especial interés en backend, datos, automatización y sistemas conectados.",
         territory: "Backend · Datos · Sistemas",
@@ -57,21 +60,20 @@ const copy =
         exploreNavigation: "Explorar",
         exploreWork: "Ver todo el trabajo",
         exploreProduction: "Ver casos de producción",
-        aboutTitle: "SOBRE MÍ",
-        aboutProfile: "[profile.txt]",
+        aboutTitle: "SOBRE MI",
+        aboutProfile: "[profile.log]",
+        aboutPortraitAlt: "Retrato de Rafael López",
         aboutRole: "Software Developer",
         aboutTerritory: "Backend · Datos · Sistemas",
         aboutFirstParagraph:
           "Mi enfoque se centra en la creación de software diseñado para resolver problemas reales, priorizando la robustez técnica y la eficiencia operativa. Trabajo en entornos de backend y gestión de datos, entendiendo el código como una herramienta de automatización y precisión.",
         aboutSecondParagraph:
-          "Creo en el trabajo verificable y en la ingeniería de respuesta directa. Mi trayectoria combina la curiosidad técnica con la responsabilidad profesional, buscando la implementación más limpia y mantenible para cada desafío sistémico.",
+          "Creo en el trabajo verificable y en la ingeniería de respuesta directa. Mi trayectoria combina la curiosidad técnica con la responsabilidad profesional, buscando la implementación más limpia y mantenible para cada desafío.",
       };
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const { workItems, productionItems } = selectedWork[locale];
-type Portrait = { src?: string; alt?: string };
-const portrait: Portrait = {};
 ---
 
 <BaseLayout title={copy.title} description={copy.description} lang={locale}>
@@ -127,7 +129,8 @@ const portrait: Portrait = {};
             </p>
             <p class="cmd-identity__row" aria-hidden="true">
               <span data-cmd-row="prompt"></span><span
-                class="cmd-identity__cursor">█</span>
+                class="cmd-identity__cursor">█</span
+              >
             </p>
           </div>
         </aside>
@@ -141,6 +144,7 @@ const portrait: Portrait = {};
         <div class="selected-work__header">
           <p class="selected-work__eyebrow">RLP / EVIDENCE</p>
           <h2 id="featured-evidence-title">{copy.evidenceTitle}</h2>
+          <p class="selected-work__subtitle">[work.log]</p>
         </div>
 
         <div class="selected-work__items">
@@ -162,22 +166,42 @@ const portrait: Portrait = {};
                     class="selected-work__artifact evidence-carousel__item"
                   >
                     <p class="selected-work__id">{item.eyebrow}</p>
-                    {item.showMediaSlot && (
-                      <div
-                        class="selected-work__media-slot"
-                        data-territory-media-slot
-                        aria-hidden="true"
-                      />
-                    )}
-                    {
-                      item.action && !item.action.external ? (
-                        <a class="selected-work__title-link" href={`${base}${item.action.href}`}>
-                          <h4>{item.title}</h4>
-                        </a>
+                    {item.showMediaSlot &&
+                      (item.media ? (
+                        <figure
+                          class="selected-work__media-slot"
+                          data-territory-media-slot
+                        >
+                          <Image
+                            src={item.media.image}
+                            alt={item.media.alt[locale]}
+                            width={item.media.image.width}
+                            height={item.media.image.height}
+                            widths={[640, 960, 1280, 1600]}
+                            sizes="(min-width: 1024px) 50vw, 100vw"
+                            format="webp"
+                            quality={90}
+                            loading="lazy"
+                          />
+                          <figcaption>{item.media.caption[locale]}</figcaption>
+                        </figure>
                       ) : (
+                        <div
+                          class="selected-work__media-slot"
+                          data-territory-media-slot
+                          aria-hidden="true"
+                        />
+                      ))}
+                    {item.action && !item.action.external ? (
+                      <a
+                        class="selected-work__title-link"
+                        href={`${base}${item.action.href}`}
+                      >
                         <h4>{item.title}</h4>
-                      )
-                    }
+                      </a>
+                    ) : (
+                      <h4>{item.title}</h4>
+                    )}
                     <p>{item.summary}</p>
                     <p class="selected-work__engineering">
                       {item.techHighlights}
@@ -211,20 +235,41 @@ const portrait: Portrait = {};
                     <p class="selected-work__id">
                       RLP / PROD / {item.id.slice(-3)}
                     </p>
-                    <div
-                      class="selected-work__media-slot"
-                      data-territory-media-slot
-                      aria-hidden="true"
-                    />
-                    {
-                      item.action && !item.action.external ? (
-                        <a class="selected-work__title-link" href={`${base}${item.action.href}`}>
-                          <h4>{item.title}</h4>
-                        </a>
-                      ) : (
+                    {item.media ? (
+                      <figure
+                        class="selected-work__media-slot"
+                        data-territory-media-slot
+                      >
+                        <Image
+                          src={item.media.image}
+                          alt={item.media.alt[locale]}
+                          width={item.media.image.width}
+                          height={item.media.image.height}
+                          widths={[640, 960, 1280, 1600]}
+                          sizes="(min-width: 1024px) 50vw, 100vw"
+                          format="webp"
+                          quality={90}
+                          loading="lazy"
+                        />
+                        <figcaption>{item.media.caption[locale]}</figcaption>
+                      </figure>
+                    ) : (
+                      <div
+                        class="selected-work__media-slot"
+                        data-territory-media-slot
+                        aria-hidden="true"
+                      />
+                    )}
+                    {item.action && !item.action.external ? (
+                      <a
+                        class="selected-work__title-link"
+                        href={`${base}${item.action.href}`}
+                      >
                         <h4>{item.title}</h4>
-                      )
-                    }
+                      </a>
+                    ) : (
+                      <h4>{item.title}</h4>
+                    )}
                     <p>{item.summary}</p>
                     <p class="selected-work__engineering">
                       {item.techHighlights}
@@ -237,7 +282,11 @@ const portrait: Portrait = {};
                             : `${base}${item.action.href}`
                         }
                         target={item.action.external ? "_blank" : undefined}
-                        rel={item.action.external ? "noreferrer" : undefined}
+                        rel={
+                          item.action.external
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
                       >
                         {item.action.label}
                       </ActionLink>
@@ -288,18 +337,24 @@ const portrait: Portrait = {};
 
       <section id="about" class="home-about" aria-labelledby="about-title">
         <div class="home-about__header">
+          <p class="home-about__eyebrow">RLP / ABOUT</p>
           <h2 id="about-title">{copy.aboutTitle}</h2>
-          <p>{copy.aboutProfile}</p>
+          <p class="home-about__subtitle">{copy.aboutProfile}</p>
         </div>
         <div class="home-about__content">
           <div class="home-about__identity">
-            {
-              portrait.src && portrait.alt && (
-                <figure class="home-about__portrait">
-                  <img src={portrait.src} alt={portrait.alt} />
-                </figure>
-              )
-            }
+            <figure class="home-about__portrait">
+              <Image
+                src={portrait}
+                alt={copy.aboutPortraitAlt}
+                width={portrait.width}
+                height={portrait.height}
+                widths={[320, 480, 640, 960]}
+                sizes="(min-width: 768px) 20rem, min(20rem, calc(100vw - 2rem))"
+                format="webp"
+                loading="lazy"
+              />
+            </figure>
             <p>Rafael López</p>
             <p>{copy.aboutRole}</p>
             <p>{copy.aboutTerritory}</p>
@@ -422,7 +477,6 @@ const portrait: Portrait = {};
 
 <style>
   .home-shell {
-    background-color: var(--theme-canvas);
     color: var(--theme-text);
   }
   .home-hero {
@@ -548,21 +602,24 @@ const portrait: Portrait = {};
     border-top: 1px solid var(--theme-line);
   }
   .selected-work__header {
-    display: grid;
-    gap: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
     max-width: var(--reading-max);
   }
+  .selected-work__eyebrow {
+    width: 100%;
+  }
   .selected-work__eyebrow,
-  .selected-work__id {
+  .selected-work__id,
+  .home-about__eyebrow {
     margin: 0;
-    color: var(--theme-text-muted);
+    color: var(--theme-accent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.08em;
-  }
-  .selected-work__id {
-    color: var(--theme-accent);
   }
   .selected-work h2,
   .selected-work h3,
@@ -572,7 +629,11 @@ const portrait: Portrait = {};
     line-height: 1.05;
   }
   .selected-work h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-transform: uppercase;
   }
   .selected-work h3 {
     font-size: clamp(1.25rem, 2vw, 1.5rem);
@@ -616,6 +677,11 @@ const portrait: Portrait = {};
     font-size: 0.875rem;
   }
   .selected-work__media-slot {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
     aspect-ratio: 16 / 9;
     border: 1px solid var(--theme-line);
     background: linear-gradient(
@@ -623,6 +689,25 @@ const portrait: Portrait = {};
       var(--theme-surface-raised),
       var(--theme-canvas)
     );
+  }
+  .selected-work__media-slot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .selected-work__media-slot figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0.35rem 0.5rem;
+    background: color-mix(in srgb, var(--theme-surface) 90%, transparent);
+    color: var(--theme-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.3;
   }
   .selected-work__dossier {
     display: grid;
@@ -707,14 +792,19 @@ const portrait: Portrait = {};
   .home-about__copy p {
     margin: 0;
   }
+  .home-about__eyebrow {
+    width: 100%;
+  }
   .home-about__header h2 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 500;
     letter-spacing: -0.04em;
     line-height: 1;
   }
-  .home-about__header p,
+  .home-about__subtitle,
+  .selected-work__subtitle,
   .home-about__identity p:last-child {
+    margin: 0;
     color: var(--theme-accent);
     font-family: var(--font-mono);
     font-size: 0.6875rem;
@@ -722,6 +812,7 @@ const portrait: Portrait = {};
   }
   .home-about__content {
     display: grid;
+    align-items: start;
     gap: var(--space-7);
   }
   .home-about__identity {
@@ -738,12 +829,25 @@ const portrait: Portrait = {};
   }
   .home-about__portrait {
     margin: 0 0 var(--space-3);
-    max-width: 14rem;
+    max-width: 20rem;
+    border: 1px solid var(--color-rlp-cyan);
+    border-radius: 0;
+    transition: border-color var(--motion-fast) var(--ease-standard);
   }
   .home-about__portrait img {
     display: block;
     width: 100%;
     height: auto;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .home-about__portrait:hover {
+      border-color: transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-about__portrait {
+      transition-duration: 0s;
+    }
   }
   .home-about__copy {
     display: grid;
@@ -764,7 +868,7 @@ const portrait: Portrait = {};
       border-left: 1px solid var(--theme-line);
     }
     .home-about__content {
-      grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
     }
   }
 </style>

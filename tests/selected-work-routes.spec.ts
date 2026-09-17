@@ -53,8 +53,8 @@ test("keeps the Work index free of horizontal overflow across themes and canonic
 
 test("keeps Production public indexes within the approved factual boundary", async ({ page }) => {
   for (const entry of [
-    { route: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella ↗", caseRoute: "/web-site/production/quinta-bella/" },
-    { route: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella ↗", caseRoute: "/web-site/en/production/quinta-bella/" },
+    { route: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella ↗", aguilasAction: "Ver Águilas FC ↗", aguilasRoute: "/web-site/production/aguilas-fc/", caseRoute: "/web-site/production/quinta-bella/" },
+    { route: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella ↗", aguilasAction: "View Águilas FC ↗", aguilasRoute: "/web-site/en/production/aguilas-fc/", caseRoute: "/web-site/en/production/quinta-bella/" },
   ]) {
     await page.goto(entry.route);
     const index = page.locator('main [data-territory-index="production"]');
@@ -64,6 +64,10 @@ test("keeps Production public indexes within the approved factual boundary", asy
     await expect(index.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
     await expect(index.locator('[data-surface="dossier"]')).toHaveCount(3);
+    const aguilas = index.getByRole("link", { name: entry.aguilasAction, exact: true });
+    await expect(aguilas).toHaveAttribute("href", entry.aguilasRoute);
+    await expect(aguilas).not.toHaveAttribute("target");
+    await expect(aguilas).not.toHaveAttribute("rel");
     await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveAttribute("href", entry.caseRoute);
 
     await expect(index.locator(".territory-index__facts")).toHaveCount(0);

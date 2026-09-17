@@ -241,7 +241,7 @@ test.describe("U11 Contact", () => {
     await expect(page.locator("#contact-form")).toHaveAttribute("data-contact-state", "ERROR", { timeout: 1_000 });
     await expect(page.locator("#contact-form")).toHaveAttribute("aria-busy", "false");
     await expect(page.getByLabel("Nombre", { exact: true })).toHaveValue(validValues.es.name);
-    await expect(page.locator("main.contact-shell")).toHaveCSS("background-color", "rgb(28, 29, 29)");
+    await expect(page.locator("main.contact-shell")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await expect(page.getByRole("button", { name: "Reintentar", exact: true })).toBeVisible();
   });
 });

@@ -4,6 +4,7 @@ import Surface from "./Surface.astro";
 import TerritoryIndex from "./TerritoryIndex.astro";
 import { gleaNexoIndex } from "../data/glea-nexo-case";
 import { selectedWork } from "../data/selected-work";
+import { Image } from "astro:assets";
 
 interface Props {
   locale: "es" | "en";
@@ -11,6 +12,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const gleaMedia = selectedWork[locale].workItems.find((item) => item.id === "lab001")?.media;
 const copy = locale === "en"
   ? {
       title: "Work | Rafael López",
@@ -32,7 +34,24 @@ const copy = locale === "en"
   {selectedWork[locale].workItems.filter((item) => item.category === "work").map((item) => (
     <Surface variant="artifact" class="territory-index__record">
       <p class="territory-index__id">{item.eyebrow}</p>
-      <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
+      {item.media ? (
+        <figure class="territory-index__media-slot" data-territory-media-slot>
+          <Image
+            src={item.media.image}
+            alt={item.media.alt[locale]}
+            width={item.media.image.width}
+            height={item.media.image.height}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            format="webp"
+            quality={90}
+            loading="lazy"
+          />
+          <figcaption>{item.media.caption[locale]}</figcaption>
+        </figure>
+      ) : (
+        <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
+      )}
       <h2>{item.title}</h2>
       <p class="territory-index__summary">{item.summary}</p>
       <p class="territory-index__tech">{item.techHighlights}</p>
@@ -42,7 +61,24 @@ const copy = locale === "en"
   <Surface variant="artifact" class="territory-index__record" data-lab-record>
     <p class="territory-index__id">{gleaNexoIndex[locale].eyebrow}</p>
     <p class="territory-index__status">{gleaNexoIndex[locale].status}</p>
-    <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
+    {gleaMedia ? (
+      <figure class="territory-index__media-slot" data-territory-media-slot>
+        <Image
+          src={gleaMedia.image}
+          alt={gleaMedia.alt[locale]}
+          width={gleaMedia.image.width}
+          height={gleaMedia.image.height}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          format="webp"
+          quality={90}
+          loading="lazy"
+        />
+        <figcaption>{gleaMedia.caption[locale]}</figcaption>
+      </figure>
+    ) : (
+      <div class="territory-index__media-slot" data-territory-media-slot aria-hidden="true"></div>
+    )}
     <h2>{gleaNexoIndex[locale].title}</h2>
     <p class="territory-index__summary">{gleaNexoIndex[locale].summary}</p>
     <p class="territory-index__tech">{gleaNexoIndex[locale].techHighlights}</p>

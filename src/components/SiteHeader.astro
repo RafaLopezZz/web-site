@@ -1,4 +1,6 @@
 ---
+import logo from "../assets/logo-cyan.svg";
+
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
@@ -8,7 +10,7 @@ interface Props {
 
 const { locale = "es" } = Astro.props;
 const home = locale === "en" ? `${base}en/` : base;
-const isBlog = locale === "es" && Astro.url.pathname.startsWith(`${base}blog`);
+const isNotes = Astro.url.pathname.startsWith(`${base}blog`);
 const work = locale === "en" ? `${base}en/work/` : `${base}work/`;
 const production = locale === "en" ? `${base}en/production/` : `${base}production/`;
 const career = locale === "en" ? `${base}en/experience/` : `${base}experience/`;
@@ -21,28 +23,30 @@ const isCareer = Astro.url.pathname.startsWith(career) || Astro.url.pathname.sta
 const isSkills = Astro.url.pathname.startsWith(skills);
 const isHome = Astro.url.pathname === home;
 
-const links = locale === "en" ? [
-  { href: home, label: "Home", current: isHome },
-  { href: work, label: "Work", current: isWork },
-  { href: production, label: "Production", current: isProduction },
-  { href: career, label: "Career", current: isCareer },
-  { href: skills, label: "Skills", current: isSkills },
-  { href: contact, label: "Contact", current: Astro.url.pathname.startsWith(contact) },
-] : [
-  { href: home, label: "Inicio", current: isHome },
-  { href: work, label: "Trabajo", current: isWork },
-  { href: production, label: "Producción", current: isProduction },
-  { href: career, label: "Trayectoria", current: isCareer },
-  { href: skills, label: "Habilidades", current: isSkills },
-  { href: `${base}blog/`, label: "Notas", current: isBlog },
-  { href: contact, label: "Contacto", current: Astro.url.pathname.startsWith(contact) },
-];
+const navigationItems = [
+  { href: { es: home, en: `${base}en/` }, label: { es: "Inicio", en: "Home" }, current: isHome },
+  { href: { es: work, en: `${base}en/work/` }, label: { es: "Trabajo", en: "Work" }, current: isWork },
+  { href: { es: production, en: `${base}en/production/` }, label: { es: "Producción", en: "Production" }, current: isProduction },
+  { href: { es: career, en: `${base}en/experience/` }, label: { es: "Trayectoria", en: "Career" }, current: isCareer },
+  { href: { es: skills, en: `${base}en/skills/` }, label: { es: "Habilidades", en: "Skills" }, current: isSkills },
+  { href: { es: `${base}blog/`, en: `${base}blog/` }, label: { es: "Notas", en: "Notes" }, current: isNotes },
+  { href: { es: contact, en: `${base}en/contact/` }, label: { es: "Contacto", en: "Contact" }, current: Astro.url.pathname.startsWith(contact) },
+] as const;
+
+const links = navigationItems.map((item) => ({
+  href: item.href[locale],
+  label: item.label[locale],
+  current: item.current,
+}));
 ---
 
 <header class="site-header">
   <div class="rlp-container">
     <nav class="site-header__nav" aria-label="Primary navigation">
-      <a class="site-header__brand" href={home}>RLP</a>
+      <a class="site-header__brand" href={home} aria-label="Rafael López" title="Rafael López">
+        <img src={logo.src} alt="" width="48" height="44" />
+        <span class="sr-only">Rafael López</span>
+      </a>
 
       <div class="site-header__primary">
         <div id="site-navigation" class="site-header__menu" hidden>
@@ -81,8 +85,8 @@ const links = locale === "en" ? [
           </svg>
           <input id="theme-control-range" type="range" min="0" max="2" step="1" value="0" aria-label="Preferencia de tema" aria-valuetext="Sistema" />
         </div>
-        <button id="site-menu-toggle" class="site-header__toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Open navigation">
-          <span aria-hidden="true">Menu</span>
+        <button id="site-menu-toggle" class="site-header__toggle" type="button" data-menu-locale={locale} aria-controls="site-navigation" aria-expanded="false" aria-label={locale === "en" ? "Open menu" : "Abrir menú"}>
+          <span class="site-header__menu-icon" data-menu-icon="closed" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
       </div>
 
@@ -93,6 +97,7 @@ const links = locale === "en" ? [
 <script is:inline>
   const toggle = document.querySelector("#site-menu-toggle");
   const menu = document.querySelector("#site-navigation");
+  const menuIcon = document.querySelector("[data-menu-icon]");
   const themeControl = document.querySelector("#theme-control");
   const themeRange = document.querySelector("#theme-control-range");
   const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -125,20 +130,26 @@ const links = locale === "en" ? [
     });
   }
 
-  const closeMenu = (restoreFocus = false) => {
+  const menuLocale = toggle?.getAttribute("data-menu-locale") === "en" ? "en" : "es";
+  const menuLabels = menuLocale === "en"
+    ? { open: "Open menu", close: "Close menu" }
+    : { open: "Abrir menú", close: "Cerrar menú" };
+
+  const setMenuState = (open, restoreFocus = false) => {
     if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
-    menu.hidden = true;
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open navigation");
+    menu.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? menuLabels.close : menuLabels.open);
+    menuIcon?.setAttribute("data-menu-icon", open ? "open" : "closed");
     if (restoreFocus) toggle.focus();
   };
+
+  const closeMenu = (restoreFocus = false) => setMenuState(false, restoreFocus);
 
   if (toggle instanceof HTMLButtonElement && menu instanceof HTMLElement) {
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") === "true";
-      menu.hidden = isOpen;
-      toggle.setAttribute("aria-expanded", String(!isOpen));
-      toggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+      setMenuState(!isOpen);
     });
 
     menu.addEventListener("click", (event) => {
@@ -182,6 +193,9 @@ const links = locale === "en" ? [
   }
 
   .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     border-bottom: 2px solid transparent;
     font-size: 1.125rem;
     font-weight: 700;
@@ -189,15 +203,59 @@ const links = locale === "en" ? [
     text-decoration: none;
   }
 
+  .site-header__brand img {
+    width: 3rem;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .site-header__brand .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   .site-header__toggle {
+    display: grid;
     min-width: 2.75rem;
     min-height: 2.75rem;
+    place-items: center;
     border: 1px solid var(--theme-text);
     background: transparent;
     color: inherit;
     font-size: 0.875rem;
     letter-spacing: 0.04em;
+    padding: 0;
   }
+
+  .site-header__menu-icon {
+    position: relative;
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .site-header__menu-icon span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    transition: transform var(--motion-fast) var(--ease-standard), opacity var(--motion-fast) var(--ease-standard);
+  }
+
+  .site-header__menu-icon span:first-child { transform: translateY(calc(-50% - 6px)); }
+  .site-header__menu-icon span:nth-child(2) { transform: translateY(-50%); }
+  .site-header__menu-icon span:last-child { transform: translateY(calc(-50% + 6px)); }
+  .site-header__menu-icon[data-menu-icon="open"] span:first-child { transform: translateY(-50%) rotate(45deg); }
+  .site-header__menu-icon[data-menu-icon="open"] span:nth-child(2) { opacity: 0; }
+  .site-header__menu-icon[data-menu-icon="open"] span:last-child { transform: translateY(-50%) rotate(-45deg); }
 
   .site-header__utility {
     display: flex;
@@ -344,7 +402,8 @@ const links = locale === "en" ? [
   .site-header__theme[data-theme-preference="dark"] .site-header__theme-slider { transform: translateX(48px); }
 
   @media (prefers-reduced-motion: reduce) {
-    .site-header__theme-slider { transition: none; }
+    .site-header__theme-slider,
+    .site-header__menu-icon span { transition: none; }
   }
 
   @media (min-width: 900px) {

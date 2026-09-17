@@ -24,7 +24,7 @@ export const cosechaCase = {
     outcomeTitle: "Resultado",
     outcome: "Caso académico presentado y aprobado, con decisiones de arquitectura y límites técnicos explícitos.",
     source: "Ver repositorio ↗",
-    blog: "Leer el artículo técnico →",
+    blog: "Artículo técnico · ES →",
   },
   en: {
     title: "Cosecha en Cope",

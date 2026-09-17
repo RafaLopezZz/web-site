@@ -16,7 +16,7 @@ const locales = [
     orders: "órdenes específicas por productor",
     s3: "AWS S3",
     manualS3: ["validé manualmente", "operaciones reales", "subida", "borrado"],
-    articleLink: "Leer el artículo técnico →",
+    articleLink: "Artículo técnico · ES →",
     articleCaseLink: "Ver el caso de Cosecha en Cope →",
     altCover: "Portada del proyecto Cosecha en Cope, un marketplace agrícola",
     altArchitecture: "Arquitectura híbrida de Cosecha en Cope",

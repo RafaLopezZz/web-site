@@ -48,7 +48,7 @@ test("defines a centralized restrained CSS-first interaction contract", async ()
   expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   expect(css).toContain(".site-header .site-header__link");
   expect(css).toContain(".territory-index__records .surface.surface--dossier:hover");
-  expect(header).not.toContain("var(--motion-");
+  expect(header).toContain("var(--motion-fast)");
   expect(territoryIndex).not.toContain("surface--dossier:hover");
   expect(css).not.toMatch(/transition\s*:\s*all\b/);
   expect(packageJson).not.toMatch(/gsap|framer-motion|anime(?:js)?|motion-one|swiper|aos/i);
@@ -188,7 +188,7 @@ test("keeps bilingual themed routes overflow-safe at canonical widths", async ({
   }
 });
 
-test("shares an active technical background across Home, Work, and Production", async ({ page }) => {
+test("shares an active technical background across Home, Work, Production, and Notes", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
 
   let sharedContract: Record<string, string> | undefined;
@@ -196,6 +196,8 @@ test("shares an active technical background across Home, Work, and Production", 
     { route: `${root}/`, shell: "main.home-shell" },
     { route: `${root}/work/`, shell: "main.territory-index-shell" },
     { route: `${root}/production/`, shell: "main.territory-index-shell" },
+    { route: `${root}/blog/`, shell: "main.notes-shell" },
+    { route: `${root}/blog/desarrollo-importador-db/`, shell: "main.notes-shell" },
     { route: `${root}/work/importador-db/`, shell: "main.case-shell" },
   ]) {
     await page.goto(route);
@@ -211,6 +213,7 @@ test("shares an active technical background across Home, Work, and Production", 
         backgroundSize: style.backgroundSize,
         animationDuration: style.animationDuration,
         animationTimingFunction: style.animationTimingFunction,
+        backgroundColor: style.backgroundColor,
         hasActiveAnimation: element.getAnimations().some((animation) => animation.playState === "running"),
         hasNonZeroDuration: style.animationDuration.split(",").some((duration) => Number.parseFloat(duration) > 0),
       };
@@ -219,6 +222,7 @@ test("shares an active technical background across Home, Work, and Production", 
     const afterPosition = await owner.evaluate((element) => getComputedStyle(element).backgroundPosition);
 
     expect(before.backgroundImage).not.toBe("none");
+    expect(before.backgroundColor).toBe("rgba(0, 0, 0, 0)");
     expect(before.hasActiveAnimation).toBe(true);
     expect(before.hasNonZeroDuration).toBe(true);
     expect(afterPosition).not.toBe(before.backgroundPosition);
@@ -229,6 +233,76 @@ test("shares an active technical background across Home, Work, and Production", 
   }
 });
 
+test("keeps shared shell ownership transparent across light, dark, and system themes", async ({ page }) => {
+  const routes = [
+    `${root}/work/`,
+    `${root}/work/importador-db/`,
+    `${root}/blog/`,
+    `${root}/blog/desarrollo-importador-db/`,
+  ];
+
+  for (const theme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme: theme });
+    await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
+    for (const route of routes) {
+      await page.goto(route);
+      const shell = page.locator("main");
+      await expect(shell).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+      await expect(shell).toHaveCSS("background-image", /linear-gradient/);
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+    }
+  }
+
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.addInitScript(() => localStorage.removeItem("rlp-theme"));
+  await page.goto(`${root}/blog/`);
+  await expect(page.locator("html")).toHaveAttribute("data-theme-preference", "system");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator("main")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(page.locator("main")).toHaveCSS("background-image", /linear-gradient/);
+});
+
+test("keeps Notes on the shared background owner without Notes-specific motion", async ({ page }) => {
+  const css = await readFile("src/styles/global.css", "utf8");
+  expect(css).not.toMatch(/\.notes-shell\s*\{/);
+
+  for (const route of [`${root}/blog/`, `${root}/blog/desarrollo-cosecha-en-cope/`]) {
+    await page.goto(route);
+    const notes = page.locator("main.notes-shell");
+    await expect(notes).toBeVisible();
+    await expect(notes).toHaveCSS("background-size", /64px 64px/);
+    await expect(notes).toHaveCSS("animation-name", "technical-background-drift");
+    await expect(notes).toHaveCSS("animation-duration", "12s");
+  }
+});
+
+test("keeps Notes shells page-sized so the shared grid is not clipped by the content container", async () => {
+  const [index, article] = await Promise.all([
+    readFile("src/pages/blog/index.astro", "utf8"),
+    readFile("src/pages/blog/[slug].astro", "utf8"),
+  ]);
+
+  for (const source of [index, article]) {
+    expect(source).toMatch(/<main[^>]+class="notes-shell"/);
+    expect(source).toContain('<div class="rlp-container py-10 md:py-14">');
+    expect(source).not.toMatch(/<main[^>]+class="notes-shell rlp-container/);
+  }
+});
+
+test("keeps page-size shells transparent while semantic content surfaces remain readable", async ({ page }) => {
+  for (const { route, shell, surface } of [
+    { route: `${root}/work/importador-db/`, shell: "main.case-shell", surface: 'main.case-shell [data-surface="artifact"]' },
+    { route: `${root}/blog/`, shell: "main.notes-shell", surface: ".blog-post-card" },
+    { route: `${root}/blog/desarrollo-importador-db/`, shell: "main.notes-shell", surface: ".blog-article__figure" },
+  ]) {
+    await page.goto(route);
+    await expect(page.locator(shell)).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await expect(page.locator(shell)).toHaveCSS("background-image", /linear-gradient/);
+    await expect(page.locator(surface).first()).toBeVisible();
+    await expect(page.locator(surface).first()).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  }
+});
+
 test("keeps technical backgrounds inactive and stable for reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
 
@@ -236,6 +310,8 @@ test("keeps technical backgrounds inactive and stable for reduced motion", async
     { route: `${root}/`, shell: "main.home-shell" },
     { route: `${root}/work/`, shell: "main.territory-index-shell" },
     { route: `${root}/production/`, shell: "main.territory-index-shell" },
+    { route: `${root}/blog/`, shell: "main.notes-shell" },
+    { route: `${root}/blog/desarrollo-importador-db/`, shell: "main.notes-shell" },
     { route: `${root}/work/importador-db/`, shell: "main.case-shell" },
   ]) {
     await page.goto(route);
@@ -246,6 +322,13 @@ test("keeps technical backgrounds inactive and stable for reduced motion", async
     expect(await owner.evaluate((element) => element.getAnimations().some((animation) => animation.playState === "running"))).toBe(false);
     await expect(owner).toHaveCSS("background-position", beforePosition);
   }
+});
+
+test("disables document smooth scrolling for reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`${root}/`);
+
+  await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
 });
 
 test("progresses the CMD identity body without moving its title bar or layout", async ({ page }) => {

@@ -44,6 +44,9 @@ test("classifies Glea-Nexo as LAB in Work and selects it through Home data", () 
   expect(workIndex).toContain('variant="artifact"');
   expect(selectedWork).toContain("Glea-Nexo");
   expect(selectedWork).toContain("RLP / LAB / 001");
+  expect(selectedWork).toContain("glea-nexo.png");
+  expect(selectedWork).toContain("importador-db_old.png");
+  expect(selectedWork).not.toContain("importador-db.png");
   expect(home).toContain("item.eyebrow");
   expect(existsSync(resolve(root, "src/content/projects/glea-nexo.md"))).toBe(false);
   expect(home).not.toContain("gleaNexoIndex");
@@ -91,6 +94,7 @@ test("defines the bilingual six-section LAB contract and only accepted public st
   ]) expect(data.toLowerCase()).not.toContain(forbidden.toLowerCase());
 
   expect(component).toContain("WorkCase");
+  expect(component).toContain("glea-nexo.png");
   expect(component).not.toContain("<img");
 });
 
@@ -158,6 +162,13 @@ test("uses only Spanish editorial and status vocabulary on the rendered Spanish 
     "reprocesado",
     "recorrido extremo a extremo",
   ]) expect(text).toContain(required);
+
+  const image = surface.locator(".case__media img");
+  await expect(image).toHaveAttribute("src", /\/_astro\/glea-nexo[^/]+\.webp$/);
+  await expect(image).toHaveAttribute("srcset", /640w/);
+  await expect(image).toHaveAttribute("alt", /Node-RED/);
+  await expect(image).toHaveAttribute("loading", "lazy");
+  await expect(surface).not.toContainText(/Production-ready|production claim|listo para producción/i);
 });
 
 test("keeps all authority packets unchanged", () => {

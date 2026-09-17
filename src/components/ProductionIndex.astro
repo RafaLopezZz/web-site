@@ -30,5 +30,5 @@ const copy = locale === "en"
 ---
 
 <TerritoryIndex locale={locale} territory="production" {...copy}>
-  {productionItems.map((item) => <ProductionDossier item={item} eyebrow={copy.eyebrow} />)}
+  {productionItems.map((item) => <ProductionDossier locale={locale} item={item} eyebrow={copy.eyebrow} />)}
 </TerritoryIndex>

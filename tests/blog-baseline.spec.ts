@@ -48,6 +48,9 @@ test("preserves the local blog index semantic baseline", async ({ page }) => {
 
   expect(response?.ok()).toBe(true);
   await expect(page.title()).resolves.toContain("Rafael López");
+  await expect(page.locator(".blog-index__accent")).toHaveText("RLP / NOTES");
+  await expect(page.locator(".blog-post-card__kind")).toHaveText(["Notas", "Notas", "Notas"]);
+  await expect(page.getByRole("link", { name: "Notas", exact: true })).toHaveAttribute("aria-current", "page");
 
   for (const article of articles) {
     await expect(
@@ -67,6 +70,7 @@ for (const article of articles) {
     await expect(
       page.getByRole("heading", { name: article.deepHeading }),
     ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Volver a notas", exact: true })).toHaveAttribute("href", "/web-site/blog");
     await expect(page.getByAltText(article.coverAlt)).toBeVisible();
 
     if (article.additionalImageAlt) {

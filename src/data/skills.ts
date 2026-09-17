@@ -43,10 +43,27 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
       en: "I design and build applications and APIs with attention to business rules and relational data.",
     },
     capabilities: {
-      es: ["Aplicaciones web", "APIs REST", "Lógica de negocio", "Persistencia relacional"],
-      en: ["Web applications", "REST APIs", "Business logic", "Relational persistence"],
+      es: [
+        "Aplicaciones web",
+        "APIs REST",
+        "Lógica de negocio",
+        "Persistencia relacional",
+      ],
+      en: [
+        "Web applications",
+        "REST APIs",
+        "Business logic",
+        "Relational persistence",
+      ],
     },
-    technologies: ["Java", "Spring Boot", "PHP", "Laravel", "PostgreSQL", "MySQL"],
+    technologies: [
+      "Java",
+      "Spring Boot",
+      "PHP",
+      "Laravel",
+      "PostgreSQL",
+      "MySQL",
+    ],
   },
   {
     id: "data",
@@ -57,10 +74,29 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
       en: "I work with data from relational modelling and SQL to exploration and machine learning in training.",
     },
     capabilities: {
-      es: ["Modelado relacional", "Consultas SQL", "Exploración de datos", "Visualización", "Machine learning"],
-      en: ["Relational modelling", "SQL queries", "Data exploration", "Visualization", "Machine learning"],
+      es: [
+        "Modelado relacional",
+        "Consultas SQL",
+        "Exploración de datos",
+        "Visualización",
+        "Machine learning",
+      ],
+      en: [
+        "Relational modelling",
+        "SQL queries",
+        "Data exploration",
+        "Visualization",
+        "Machine learning",
+      ],
     },
-    technologies: ["PostgreSQL", "MySQL", "Python", "Machine Learning", "Visualización de datos", "Business Intelligence"],
+    technologies: [
+      "PostgreSQL",
+      "MySQL",
+      "Python",
+      "Machine Learning",
+      "Visualización de datos",
+      "Business Intelligence",
+    ],
   },
   {
     id: "systems",
@@ -71,10 +107,28 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
       en: "I maintain a practical foundation in systems, networks, automation, and support for real environments.",
     },
     capabilities: {
-      es: ["Soporte técnico", "Entornos Windows y Linux", "Automatización", "Continuidad sin conexión"],
-      en: ["Technical support", "Windows and Linux environments", "Automation", "Offline continuity"],
+      es: [
+        "Soporte técnico",
+        "Entornos Windows y Linux",
+        "Automatización",
+        "Continuidad sin conexión",
+      ],
+      en: [
+        "Technical support",
+        "Windows and Linux environments",
+        "Automation",
+        "Offline continuity",
+      ],
     },
-    technologies: ["Bash / Shell", "PowerShell", "Git", "Docker", "MQTT", "Node-RED", "SQLite"],
+    technologies: [
+      "Bash / Shell",
+      "PowerShell",
+      "Git",
+      "Docker",
+      "MQTT",
+      "Node-RED",
+      "SQLite",
+    ],
   },
   {
     id: "applied-ai",
@@ -107,8 +161,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
     technologies: [],
     evidence: {
       intro: {
-        es: "La evidencia pública se limita a la validación suministrada del flujo de trabajo.",
-        en: "The public evidence is limited to the supplied validation of the workflow.",
+        es: "Workflows de desarrollo asistido por agentes con routing explícito, ciclos SDD, validación automatizada y controles para evitar fallbacks silenciosos.",
+        en: "Development workflows with explicit routing, SDD cycles, automated validation, and safeguards against silent fallbacks.",
       },
       statements: {
         es: [
@@ -126,7 +180,10 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
           "The no-silent-fallback claim is bounded to the supplied validation.",
         ],
       },
-      linkLabel: { es: "Ver artefacto de evidencia ↗", en: "View evidence artifact ↗" },
+      linkLabel: {
+        es: "Ver repositorio ↗",
+        en: "View repository ↗",
+      },
     },
   },
 ];

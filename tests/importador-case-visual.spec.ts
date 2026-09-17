@@ -33,7 +33,15 @@ test("presents the U10 evidence contract for ImportadorDB in both locales", asyn
         await expect(caseStudy).not.toContainText("Java 25");
         await expect(caseStudy).not.toContainText("AES-256");
         await expect(caseStudy).not.toContainText("SXSSFWorkbook");
-        await expect(caseStudy.locator("figure img")).toHaveCount(1);
+         await expect(caseStudy.locator("figure img")).toHaveCount(1);
+         const evidence = caseStudy.locator("figure img");
+         await expect(evidence).toHaveAttribute("src", /\/_astro\/importador-db_old[^/]+\.webp$/);
+         await expect(evidence).toHaveAttribute("srcset", /640w/);
+         await expect(evidence).toHaveAttribute("sizes", "(min-width: 1024px) 50vw, 100vw");
+         await expect(evidence).toHaveAttribute("loading", "lazy");
+         await expect(evidence).toHaveAttribute("width", "1200");
+         await expect(evidence).toHaveAttribute("height", "801");
+         await expect(evidence).toHaveAttribute("alt", /ImportadorDB/);
         await expect(caseStudy.getByRole("link", { name: article, exact: true })).toHaveAttribute("href", "/web-site/blog/desarrollo-importador-db/");
         await expect(page.locator("html")).toHaveJSProperty("scrollWidth", width);
 

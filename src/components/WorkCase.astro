@@ -5,6 +5,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFooter from "./SiteFooter.astro";
 import SiteHeader from "./SiteHeader.astro";
 import Surface from "./Surface.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 type CaseCopy = {
   title: string;
@@ -26,7 +28,9 @@ type CaseCopy = {
   relatedLinks?: readonly { href: string; label: string }[];
 };
 
-type Media = { src: string; alt: string; caption: string };
+type Media =
+  | { image: ImageMetadata; alt: string; caption: string }
+  | { src: string; alt: string; caption: string };
 
 interface Props {
   locale: "es" | "en";
@@ -65,7 +69,21 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
         <div class="case__media">
           {media.map((item) => (
             <figure>
-              <img src={item.src} alt={item.alt} loading="lazy" />
+              {"image" in item ? (
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  width={item.image.width}
+                  height={item.image.height}
+                  widths={[640, 960, 1280, 1600]}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  format="webp"
+                  quality={90}
+                  loading="lazy"
+                />
+              ) : (
+                <img src={item.src} alt={item.alt} loading="lazy" />
+              )}
               <figcaption>{item.caption}</figcaption>
             </figure>
           ))}
@@ -122,7 +140,7 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
 </BaseLayout>
 
 <style>
-  .case-shell { background-color: var(--theme-canvas); color: var(--theme-text); }
+  .case-shell { color: var(--theme-text); }
   .case { display: grid; gap: var(--space-7); margin-block: var(--space-8); padding-block: var(--space-6); }
   .case__hero, .case__body section { display: grid; gap: var(--space-4); max-width: var(--reading-max); }
   .case__hero > p, .case__body section > p, li, figcaption { margin: 0; color: var(--theme-text-muted); line-height: 1.7; }

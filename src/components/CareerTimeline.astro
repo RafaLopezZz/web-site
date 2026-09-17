@@ -95,7 +95,7 @@ const linkHref = (href: string) => href.startsWith("http") ? href : `${base}${hr
                   {record.links && (
                     <ul class="career-record__links" aria-label={locale === "en" ? "Related websites" : "Webs relacionados"}>
                       {record.links.map((link) => (
-                        <li><a href={linkHref(link.href)} target={link.external ? "_blank" : undefined} rel={link.external ? "noreferrer" : undefined}>{link.label}</a></li>
+                        <li><a href={linkHref(link.href)} target={link.href.startsWith("http") || link.external ? "_blank" : undefined} rel={link.href.startsWith("http") || link.external ? "noopener noreferrer" : undefined}>{link.label}</a></li>
                       ))}
                     </ul>
                   )}

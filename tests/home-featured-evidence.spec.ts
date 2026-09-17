@@ -20,7 +20,7 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.getByRole("heading", { name: home.endsWith("/en/") ? "Work" : "Trabajo", exact: true })).toHaveCount(0);
     await expect(production.getByRole("heading", { name: home.endsWith("/en/") ? "Production" : "Producción", exact: true })).toHaveCount(0);
     await expect(work.locator('[data-evidence-track] article[data-surface="artifact"]')).toHaveCount(3);
-    await expect(work.locator("[data-territory-media-slot]")).toHaveCount(2);
+     await expect(work.locator("[data-territory-media-slot]")).toHaveCount(3);
     await expect(work.getByText("RLP / WORK / 001", { exact: true })).toBeVisible();
     await expect(work.getByText("RLP / WORK / 002", { exact: true })).toBeVisible();
     await expect(work.getByText("RLP / LAB / 001", { exact: true })).toBeVisible();
@@ -29,11 +29,17 @@ test("presents pure selected-work category carousels with verified records", asy
     const glea = work.locator("article").filter({ hasText: "Glea-Nexo" });
     await expect(glea).toHaveCount(1);
     await expect(glea.getByRole("heading", { name: "Glea-Nexo", exact: true })).toBeVisible();
-    await expect(glea.locator("[data-territory-media-slot], img, picture, video")).toHaveCount(0);
+     await expect(glea.locator("[data-territory-media-slot]")).toHaveCount(1);
+     await expect(glea.locator("img")).toHaveAttribute("src", /\/[_a-z]+\/[^/]+\.webp$/);
+     await expect(glea.locator("img")).toHaveAttribute("srcset", /640w/);
+     await expect(glea.locator("img")).toHaveAttribute("alt", /Glea-Nexo/);
+     const importador = work.locator("article").filter({ hasText: "ImportadorDB" });
+     await expect(importador.locator("img")).toHaveAttribute("alt", /ImportadorDB/);
+     await expect(importador.locator("img")).toHaveAttribute("src", /importador-db_old[^/]*\.webp$/);
     await expect(glea).toContainText(home.endsWith("/en/")
       ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries."
       : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
-    await expect(glea).not.toContainText(/AI|Big Data|Production|real agricultural sensor|real agricultural dataset/i);
+     await expect(glea).not.toContainText(/AI|Big Data|Production|real agricultural sensor|real agricultural dataset/i);
     const workActions = work.getByRole("link", { name: home.endsWith("/en/") ? "View case →" : "Ver caso →", exact: true });
     await expect(workActions).toHaveCount(3);
     await expect(workActions.nth(1)).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
@@ -51,9 +57,21 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(production.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
+    await expect(production.locator("img")).toHaveCount(3);
+    for (const image of await production.locator("img").all()) {
+      await expect(image).toHaveAttribute("src", /\/_astro\/[^/]+\.webp$/);
+      await expect(image).toHaveAttribute("srcset", /640w/);
+      await expect(image).toHaveAttribute("srcset", /1280w/);
+      await expect(image).toHaveAttribute("sizes", "(min-width: 1024px) 50vw, 100vw");
+    }
+    const aguilas = production.getByRole("link", { name: /Águilas FC.*↗/ });
+    await expect(aguilas).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
+    await expect(aguilas).not.toHaveAttribute("target");
+    await expect(aguilas).not.toHaveAttribute("rel");
     await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
     await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("target", "_blank");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noreferrer");
+    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(production.getByRole("link", { name: home.endsWith("/en/") ? "View Quinta Bella ↗" : "Ver Quinta Bella ↗", exact: true })).not.toHaveAttribute("target");
     const previous = production.getByRole("button", { name: home.endsWith("/en/") ? "Previous" : "Caso anterior" });
     const next = production.getByRole("button", { name: home.endsWith("/en/") ? "Next" : "Caso siguiente" });
     await expect(production.getByRole("button")).toHaveCount(2);
@@ -220,7 +238,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
     });
 
     const titleLinks = page.locator("#featured-evidence .selected-work__title-link");
-    await expect(titleLinks).toHaveCount(4);
+    await expect(titleLinks).toHaveCount(5);
     for (const title of await titleLinks.all()) {
       await title.focus();
       await expect(title).toBeFocused();
@@ -250,16 +268,17 @@ test("links only routable Home project titles without fake or nested anchors", a
     const titleLinks = evidence.locator(".selected-work__title-link");
     const english = home.endsWith("/en/");
 
-    await expect(titleLinks).toHaveCount(4);
+    await expect(titleLinks).toHaveCount(5);
     await expect(titleLinks.nth(0)).toHaveAttribute("href", english ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
     await expect(titleLinks.nth(1)).toHaveAttribute("href", english ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(titleLinks.nth(2)).toHaveAttribute("href", english ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
-    await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
-    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(1);
+    await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
+    await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
+    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(2);
     await expect(evidence.locator("a[href='#'], a[href='']")).toHaveCount(0);
     await expect(evidence.locator("a a, article a article")).toHaveCount(0);
 
-    for (const title of ["Águilas FC", "La Ola Art Gallery"]) {
+    for (const title of ["La Ola Art Gallery"]) {
       const heading = evidence.getByRole("heading", { name: title, exact: true });
       expect(await heading.evaluate((element) => element.closest("a") === null)).toBe(true);
     }

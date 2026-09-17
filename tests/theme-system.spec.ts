@@ -132,7 +132,8 @@ test("keeps semantic theme outputs readable and CMD terminal invariant across ro
       await page.setViewportSize({ width, height: 900 });
       await page.goto(home);
       await expectNoOverflow(page);
-      await expect(page.locator("main")).toHaveCSS("background-color", colorScheme === "light" ? "rgb(242, 240, 234)" : "rgb(28, 29, 29)");
+       await expect(page.locator("main")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+       await expect(page.locator("body")).toHaveCSS("background-color", colorScheme === "light" ? "rgb(242, 240, 234)" : "rgb(28, 29, 29)");
       await expect(page.locator(".cmd-identity__terminal")).toHaveCSS("background-color", "rgb(12, 12, 12)");
       const terminalRuleColor = await page.evaluate(() => {
         for (const sheet of document.styleSheets) {

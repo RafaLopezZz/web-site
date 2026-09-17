@@ -26,12 +26,25 @@ test("keeps one visual record composition with territory-specific semantic surfa
 
     for (const record of await records.all()) {
       await expect(record.locator(":scope > .territory-index__id")).toHaveCount(1);
-      await expect(record.locator(":scope > [data-territory-media-slot][aria-hidden=\"true\"]")).toHaveCount(1);
+      await expect(record.locator(":scope > [data-territory-media-slot]")).toHaveCount(1);
+      if (await record.locator(":scope > [data-territory-media-slot] img").count()) {
+        await expect(record.locator(":scope > [data-territory-media-slot] img")).toHaveCount(1);
+      } else {
+        await expect(record.locator(":scope > [data-territory-media-slot][aria-hidden=\"true\"]")).toHaveCount(1);
+      }
       await expect(record.locator(":scope > h2")).toHaveCount(1);
       await expect(record.locator(":scope > .territory-index__summary")).toHaveCount(1);
       await expect(record.locator(":scope > .territory-index__tech")).toHaveCount(1);
     }
   }
+});
+
+test("removes only the records-container top border while keeping record separators", async ({ page }) => {
+  await page.goto("/web-site/production/");
+
+  const records = page.locator('[data-territory-index="production"] .territory-index__records');
+  await expect(records).toHaveCSS("border-top-width", "0px");
+  await expect(records.locator(":scope > .territory-index__record").first()).toHaveCSS("border-bottom-width", "1px");
 });
 
 test("keeps Work and Production semantics outside the shared visual shell", () => {
