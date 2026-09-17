@@ -47,7 +47,7 @@ test("renders the shared chronological career story with supported overlap in bo
           title: "Cosecha en Cope",
           side: "education",
           period: "12/2025",
-          context: "Proyecto final del DAM.",
+          context: "Proyecto final de DAM.",
         },
         {
           title: "ImportadorDB",
@@ -81,7 +81,7 @@ test("renders the shared chronological career story with supported overlap in bo
         { kind: "education", text: "EDUCATION", count: 3 },
         { kind: "certification", text: "CERTIFICATION", count: 4 },
       ],
-      workTitle: "Fullstack Developer and Systems Technician",
+      workTitle: "Full-stack Developer and Systems Technician",
       studyTitle:
         "Higher Vocational Training in Multiplatform Application Development",
       periods: ["2024 - Present", "2023 - 2025", "12/2025", "01/2026"],
@@ -109,7 +109,7 @@ test("renders the shared chronological career story with supported overlap in bo
         },
       ],
       relativeOrder: [
-        "Fullstack Developer and Systems Technician",
+        "Full-stack Developer and Systems Technician",
         "Glea-Nexo",
         "FP specialization course in Artificial Intelligence and Big Data",
       ],

@@ -98,8 +98,8 @@ test("keeps Home evidence product-first and compact while retaining approved sou
       ? "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow."
       : "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.");
     await expect(work).toContainText(english
-      ? "Marketplace for producers and consumers: catalog, authentication, and purchase."
-      : "Marketplace para productores y consumidores: catálogo, autenticación y compra.");
+      ? "Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client."
+      : "Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular.");
     await expect(work).toContainText("Java 21 · JavaFX · JDBC");
     await expect(work).toContainText("Java · Angular · PostgreSQL");
     await expect(work).toContainText(english ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries." : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");

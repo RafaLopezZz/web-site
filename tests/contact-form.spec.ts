@@ -5,7 +5,7 @@ const routes = [
     path: "/web-site/contact/",
     lang: "es",
     heading: "Contacto",
-    intro: "Si quieres hablar sobre software, proyectos, automatización o alguna idea en la que pueda aportar, estaré encantado de leerte.",
+    intro: "Si quieres hablar sobre software, proyectos, automatización o alguna idea en la que pueda ayudar, estaré encantado de leerte.",
     contextTitle: "Hablemos",
     context: "¿Tienes un proyecto, una idea o una pregunta? Escríbeme y cuéntame un poco. No hace falta preparar nada especial.",
     directTitle: "También puedes encontrarme aquí",

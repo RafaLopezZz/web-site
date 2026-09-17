@@ -39,8 +39,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
     kicker: { es: "RLP / SKILLS / 001", en: "RLP / SKILLS / 001" },
     title: { es: "Backend", en: "Backend" },
     description: {
-      es: "Diseño y desarrollo de aplicaciones y APIs con atención a reglas de negocio y datos relacionales.",
-      en: "I design and build applications and APIs with attention to business rules and relational data.",
+      es: "Conecto APIs, lógica de aplicación y persistencia para convertir requisitos en soluciones que funcionen dentro del sistema completo.",
+      en: "I connect APIs, application logic, and persistence to turn requirements into solutions that work within the complete system.",
     },
     capabilities: {
       es: [
@@ -70,8 +70,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
     kicker: { es: "RLP / SKILLS / 002", en: "RLP / SKILLS / 002" },
     title: { es: "Data", en: "Data" },
     description: {
-      es: "Trabajo con datos desde el modelado relacional y SQL hasta la exploración y el aprendizaje automático en formación.",
-      en: "I work with data from relational modelling and SQL to exploration and machine learning in training.",
+      es: "Trabajo con datos relacionales, SQL y análisis para que los procesos y decisiones del sistema se apoyen en información fiable.",
+      en: "I work with relational data, SQL, and analysis so that system processes and decisions are based on reliable information.",
     },
     capabilities: {
       es: [
@@ -103,8 +103,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
     kicker: { es: "RLP / SKILLS / 003", en: "RLP / SKILLS / 003" },
     title: { es: "Systems", en: "Systems" },
     description: {
-      es: "Mantengo una base práctica en sistemas, redes, automatización y soporte de entornos reales.",
-      en: "I maintain a practical foundation in systems, networks, automation, and support for real environments.",
+      es: "Es la capa donde backend y datos tienen que funcionar de verdad: sistemas, redes, automatización, dispositivos y continuidad.",
+      en: "This is where backend and data have to work in practice: systems, networks, automation, devices, and continuity.",
     },
     capabilities: {
       es: [
@@ -135,8 +135,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
     kicker: { es: "RLP / SKILLS / 004", en: "RLP / SKILLS / 004" },
     title: { es: "IA aplicada", en: "Applied AI" },
     description: {
-      es: "Capacidad de integrar asistencia de agentes en ingeniería sin delegar el criterio, los límites ni la validación.",
-      en: "A capability for integrating agent assistance into engineering without delegating judgment, boundaries, or validation.",
+      es: "Uso agentes como herramientas de ingeniería: yo mantengo el criterio y los límites; el agente ejecuta tareas delimitadas que después pueden validarse.",
+      en: "I use agents as engineering tools: I retain judgment and boundaries; the agent executes bounded tasks whose results can then be validated.",
     },
     capabilities: {
       es: [
