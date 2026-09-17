@@ -1,0 +1,30 @@
+---
+interface Props {
+  technology: string;
+}
+
+const { technology } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const iconByTechnology: Readonly<Record<string, string>> = {
+  Java: "openjdk.svg",
+  Python: "python.svg",
+  Docker: "docker.svg",
+  Git: "git.svg",
+  Angular: "angular.svg",
+};
+const icon = iconByTechnology[technology];
+---
+
+<span class="technology-mark" data-tech-mark>
+  {icon && <img src={`${base}icons/tech/${icon}`} alt="" aria-hidden="true" width="16" height="16" loading="lazy" decoding="async" />}
+  <span class="technology-mark__name">{technology}</span>
+</span>
+
+<style>
+  .technology-mark { display: inline-flex; min-height: 1.5rem; align-items: center; gap: var(--space-2); }
+  .technology-mark img { width: 1rem; height: 1rem; opacity: 0.86; filter: brightness(0) saturate(100%) invert(48%) sepia(87%) saturate(1141%) hue-rotate(145deg) brightness(88%) contrast(95%); }
+  :global(:root[data-theme="dark"]) .technology-mark img { filter: brightness(0) saturate(100%) invert(72%) sepia(32%) saturate(755%) hue-rotate(140deg) brightness(87%) contrast(87%); }
+  .technology-mark__name { color: inherit; }
+</style>

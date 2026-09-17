@@ -1,62 +1,207 @@
-import type { SkillCategory } from "./types";
+export type SkillsLocale = "es" | "en";
 
-export const skillCategories: SkillCategory[] = [
+type LocalizedText = {
+  es: string;
+  en: string;
+};
+
+export type SkillDomain = {
+  id: "backend" | "data" | "systems" | "applied-ai";
+  kicker: string;
+  title: string;
+  description: string;
+  capabilities: readonly string[];
+  technologies: readonly string[];
+  evidence?: {
+    intro: string;
+    statements: readonly string[];
+    linkLabel: string;
+  };
+};
+
+type LocalizedSkillDomain = {
+  id: SkillDomain["id"];
+  kicker: LocalizedText;
+  title: LocalizedText;
+  description: LocalizedText;
+  capabilities: { es: readonly string[]; en: readonly string[] };
+  technologies: readonly string[];
+  evidence?: {
+    intro: LocalizedText;
+    statements: { es: readonly string[]; en: readonly string[] };
+    linkLabel: LocalizedText;
+  };
+};
+
+const localizedDomains: readonly LocalizedSkillDomain[] = [
   {
-    title: "Backend",
-    description: "Java, Spring Boot, APIs REST y bases de datos relacionales.",
-    skills: [
-      { name: "Java", icon: "openjdk" },
-      { name: "Spring Boot", icon: "springboot" },
-      { name: "APIs REST" },
-      { name: "PostgreSQL", icon: "postgresql" },
-      { name: "MySQL", icon: "mysql" },
-      { name: "PHP", icon: "php" },
-      { name: "Laravel", icon: "laravel" },
-      { name: "Bash / Shell", icon: "gnubash" },
+    id: "backend",
+    kicker: { es: "RLP / SKILLS / 001", en: "RLP / SKILLS / 001" },
+    title: { es: "Backend", en: "Backend" },
+    description: {
+      es: "Diseño y desarrollo de aplicaciones y APIs con atención a reglas de negocio y datos relacionales.",
+      en: "I design and build applications and APIs with attention to business rules and relational data.",
+    },
+    capabilities: {
+      es: [
+        "Aplicaciones web",
+        "APIs REST",
+        "Lógica de negocio",
+        "Persistencia relacional",
+      ],
+      en: [
+        "Web applications",
+        "REST APIs",
+        "Business logic",
+        "Relational persistence",
+      ],
+    },
+    technologies: [
+      "Java",
+      "Spring Boot",
+      "PHP",
+      "Laravel",
+      "PostgreSQL",
+      "MySQL",
     ],
   },
   {
-    title: "Frontend",
-    description:
-      "Interfaces claras con Angular, TypeScript y base sólida en HTML y CSS.",
-    skills: [
-      { name: "Angular", icon: "angular" },
-      { name: "TypeScript", icon: "typescript" },
-      { name: "HTML", icon: "html5" },
-      { name: "CSS", icon: "css" },
-      { name: "Bootstrap", icon: "bootstrap" },
-      { name: "Tailwind", icon: "tailwindcss" },
-      { name: "Thymeleaf", icon: "thymeleaf" },
+    id: "data",
+    kicker: { es: "RLP / SKILLS / 002", en: "RLP / SKILLS / 002" },
+    title: { es: "Data", en: "Data" },
+    description: {
+      es: "Trabajo con datos desde el modelado relacional y SQL hasta la exploración y el aprendizaje automático en formación.",
+      en: "I work with data from relational modelling and SQL to exploration and machine learning in training.",
+    },
+    capabilities: {
+      es: [
+        "Modelado relacional",
+        "Consultas SQL",
+        "Exploración de datos",
+        "Visualización",
+        "Machine learning",
+      ],
+      en: [
+        "Relational modelling",
+        "SQL queries",
+        "Data exploration",
+        "Visualization",
+        "Machine learning",
+      ],
+    },
+    technologies: [
+      "PostgreSQL",
+      "MySQL",
+      "Python",
+      "Machine Learning",
+      "Visualización de datos",
+      "Business Intelligence",
     ],
   },
   {
-    title: "Herramientas",
-    description:
-      "Trabajo habitual con control de versiones, documentación y despliegues sencillos.",
-    skills: [
-      { name: "Git", icon: "git" },
-      { name: "GitHub", icon: "github" },
-      { name: "Docker básico", icon: "docker" },
-      { name: "Swagger", icon: "swagger" },
-      { name: "Postman", icon: "postman" },
-      { name: "Railway", icon: "railway" },
+    id: "systems",
+    kicker: { es: "RLP / SKILLS / 003", en: "RLP / SKILLS / 003" },
+    title: { es: "Systems", en: "Systems" },
+    description: {
+      es: "Mantengo una base práctica en sistemas, redes, automatización y soporte de entornos reales.",
+      en: "I maintain a practical foundation in systems, networks, automation, and support for real environments.",
+    },
+    capabilities: {
+      es: [
+        "Soporte técnico",
+        "Entornos Windows y Linux",
+        "Automatización",
+        "Continuidad sin conexión",
+      ],
+      en: [
+        "Technical support",
+        "Windows and Linux environments",
+        "Automation",
+        "Offline continuity",
+      ],
+    },
+    technologies: [
+      "Bash / Shell",
+      "PowerShell",
+      "Git",
+      "Docker",
+      "MQTT",
+      "Node-RED",
+      "SQLite",
     ],
   },
   {
-    title: "Aprendiendo y practicando",
-    description:
-      "Tecnologías y áreas que estoy trabajando en la especialización de IA y Big Data para ampliar base técnica.",
-    skills: [
-      { name: "Python", icon: "python" },
-      { name: "Machine Learning" },
-      { name: "Deep Learning" },
-      { name: "Visualización de datos" },
-      { name: "Business Intelligence" },
-      { name: "Testing" },
-      { name: "CI / CD" },
-      { name: "AWS" },
-      { name: "MongoDB", icon: "mongodb" },
-      { name: "Astro", icon: "astro" },
-    ],
+    id: "applied-ai",
+    kicker: { es: "RLP / SKILLS / 004", en: "RLP / SKILLS / 004" },
+    title: { es: "IA aplicada", en: "Applied AI" },
+    description: {
+      es: "Capacidad de integrar asistencia de agentes en ingeniería sin delegar el criterio, los límites ni la validación.",
+      en: "A capability for integrating agent assistance into engineering without delegating judgment, boundaries, or validation.",
+    },
+    capabilities: {
+      es: [
+        "Flujos de ingeniería asistidos por agentes",
+        "Enrutamiento explícito",
+        "Límites de responsabilidad",
+        "Ciclo de vida SDD",
+        "Validación automatizada",
+        "Trazabilidad y evidencia de intentos",
+        "Controles contra fallbacks silenciosos",
+      ],
+      en: [
+        "Agent-assisted engineering workflows",
+        "Explicit routing",
+        "Responsibility boundaries",
+        "SDD lifecycle",
+        "Automated validation",
+        "Traceability and attempt evidence",
+        "Controls against silent fallbacks",
+      ],
+    },
+    technologies: [],
+    evidence: {
+      intro: {
+        es: "Workflows de desarrollo asistido por agentes con routing explícito, ciclos SDD, validación automatizada y controles para evitar fallbacks silenciosos.",
+        en: "Development workflows with explicit routing, SDD cycles, automated validation, and safeguards against silent fallbacks.",
+      },
+      statements: {
+        es: [
+          "36 rutas explícitas",
+          "150 aserciones",
+          "enrutamiento de proveedores/modelos 7/7",
+          "Ciclo de vida SDD completo",
+          "La ausencia de fallback silencioso queda acotada a la validación suministrada.",
+        ],
+        en: [
+          "36 explicit routes",
+          "150 assertions",
+          "7/7 provider/model routing",
+          "Full SDD lifecycle",
+          "The no-silent-fallback claim is bounded to the supplied validation.",
+        ],
+      },
+      linkLabel: {
+        es: "Ver repositorio ↗",
+        en: "View repository ↗",
+      },
+    },
   },
 ];
+
+export function getSkillDomains(locale: SkillsLocale): readonly SkillDomain[] {
+  return localizedDomains.map((domain) => ({
+    id: domain.id,
+    kicker: domain.kicker[locale],
+    title: domain.title[locale],
+    description: domain.description[locale],
+    capabilities: domain.capabilities[locale],
+    technologies: domain.technologies,
+    evidence: domain.evidence
+      ? {
+          intro: domain.evidence.intro[locale],
+          statements: domain.evidence.statements[locale],
+          linkLabel: domain.evidence.linkLabel[locale],
+        }
+      : undefined,
+  }));
+}

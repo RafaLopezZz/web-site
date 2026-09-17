@@ -1,0 +1,79 @@
+---
+interface Props {
+  id: string;
+  itemCount: number;
+  previousLabel: string;
+  nextLabel: string;
+}
+
+const { id, itemCount, previousLabel, nextLabel } = Astro.props;
+---
+
+<div id={id} class="evidence-carousel" data-evidence-carousel>
+  <div class="evidence-carousel__track" data-evidence-track tabindex="0">
+    <slot />
+  </div>
+  {itemCount > 1 && (
+    <footer class="evidence-carousel__footer" data-evidence-footer>
+      <p class="evidence-carousel__position" data-evidence-position aria-live="polite">01 / {String(itemCount).padStart(2, "0")}</p>
+      <div class="evidence-carousel__controls">
+        <button type="button" data-evidence-previous aria-label={previousLabel} disabled>←</button>
+        <button type="button" data-evidence-next aria-label={nextLabel}>→</button>
+      </div>
+    </footer>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-evidence-carousel]").forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>("[data-evidence-track]");
+    if (!track) return;
+
+    const previous = carousel.querySelector<HTMLButtonElement>("[data-evidence-previous]");
+    const next = carousel.querySelector<HTMLButtonElement>("[data-evidence-next]");
+    const position = carousel.querySelector<HTMLElement>("[data-evidence-position]");
+    const items = track.querySelectorAll<HTMLElement>(".evidence-carousel__item");
+    let index = 0;
+
+    const update = (nextIndex: number) => {
+      index = Math.max(0, Math.min(nextIndex, items.length - 1));
+      if (position) position.textContent = `${String(index + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+      if (previous) previous.disabled = index === 0;
+      if (next) next.disabled = index === items.length - 1;
+    };
+
+    const move = (offset: number) => {
+      update(index + offset);
+      track.scrollTo({
+        left: index * track.clientWidth,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      });
+    };
+
+    previous?.addEventListener("click", () => move(-1));
+    next?.addEventListener("click", () => move(1));
+    track.addEventListener("scroll", () => {
+      if (!track.clientWidth) return;
+      update(Math.round(track.scrollLeft / track.clientWidth));
+    });
+    update(0);
+  });
+</script>
+
+<style>
+  .evidence-carousel { display: grid; gap: var(--space-3); min-width: 0; }
+  .evidence-carousel__track { display: flex; min-width: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .evidence-carousel__track::-webkit-scrollbar { display: none; }
+  .evidence-carousel__track :global(.evidence-carousel__item) { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+   .evidence-carousel__footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 2.75rem; margin-top: var(--space-5); border-top: 1px solid var(--theme-line); padding-top: var(--space-3); }
+   .evidence-carousel__position { margin: 0; color: var(--theme-accent); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; white-space: nowrap; }
+   .evidence-carousel__controls { display: flex; flex-shrink: 0; gap: var(--space-2); }
+  .evidence-carousel__controls button { display: grid; width: 2.75rem; min-height: 2.75rem; place-items: center; border: 1px solid var(--theme-text); background: var(--theme-surface); color: var(--theme-text); font: 500 1.125rem/1 var(--font-mono); }
+   .evidence-carousel__controls button:active { border-color: var(--theme-accent); color: var(--theme-accent); }
+   .evidence-carousel__controls button:disabled { cursor: not-allowed; border-color: var(--theme-line); color: var(--theme-text-muted); opacity: 1; }
+  @media (min-width: 1024px) {
+    .evidence-carousel { height: 100%; grid-template-rows: minmax(0, 1fr) auto; }
+    .evidence-carousel__track { min-height: 0; }
+    .evidence-carousel__footer { flex-wrap: nowrap; }
+  }
+</style>

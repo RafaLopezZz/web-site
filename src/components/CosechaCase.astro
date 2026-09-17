@@ -1,0 +1,33 @@
+---
+import WorkCase from "./WorkCase.astro";
+import { cosechaCase } from "../data/cosecha-case";
+import cover from "../content/blog/images/cosecha-en-cope.png";
+import architecture from "../content/blog/images/cosechaencope_arquitectura.png";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+const copy = cosechaCase[locale];
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const media = [
+  {
+    src: cover.src,
+    alt: locale === "es"
+      ? "Portada del proyecto Cosecha en Cope, un marketplace agrícola"
+      : "Cosecha en Cope project cover, an agricultural marketplace",
+    caption: locale === "es" ? "Portada documental del proyecto." : "Documentary project cover.",
+  },
+  {
+    src: architecture.src,
+    alt: locale === "es" ? "Arquitectura híbrida de Cosecha en Cope" : "Cosecha en Cope hybrid architecture",
+    caption: locale === "es" ? "Diagrama de la arquitectura híbrida." : "Hybrid architecture diagram.",
+  },
+];
+---
+
+<WorkCase
+  locale={locale}
+  caseId="cosecha-en-cope"
+  copy={copy}
+  sourceHref="https://github.com/RafaLopezZz/CosechaEnCope"
+  blogHref={`${base}blog/desarrollo-cosecha-en-cope/`}
+  media={media}
+/>

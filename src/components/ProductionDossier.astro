@@ -1,0 +1,55 @@
+---
+import ActionLink from "./ActionLink.astro";
+import Surface from "./Surface.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  locale: "es" | "en";
+  item: {
+    id: string;
+    title: string;
+    summary: string;
+    techHighlights: string;
+    media: {
+      image: ImageMetadata;
+      alt: { es: string; en: string };
+      caption: { es: string; en: string };
+    };
+    action?: { href: string; label: string; external?: boolean };
+  };
+  eyebrow: string;
+}
+
+const { locale, item, eyebrow } = Astro.props;
+---
+
+<Surface variant="dossier" class="territory-index__record production-dossier" data-production-record>
+  <p class="territory-index__id">{eyebrow} / {item.id.slice(-3)}</p>
+  <figure class="territory-index__media-slot" data-territory-media-slot>
+    <Image
+      src={item.media.image}
+      alt={item.media.alt[locale]}
+      width={item.media.image.width}
+      height={item.media.image.height}
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      format="webp"
+      quality={90}
+      loading="lazy"
+    />
+    <figcaption>{item.media.caption[locale]}</figcaption>
+  </figure>
+  <h2>{item.title}</h2>
+  <p class="territory-index__summary">{item.summary}</p>
+  <p class="territory-index__tech">{item.techHighlights}</p>
+  {item.action && (
+    <ActionLink
+      href={item.action.href}
+      target={item.action.external ? "_blank" : undefined}
+      rel={item.action.external ? "noopener noreferrer" : undefined}
+    >
+      {item.action.label}
+    </ActionLink>
+  )}
+</Surface>

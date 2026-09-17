@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Navbar from "../../components/Navbar.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -24,100 +24,112 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={`${post.data.title} | Rafael López`} description={post.data.excerpt} image={post.data.cover}>
-  <Navbar />
+  <SiteHeader />
 
-  <main id="main-content" class="editorial-container py-10 md:py-14">
-    <article class="mx-auto max-w-4xl">
-      <header class="border-b border-white/10 pb-10 pt-8 md:pb-12 md:pt-12">
-        <a
-          href={`${base}blog`}
-          class="inline-flex text-xs uppercase tracking-[0.2em] text-white/60 transition hover:text-accent"
-        >
-          Volver al blog
-        </a>
-        <p class="mt-6 text-xs uppercase tracking-[0.28em] text-accent">
-          {
-            post.data.date.toLocaleDateString("es-ES", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })
-          }
-        </p>
-        <h1
-          class="mt-4 max-w-4xl font-display text-4xl font-extrabold leading-[0.98] md:text-6xl"
-        >
-          {post.data.title}
-        </h1>
-        <p
-          class="mt-6 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg"
-        >
-          {post.data.excerpt}
-        </p>
-        <ul class="mt-6 flex flex-wrap gap-3">
-          {
-            post.data.tags.map((tag: string) => (
-              <li class="text-xs uppercase tracking-[0.16em] text-accent">
-                {tag}
-              </li>
-            ))
-          }
-        </ul>
-      </header>
-
-      <figure
-        class="mt-10 overflow-hidden border border-white/10 bg-white/[0.02]"
-      >
-        <Image
-          src={post.data.cover}
-          alt={post.data.coverAlt}
-          width={1440}
-          height={900}
-          class="w-full object-cover"
-        />
-      </figure>
-
-      <div class="article-content mt-10">
-        <Content />
-      </div>
-
-      {
-        post.data.gallery.length > 0 && (
-          <section
-            class="mt-12 space-y-6 border-t border-white/10 pt-10"
-            aria-labelledby="galeria-title"
+  <main id="main-content" class="notes-shell">
+    <div class="rlp-container py-10 md:py-14">
+      <article class="rlp-reading mx-auto">
+        <header class="blog-article__header pb-10 pt-8 md:pb-12 md:pt-12">
+          <a
+            href={`${base}blog`}
+            class="blog-article__back inline-flex text-xs uppercase tracking-[0.2em] transition"
           >
-            <h2 id="galeria-title" class="font-display text-3xl font-bold">
-              Galería
-            </h2>
-            <div class="grid gap-6 md:grid-cols-2">
-              {post.data.gallery.map(
-                (item: {
-                  image: ImageMetadata;
-                  alt: string;
-                  caption?: string;
-                }) => (
-                  <figure class="space-y-3">
-                    <Image
-                      src={item.image}
-                      alt={item.alt}
-                      width={1200}
-                      height={800}
-                      class="w-full border border-white/10 object-cover"
-                    />
-                    {item.caption && (
-                      <figcaption class="text-sm leading-relaxed text-white/55">
-                        {item.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                ),
-              )}
-            </div>
-          </section>
-        )
-      }
-    </article>
+            Volver a notas
+          </a>
+          <p class="blog-article__accent mt-6 text-xs uppercase tracking-[0.28em]">
+            {
+              post.data.date.toLocaleDateString("es-ES", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            }
+          </p>
+          <h1
+            class="mt-4 max-w-4xl font-display text-4xl font-extrabold leading-[0.98] md:text-6xl"
+          >
+            {post.data.title}
+          </h1>
+          <p
+            class="blog-article__summary mt-6 max-w-3xl text-base leading-relaxed md:text-lg"
+          >
+            {post.data.excerpt}
+          </p>
+          <ul class="mt-6 flex flex-wrap gap-3">
+            {
+              post.data.tags.map((tag: string) => (
+                <li class="blog-article__accent text-xs uppercase tracking-[0.16em]">
+                  {tag}
+                </li>
+              ))
+            }
+          </ul>
+        </header>
+
+        <figure
+          class="blog-article__figure mt-10 overflow-hidden"
+        >
+          <Image
+            src={post.data.cover}
+            alt={post.data.coverAlt}
+            width={1440}
+            height={900}
+            class="w-full object-cover"
+          />
+        </figure>
+
+        <div class="article-content mt-10">
+          <Content />
+        </div>
+
+        {
+          post.data.gallery.length > 0 && (
+            <section
+              class="blog-article__gallery mt-12 space-y-6 pt-10"
+              aria-labelledby="galeria-title"
+            >
+              <h2 id="galeria-title" class="font-display text-3xl font-bold">
+                Galería
+              </h2>
+              <div class="grid gap-6 md:grid-cols-2">
+                {post.data.gallery.map(
+                  (item: {
+                    image: ImageMetadata;
+                    alt: string;
+                    caption?: string;
+                  }) => (
+                    <figure class="space-y-3">
+                      <Image
+                        src={item.image}
+                        alt={item.alt}
+                        width={1200}
+                        height={800}
+                        class="blog-article__image w-full object-cover"
+                      />
+                      {item.caption && (
+                        <figcaption class="blog-article__caption text-sm leading-relaxed">
+                          {item.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ),
+                )}
+              </div>
+            </section>
+          )
+        }
+      </article>
+    </div>
   </main>
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .blog-article__header, .blog-article__gallery { border-color: var(--theme-line); border-style: solid; }
+  .blog-article__header { border-width: 0 0 1px; }
+  .blog-article__gallery { border-width: 1px 0 0; }
+  .blog-article__back, .blog-article__summary, .blog-article__caption { color: var(--theme-text-muted); }
+  .blog-article__back:hover, .blog-article__accent { color: var(--theme-accent); }
+  .blog-article__figure { border: 1px solid var(--theme-line); background: var(--theme-surface-raised); }
+  .blog-article__image { border: 1px solid var(--theme-line); }
+</style>

@@ -1,0 +1,27 @@
+---
+import WorkCase from "./WorkCase.astro";
+import { gleaNexoCase } from "../data/glea-nexo-case";
+import gleaNexoScreenshot from "../assets/projects/glea-nexo.png";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+const copy = gleaNexoCase[locale];
+---
+
+<WorkCase
+  locale={locale}
+  caseId="glea-nexo"
+  copy={copy}
+  sourceHref="https://github.com/RafaLopezZz/glea-nexo"
+  blogHref="https://github.com/RafaLopezZz/glea-nexo/pull/4"
+  blogExternal
+  relatedLinks={copy.relatedLinks}
+  media={[{
+    image: gleaNexoScreenshot,
+    alt: locale === "es"
+      ? "Flujo de Node-RED de Glea-Nexo que conecta MQTT con el almacenamiento y la respuesta del backend"
+      : "Glea-Nexo Node-RED flow connecting MQTT with storage and the backend response",
+    caption: locale === "es"
+      ? "Flujo técnico documentado del laboratorio."
+      : "Documented technical flow from the lab.",
+  }]}
+/>

@@ -1,17 +1,17 @@
 ---
 title: "Cosecha en Cope"
-description: "TFC DAM - Marketplace de productos agrícolas frescos, conectando agricultores locales con consumidores."
+description: "Proyecto final de DAM: prototipo académico full-stack de un marketplace agrícola."
 techStack:
-  - "Java Spring Boot"
-  - "Spring Security"
-  - "Hibernate"
+  - "Java 17"
+  - "Spring Boot 3.5.2"
+  - "JPA/Hibernate"
   - "PostgreSQL"
-  - "Angular"
+  - "Angular 20"
   - "Thymeleaf"
-  - "Swagger"
+  - "OpenAPI/Swagger"
 githubUrl: "https://github.com/RafaLopezZz/CosechaEnCope"
 image: "cosecha-en-cope"
 date: "2025-12-12"
 ---
 
-Arquitectura enfocada en mantenibilidad, seguridad y escalabilidad en operaciones diarias.
+Diseñé y desarrollé el proyecto desde cero. El caso se centra en su arquitectura híbrida, el modelo de pedidos específicos por productor y los límites entre autenticación JWT y autorización.

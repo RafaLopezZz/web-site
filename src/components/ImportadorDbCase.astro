@@ -1,0 +1,26 @@
+---
+import WorkCase from "./WorkCase.astro";
+import { importadorDbCase } from "../data/importador-db-case";
+import importadorDbScreenshot from "../assets/projects/importador-db_old.png";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+const copy = importadorDbCase[locale];
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<WorkCase
+  locale={locale}
+  caseId="importador-db"
+  copy={copy}
+  sourceHref="https://github.com/RafaLopezZz/importador-db"
+  blogHref={`${base}blog/desarrollo-importador-db/`}
+  media={[{
+     image: importadorDbScreenshot,
+    alt: locale === "es"
+      ? "Captura de ImportadorDB con selección de MySQL, opciones de importación y datos de demostración"
+      : "ImportadorDB screenshot showing MySQL selection, import options, and demonstration data",
+    caption: locale === "es"
+      ? "Captura documental de la interfaz con datos de demostración no sensibles."
+      : "Documentary interface screenshot with non-sensitive demonstration data.",
+  }]}
+/>

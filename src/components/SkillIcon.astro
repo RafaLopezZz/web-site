@@ -4,7 +4,7 @@ interface Props {
 }
 
 const { icon } = Astro.props;
-const iconUrl = `url('https://cdn.simpleicons.org/${icon}/00E5FF')`;
+const iconUrl = `url('${import.meta.env.BASE_URL}/icons/tech/${icon}.svg')`;
 ---
 
 <span class="skill-icon" style={`--icon-url: ${iconUrl};`} aria-hidden="true"></span>
