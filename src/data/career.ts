@@ -1,5 +1,9 @@
 export type CareerLocale = "es" | "en";
-export type CareerRecordKind = "experience" | "education" | "certification" | "project";
+export type CareerRecordKind =
+  | "experience"
+  | "education"
+  | "certification"
+  | "project";
 export type CareerSide = "experience" | "education";
 
 type LocalizedText = {
@@ -44,7 +48,8 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "Desarrollador Fullstack y Técnico de Sistemas",
       organization: "Leovinci Consulting S.L.",
       period: { es: "2024 - Actualmente", en: "2024 - Present" },
-      summary: "Propongo e implemento soluciones de software, automatización y sistemas para necesidades concretas de clientes en un entorno de consultoría.",
+      summary:
+        "Propongo e implemento soluciones de software, automatización y sistemas para necesidades concretas de clientes en un entorno de consultoría.",
       details: [
         "Participo desde la toma de requisitos y la propuesta de solución hasta su implementación mediante código, automatización o infraestructura.",
         "Desarrollo aplicaciones y mejoras internas con PHP, Laravel, MySQL, Java y scripts en Bash y PowerShell.",
@@ -63,7 +68,8 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "Full-stack Developer and Systems Technician",
       organization: "Leovinci Consulting S.L.",
       period: { es: "2024 - Actualmente", en: "2024 - Present" },
-      summary: "I propose and implement software, automation, and systems solutions for specific client needs in a consulting environment.",
+      summary:
+        "I propose and implement software, automation, and systems solutions for specific client needs in a consulting environment.",
       details: [
         "I contribute from requirements gathering and solution design through to implementation using code, automation, or infrastructure.",
         "I develop applications and internal improvements with PHP, Laravel, MySQL, Java, and Bash and PowerShell scripts.",
@@ -86,10 +92,12 @@ export const careerChronology: readonly CareerRecord[] = [
     period: { es: "Cursando", en: "In progress" },
     ongoing: true,
     es: {
-      title: "Curso de especialización FP en Inteligencia Artificial y Big Data",
+      title:
+        "Curso de especialización FP en Inteligencia Artificial y Big Data",
       organization: "iLERNA Online",
       period: { es: "Cursando", en: "In progress" },
-      summary: "Especialización orientada a ampliar base en datos e IA aplicada.",
+      summary:
+        "Especialización orientada a ampliar base en datos e IA aplicada.",
       details: [
         "Estoy reforzando fundamentos de Python, datos y técnicas de machine learning.",
         "Me interesa entender bien cómo integrar automatización e IA en herramientas útiles.",
@@ -100,7 +108,8 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "FP specialization course in Artificial Intelligence and Big Data",
       organization: "iLERNA Online",
       period: { es: "Cursando", en: "In progress" },
-      summary: "A specialization course focused on strengthening my foundation in data and applied AI.",
+      summary:
+        "A specialization course focused on strengthening my foundation in data and applied AI.",
       details: [
         "I am strengthening my foundations in Python, data, and machine learning techniques.",
         "I want to understand how to integrate automation and AI into useful tools.",
@@ -120,14 +129,20 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "Mouredev PRO",
       period: { es: "2026", en: "2026" },
       details: [],
-      certificate: { label: "Ver certificado", file: "certificates/Certificado BASH - Rafael López - 2026-01-11.pdf" },
+      certificate: {
+        label: "Ver certificado",
+        file: "certificates/Certificado BASH - Rafael López - 2026-01-11.pdf",
+      },
     },
     en: {
       title: "Bash/Shell",
       organization: "Mouredev PRO",
       period: { es: "2026", en: "2026" },
       details: [],
-      certificate: { label: "View certificate", file: "certificates/Certificado BASH - Rafael López - 2026-01-11.pdf" },
+      certificate: {
+        label: "View certificate",
+        file: "certificates/Certificado BASH - Rafael López - 2026-01-11.pdf",
+      },
     },
   },
   {
@@ -141,7 +156,8 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "Técnico en ruta",
       organization: "Blázquez Liria S.L.",
       period: { es: "2023 - 2024", en: "2023 - 2024" },
-      summary: "Puesto centrado en soporte técnico y resolución de incidencias en cliente.",
+      summary:
+        "Puesto centrado en soporte técnico y resolución de incidencias en cliente.",
       details: [
         "Diagnostiqué y resolví incidencias de hardware, software y conectividad en equipos de uso profesional.",
         "Trabajé con tiempos de respuesta ajustados y atención directa a usuarios en ruta.",
@@ -152,7 +168,8 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "Field Technician",
       organization: "Blázquez Liria S.L.",
       period: { es: "2023 - 2024", en: "2023 - 2024" },
-      summary: "A role focused on technical support and resolving incidents at customer sites.",
+      summary:
+        "A role focused on technical support and resolving incidents at customer sites.",
       details: [
         "I diagnosed and resolved hardware, software, and connectivity incidents on professional equipment.",
         "I worked with tight response times and direct support for users on the road.",
@@ -172,7 +189,8 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "IES Alfonso X El Sabio - Murcia (A distancia)",
       period: { es: "2023 - 2025", en: "2023 - 2025" },
       marks: "Nota media: 7.93",
-      summary: "La etapa donde consolidé la parte de programación y desarrollo de aplicaciones.",
+      summary:
+        "La etapa donde consolidé la parte de programación y desarrollo de aplicaciones.",
       details: [
         "Trabajé Java, POO, bases de datos, interfaces y control de versiones.",
         "Me ayudó a construir proyectos completos y a ordenar mejor la parte técnica.",
@@ -180,11 +198,13 @@ export const careerChronology: readonly CareerRecord[] = [
       ],
     },
     en: {
-      title: "Higher Vocational Training in Multiplatform Application Development",
+      title:
+        "Higher Vocational Training in Multiplatform Application Development",
       organization: "IES Alfonso X El Sabio - Murcia (Distance learning)",
       period: { es: "2023 - 2025", en: "2023 - 2025" },
       marks: "Average grade: 7.93",
-      summary: "The stage where I consolidated my programming and application development foundation.",
+      summary:
+        "The stage where I consolidated my programming and application development foundation.",
       details: [
         "I worked with Java, OOP, databases, interfaces, and version control.",
         "It helped me build complete projects and organize the technical side more clearly.",
@@ -204,14 +224,20 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "BIG School - Mouredev",
       period: { es: "2025", en: "2025" },
       details: [],
-      certificate: { label: "Ver certificado", file: "certificates/Certificado_IA.pdf" },
+      certificate: {
+        label: "Ver certificado",
+        file: "certificates/Certificado_IA.pdf",
+      },
     },
     en: {
       title: "Introduction to AI-assisted development course",
       organization: "BIG School - Mouredev",
       period: { es: "2025", en: "2025" },
       details: [],
-      certificate: { label: "View certificate", file: "certificates/Certificado_IA.pdf" },
+      certificate: {
+        label: "View certificate",
+        file: "certificates/Certificado_IA.pdf",
+      },
     },
   },
   {
@@ -222,25 +248,27 @@ export const careerChronology: readonly CareerRecord[] = [
     startYear: 2004,
     endYear: 2023,
     es: {
-      title: "Experiencia Transferible",
-      organization: "Otros cargos en Hostelería",
+      title: "Hostelería",
+      organization: "Hoteles y restauración",
       period: { es: "2004 - 2023", en: "2004 - 2023" },
-      summary: "Años de trabajo con clientes, coordinación y gestión de equipos que siguen influyendo en cómo afronto problemas, presión y comunicación en tecnología.",
+      summary:
+        "Casi veinte años trabajando de cara al cliente, coordinando equipos y asumiendo responsabilidades en entornos donde escuchar, adaptarse y resolver problemas formaba parte del día a día.",
       details: [
-        "Aprendí a tratar con clientes, detectar problemas rápidos y explicar soluciones de forma clara.",
-        "Trabajé durante años bajo presión real, algo que hoy me ayuda cuando una aplicación falla o hay que resolver una incidencia.",
-        "Esa etapa me dejó una forma de trabajar más ordenada y cercana a lo que necesita quien usa el producto.",
+        "Trabajé directamente con clientes durante años, aprendiendo a escuchar, entender necesidades y comunicarme con claridad.",
+        "Coordiné equipos y servicios en situaciones de mucha actividad, donde había que priorizar, reaccionar rápido y mantener la calma.",
+        "Pasé por distintos puestos hasta asumir responsabilidades como jefe de sala y gerente, una experiencia que todavía influye en mi forma de trabajar con personas y afrontar problemas.",
       ],
     },
     en: {
-      title: "Transferable Experience",
-      organization: "Previous roles in hospitality",
+      title: "Hospitality",
+      organization: "Hotels and restaurants",
       period: { es: "2004 - 2023", en: "2004 - 2023" },
-      summary: "Years of working with customers, coordination, and team leadership still shape how I approach problems, pressure, and communication in technology.",
+      summary:
+        "Nearly twenty years working directly with customers, coordinating teams, and taking responsibility in environments where listening, adapting, and solving problems were part of everyday work.",
       details: [
-        "I learned how to work with customers, identify problems quickly, and explain solutions clearly.",
-        "I spent years working under real pressure, which now helps me when an application fails or an incident needs to be resolved.",
-        "That experience gave me a more structured way of working and a stronger awareness of what the people using a product actually need.",
+        "I worked directly with customers for years, learning to listen, understand their needs, and communicate clearly.",
+        "I coordinated teams and service during busy periods, where prioritising, reacting quickly, and staying calm mattered.",
+        "I worked my way through different roles before taking on responsibilities as a head waiter and restaurant manager, an experience that still shapes how I work with people and approach problems today.",
       ],
     },
   },
@@ -256,7 +284,8 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "IES Europa - Águilas (Murcia)",
       period: { es: "2021 - 2023", en: "2021 - 2023" },
       marks: "Nota media: 9.6 - Mención Honorífica",
-      summary: "Formación que me dio base sólida en sistemas, redes y soporte técnico.",
+      summary:
+        "Formación que me dio base sólida en sistemas, redes y soporte técnico.",
       details: [
         "Aprendí hardware, software, redes y resolución de incidencias desde una base práctica.",
         "Me dio soltura para entender mejor entornos reales y no solo escribir código.",
@@ -264,11 +293,13 @@ export const careerChronology: readonly CareerRecord[] = [
       ],
     },
     en: {
-      title: "Intermediate Vocational Training in Microcomputer Systems and Networks",
+      title:
+        "Intermediate Vocational Training in Microcomputer Systems and Networks",
       organization: "IES Europa - Águilas (Murcia)",
       period: { es: "2021 - 2023", en: "2021 - 2023" },
       marks: "Average grade: 9.6 - Honorary Mention",
-      summary: "Training that gave me a solid foundation in systems, networks, and technical support.",
+      summary:
+        "Training that gave me a solid foundation in systems, networks, and technical support.",
       details: [
         "I learned hardware, software, networks, and incident resolution from a practical foundation.",
         "It gave me confidence to understand real environments, not only write code.",
@@ -288,14 +319,20 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "Coursera - Google",
       period: { es: "2022", en: "2022" },
       details: [],
-      certificate: { label: "Ver certificado", file: "certificates/Certificado Coursera W38TVAPHFLSL.pdf" },
+      certificate: {
+        label: "Ver certificado",
+        file: "certificates/Certificado Coursera W38TVAPHFLSL.pdf",
+      },
     },
     en: {
       title: "Technical Support Fundamentals",
       organization: "Coursera - Google",
       period: { es: "2022", en: "2022" },
       details: [],
-      certificate: { label: "View certificate", file: "certificates/Certificado Coursera W38TVAPHFLSL.pdf" },
+      certificate: {
+        label: "View certificate",
+        file: "certificates/Certificado Coursera W38TVAPHFLSL.pdf",
+      },
     },
   },
   {
@@ -310,14 +347,20 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "Coursera - Google",
       period: { es: "2022", en: "2022" },
       details: [],
-      certificate: { label: "Ver certificado", file: "certificates/Certificado2 Coursera 9KWEUX3HNPQM.pdf" },
+      certificate: {
+        label: "Ver certificado",
+        file: "certificates/Certificado2 Coursera 9KWEUX3HNPQM.pdf",
+      },
     },
     en: {
       title: "The Bits and Bytes of Computer Networking",
       organization: "Coursera - Google",
       period: { es: "2022", en: "2022" },
       details: [],
-      certificate: { label: "View certificate", file: "certificates/Certificado2 Coursera 9KWEUX3HNPQM.pdf" },
+      certificate: {
+        label: "View certificate",
+        file: "certificates/Certificado2 Coursera 9KWEUX3HNPQM.pdf",
+      },
     },
   },
   {
@@ -330,17 +373,26 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "ImportadorDB",
       organization: "RLP / WORK / 001",
       period: { es: "01/2026", en: "01/2026" },
-      context: "Después del DAM y antes de la especialización en IA y Big Data.",
-      details: ["Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga."],
-      links: [{ label: "Ver caso de ImportadorDB ↗", href: "work/importador-db/" }],
+      context:
+        "Después del DAM y antes de la especialización en IA y Big Data.",
+      details: [
+        "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.",
+      ],
+      links: [
+        { label: "Ver caso de ImportadorDB ↗", href: "work/importador-db/" },
+      ],
     },
     en: {
       title: "ImportadorDB",
       organization: "RLP / WORK / 001",
       period: { es: "01/2026", en: "01/2026" },
       context: "After DAM and before the AI and Big Data specialization.",
-      details: ["Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow."],
-      links: [{ label: "View ImportadorDB case ↗", href: "en/work/importador-db/" }],
+      details: [
+        "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow.",
+      ],
+      links: [
+        { label: "View ImportadorDB case ↗", href: "en/work/importador-db/" },
+      ],
     },
   },
   {
@@ -354,16 +406,30 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "RLP / WORK / 002",
       period: { es: "12/2025", en: "12/2025" },
       context: "Proyecto final de DAM.",
-      details: ["Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular."],
-      links: [{ label: "Ver caso de Cosecha en Cope ↗", href: "work/cosecha-en-cope/" }],
+      details: [
+        "Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular.",
+      ],
+      links: [
+        {
+          label: "Ver caso de Cosecha en Cope ↗",
+          href: "work/cosecha-en-cope/",
+        },
+      ],
     },
     en: {
       title: "Cosecha en Cope",
       organization: "RLP / WORK / 002",
       period: { es: "12/2025", en: "12/2025" },
       context: "DAM final project.",
-      details: ["Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client."],
-      links: [{ label: "View Cosecha en Cope case ↗", href: "en/work/cosecha-en-cope/" }],
+      details: [
+        "Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client.",
+      ],
+      links: [
+        {
+          label: "View Cosecha en Cope case ↗",
+          href: "en/work/cosecha-en-cope/",
+        },
+      ],
     },
   },
   {
@@ -376,8 +442,11 @@ export const careerChronology: readonly CareerRecord[] = [
       title: "Glea-Nexo",
       organization: "RLP / LAB / 001",
       period: null,
-      context: "Crecimiento reciente, con dirección hacia IA y Big Data, en contexto LAB.",
-      details: ["Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad."],
+      context:
+        "Crecimiento reciente, con dirección hacia IA y Big Data, en contexto LAB.",
+      details: [
+        "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.",
+      ],
       links: [{ label: "Ver caso de Glea-Nexo ↗", href: "work/glea-nexo/" }],
     },
     en: {
@@ -385,7 +454,9 @@ export const careerChronology: readonly CareerRecord[] = [
       organization: "RLP / LAB / 001",
       period: null,
       context: "Recent growth toward AI and Big Data, in a LAB context.",
-      details: ["Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries."],
+      details: [
+        "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries.",
+      ],
       links: [{ label: "View Glea-Nexo case ↗", href: "en/work/glea-nexo/" }],
     },
   },
