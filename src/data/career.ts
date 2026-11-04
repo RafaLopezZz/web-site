@@ -55,7 +55,7 @@ export const careerChronology: readonly CareerRecord[] = [
         "Desarrollo aplicaciones y mejoras internas con PHP, Laravel, MySQL, Java y scripts en Bash y PowerShell.",
         "Implanto y configuro ERP y software de gestión, intentando dejar procesos más claros, repetibles y fáciles de mantener.",
         "Mantengo entornos Windows y Linux y resuelvo incidencias teniendo en cuenta tanto el sistema como el impacto sobre el trabajo del cliente.",
-        "Algunos ejemplos de mi trabajo profesional con PHP/Laravel y MySQL:",
+        "Algunos ejemplos de mi trabajo profesional en desarrollo web con PHP:",
       ],
       links: [
         { label: "Visitar Águilas FC ↗", href: "https://www.aguilasfc.es/" },
@@ -75,7 +75,7 @@ export const careerChronology: readonly CareerRecord[] = [
         "I develop applications and internal improvements with PHP, Laravel, MySQL, Java, and Bash and PowerShell scripts.",
         "I deploy and configure ERP and business management software, aiming to make processes clearer, more repeatable, and easier to maintain.",
         "I maintain Windows and Linux environments and resolve incidents while considering both the technical system and the impact on the client's day-to-day work.",
-        "Some examples of my professional work with PHP/Laravel and MySQL:",
+        "Some examples of my professional web development work with PHP:",
       ],
       links: [
         { label: "Visit Águilas FC ↗", href: "https://www.aguilasfc.es/" },

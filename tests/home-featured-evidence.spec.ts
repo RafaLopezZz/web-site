@@ -37,8 +37,8 @@ test("presents pure selected-work category carousels with verified records", asy
      await expect(importador.locator("img")).toHaveAttribute("alt", /ImportadorDB/);
      await expect(importador.locator("img")).toHaveAttribute("src", /importador-db_old[^/]*\.webp$/);
     await expect(glea).toContainText(home.endsWith("/en/")
-      ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries."
-      : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
+      ? "Ongoing testing project on how to store and recover farm data when the connection drops. It uses simulated data for now."
+      : "Proyecto de pruebas en curso sobre cómo guardar y recuperar datos agrícolas cuando se corta la conexión. Por ahora usa datos simulados.");
      await expect(glea).not.toContainText(/AI|Big Data|Production|real agricultural sensor|real agricultural dataset/i);
     const workActions = work.locator("a.action");
     await expect(workActions).toHaveText(home.endsWith("/en/") ? ["View ImportadorDB →", "View Cosecha en Cope →", "View Glea-Nexo →"] : ["Ver ImportadorDB →", "Ver Cosecha en Cope →", "Ver Glea-Nexo →"]);
@@ -95,22 +95,22 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     const english = home.endsWith("/en/");
 
     await expect(work).toContainText(english
-      ? "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow."
-      : "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.");
+      ? "Desktop program that moves Excel data into a database. Before loading it, you can review the data and decide where each column goes."
+      : "Programa de escritorio que pasa datos de Excel a una base de datos. Antes de cargarlos, permite revisarlos y decidir dónde va cada columna.");
     await expect(work).toContainText(english
-      ? "Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client."
-      : "Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular.");
+      ? "My final DAM project: an online shop where farm producers publish their products and customers place orders. It is an academic prototype."
+      : "Mi proyecto final de DAM: una tienda online donde productores agrícolas publican sus productos y los clientes hacen pedidos. Es un prototipo académico.");
     await expect(work).toContainText("Java 21 · JavaFX · JDBC");
     await expect(work).toContainText("Java · Angular · PostgreSQL");
-    await expect(work).toContainText(english ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries." : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
+    await expect(work).toContainText(english ? "Ongoing testing project on how to store and recover farm data when the connection drops. It uses simulated data for now." : "Proyecto de pruebas en curso sobre cómo guardar y recuperar datos agrícolas cuando se corta la conexión. Por ahora usa datos simulados.");
     await expect(work).not.toContainText("Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
     await expect(work).not.toContainText("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
 
-    await expect(production).toContainText(english ? "Official Águilas FC website." : "Web oficial del Águilas FC.");
-    await expect(production).toContainText(english ? "Art and décor ecommerce." : "Ecommerce de arte y decoración.");
-    await expect(production).toContainText(english ? "Public website and booking flow for a rural campsite." : "Web pública y reservas para un camping rural.");
-    await expect(production).toContainText("PHP · Laravel · Blade");
-    await expect(production).toContainText("Laravel · Livewire · MySQL");
+    await expect(production).toContainText(english ? "The club's official website, with news, a match calendar, match reports, and sponsors. Content is published or scheduled from its own panel." : "Web oficial del club, con noticias, calendario de partidos, crónicas y patrocinadores. El contenido se publica o se programa desde un panel propio.");
+    await expect(production).toContainText(english ? "Website for an art gallery that combines an online shop with a calendar of exhibitions and workshops, including booking and payment. Everything is managed from one panel." : "Web de una galería de arte que reúne tienda online y un calendario de exposiciones y talleres con reserva y pago. Todo se gestiona desde un mismo panel.");
+    await expect(production).toContainText(english ? "Website for a campsite in Águilas (Murcia) that presents its pitches and experiences, shows its rates, and gives access to booking." : "Web de un camping en Águilas (Murcia) que presenta sus parcelas y experiencias, muestra las tarifas y da acceso a la reserva.");
+    await expect(production).toContainText("Laravel 12 · MySQL · Blade");
+    await expect(production).toContainText("Laravel 12 · MySQL · Redsys");
     await expect(production).not.toContainText(/Contexto\.|Ingeniería\.|Evidencia\.|Context\.|Engineering\.|Evidence\./);
     await expect(production).not.toContainText("HeroSlideResolverTest");
     await expect(production).not.toContainText("Resolver →");

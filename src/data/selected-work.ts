@@ -54,7 +54,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "work",
       eyebrow: "RLP / WORK / 001",
       title: "ImportadorDB",
-      summary: "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.",
+      summary: "Programa de escritorio que pasa datos de Excel a una base de datos. Antes de cargarlos, permite revisarlos y decidir dónde va cada columna.",
       techHighlights: "Java 21 · JavaFX · JDBC",
        facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
        showMediaSlot: true,
@@ -72,7 +72,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "work",
       eyebrow: "RLP / WORK / 002",
       title: "Cosecha en Cope",
-      summary: "Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular.",
+      summary: "Mi proyecto final de DAM: una tienda online donde productores agrícolas publican sus productos y los clientes hacen pedidos. Es un prototipo académico.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
       showMediaSlot: true,
@@ -90,7 +90,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "lab",
       eyebrow: "RLP / LAB / 001",
       title: "Glea-Nexo",
-      summary: "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.",
+      summary: "Proyecto de pruebas en curso sobre cómo guardar y recuperar datos agrícolas cuando se corta la conexión. Por ahora usa datos simulados.",
        techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
        showMediaSlot: true,
        media: {
@@ -106,8 +106,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
     productionItems: [{
       id: "prod001",
       title: "Águilas FC",
-      summary: "Web oficial del Águilas FC.",
-      techHighlights: "PHP · Laravel · Blade",
+      summary: "Web oficial del club, con noticias, calendario de partidos, crónicas y patrocinadores. El contenido se publica o se programa desde un panel propio.",
+      techHighlights: "Laravel 12 · MySQL · Blade",
       media: {
         image: aguilasImage,
         alt: {
@@ -120,8 +120,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
      }, {
       id: "prod002",
       title: "La Ola Art Gallery",
-      summary: "Ecommerce de arte y decoración.",
-      techHighlights: "Laravel · Livewire · MySQL",
+      summary: "Web de una galería de arte que reúne tienda online y un calendario de exposiciones y talleres con reserva y pago. Todo se gestiona desde un mismo panel.",
+      techHighlights: "Laravel 12 · MySQL · Redsys",
       media: {
         image: laOlaImage,
         alt: {
@@ -134,8 +134,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
      }, {
       id: "prod003",
       title: "Quinta Bella",
-      summary: "Web pública y reservas para un camping rural.",
-      techHighlights: "Laravel · Livewire · MySQL",
+      summary: "Web de un camping en Águilas (Murcia) que presenta sus parcelas y experiencias, muestra las tarifas y da acceso a la reserva.",
+      techHighlights: "Laravel 12 · MySQL · Blade",
       media: {
         image: quintaBellaImage,
         alt: {
@@ -153,7 +153,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "work",
       eyebrow: "RLP / WORK / 001",
       title: "ImportadorDB",
-      summary: "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow.",
+      summary: "Desktop program that moves Excel data into a database. Before loading it, you can review the data and decide where each column goes.",
       techHighlights: "Java 21 · JavaFX · JDBC",
        facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
        showMediaSlot: true,
@@ -171,7 +171,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "work",
       eyebrow: "RLP / WORK / 002",
       title: "Cosecha en Cope",
-      summary: "Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client.",
+      summary: "My final DAM project: an online shop where farm producers publish their products and customers place orders. It is an academic prototype.",
       techHighlights: "Java · Angular · PostgreSQL",
       facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
       showMediaSlot: true,
@@ -189,7 +189,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
       category: "lab",
       eyebrow: "RLP / LAB / 001",
       title: "Glea-Nexo",
-      summary: "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries.",
+      summary: "Ongoing testing project on how to store and recover farm data when the connection drops. It uses simulated data for now.",
        techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
        showMediaSlot: true,
        media: {
@@ -205,8 +205,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
     productionItems: [{
       id: "prod001",
       title: "Águilas FC",
-      summary: "Official Águilas FC website.",
-      techHighlights: "PHP · Laravel · Blade",
+      summary: "The club's official website, with news, a match calendar, match reports, and sponsors. Content is published or scheduled from its own panel.",
+      techHighlights: "Laravel 12 · MySQL · Blade",
       media: {
         image: aguilasImage,
         alt: {
@@ -219,8 +219,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
      }, {
       id: "prod002",
       title: "La Ola Art Gallery",
-      summary: "Art and décor ecommerce.",
-      techHighlights: "Laravel · Livewire · MySQL",
+      summary: "Website for an art gallery that combines an online shop with a calendar of exhibitions and workshops, including booking and payment. Everything is managed from one panel.",
+      techHighlights: "Laravel 12 · MySQL · Redsys",
       media: {
         image: laOlaImage,
         alt: {
@@ -233,8 +233,8 @@ export const selectedWork: Record<SelectedWorkLocale, {
      }, {
       id: "prod003",
       title: "Quinta Bella",
-      summary: "Public website and booking flow for a rural campsite.",
-      techHighlights: "Laravel · Livewire · MySQL",
+      summary: "Website for a campsite in Águilas (Murcia) that presents its pitches and experiences, shows its rates, and gives access to booking.",
+      techHighlights: "Laravel 12 · MySQL · Blade",
       media: {
         image: quintaBellaImage,
         alt: {
