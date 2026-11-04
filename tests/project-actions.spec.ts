@@ -19,6 +19,8 @@ const pages = [
   "/web-site/en/production/la-ola-art-gallery/",
   "/web-site/production/quinta-bella/",
   "/web-site/en/production/quinta-bella/",
+  "/web-site/production/fincas-victoria/",
+  "/web-site/en/production/fincas-victoria/",
   "/web-site/experience/",
   "/web-site/en/experience/",
 ] as const;

@@ -63,7 +63,7 @@ test("keeps Production public indexes within the approved factual boundary", asy
     await expect(index.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(index.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
-    await expect(index.locator('[data-surface="dossier"]')).toHaveCount(3);
+    await expect(index.locator('[data-surface="dossier"]')).toHaveCount(4);
     const aguilas = index.getByRole("link", { name: entry.aguilasAction, exact: true });
     await expect(aguilas).toHaveAttribute("href", entry.aguilasRoute);
     await expect(aguilas).not.toHaveAttribute("target");

@@ -49,15 +49,16 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.locator("[data-evidence-footer]")).toHaveCount(1);
     await expect(work.locator('[data-surface="dossier"]')).toHaveCount(0);
 
-    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(3);
-    await expect(production.locator("[data-territory-media-slot]")).toHaveCount(3);
+    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(4);
+    await expect(production.locator("[data-territory-media-slot]")).toHaveCount(4);
     await expect(production.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toHaveCount(0);
     await expect(production.getByText("RLP / PROD / 001", { exact: true })).toBeVisible();
     await expect(production.getByText("RLP / PROD / 002", { exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
-    await expect(production.locator("img")).toHaveCount(3);
+    await expect(production.getByRole("heading", { name: "Fincas Victoria", exact: true })).toBeVisible();
+    await expect(production.locator("img")).toHaveCount(4);
     for (const image of await production.locator("img").all()) {
       await expect(image).toHaveAttribute("src", /\/_astro\/[^/]+\.webp$/);
       await expect(image).toHaveAttribute("srcset", /640w/);
@@ -78,7 +79,7 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(previous).toHaveText("←");
     await expect(next).toHaveText("→");
     await expect(production.locator("[data-evidence-footer]")).toHaveCount(1);
-    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
+    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 04");
     await expect(production.locator('[data-surface="artifact"]')).toHaveCount(0);
     await expect(evidence.locator('[data-surface="artifact"] [data-surface="dossier"], [data-surface="dossier"] [data-surface="artifact"]')).toHaveCount(0);
     expect(await evidence.locator("a").evaluateAll((links) => links.some((link) => link.getAttribute("href") === "#"))).toBe(false);
@@ -118,7 +119,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     await expect(production).not.toContainText("pagado_sin_stock");
 
     const identifiers = evidence.locator(".selected-work__id");
-    await expect(identifiers).toHaveCount(6);
+    await expect(identifiers).toHaveCount(7);
     expect(await identifiers.evaluateAll((nodes) => nodes.every((node) => {
       const styles = getComputedStyle(node);
       const probe = document.createElement("span");
@@ -155,7 +156,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
   for (const theme of ["light", "dark"]) {
     await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
     await page.goto("/web-site/");
-    await expect(cards).toHaveCount(6);
+    await expect(cards).toHaveCount(7);
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
 
     const colors = await page.evaluate(() => {
@@ -238,7 +239,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
     });
 
     const titleLinks = page.locator("#featured-evidence .selected-work__title-link");
-    await expect(titleLinks).toHaveCount(6);
+    await expect(titleLinks).toHaveCount(7);
     for (const title of await titleLinks.all()) {
       await title.focus();
       await expect(title).toBeFocused();
@@ -268,14 +269,15 @@ test("links only routable Home project titles without fake or nested anchors", a
     const titleLinks = evidence.locator(".selected-work__title-link");
     const english = home.endsWith("/en/");
 
-    await expect(titleLinks).toHaveCount(6);
+    await expect(titleLinks).toHaveCount(7);
     await expect(titleLinks.nth(0)).toHaveAttribute("href", english ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
     await expect(titleLinks.nth(1)).toHaveAttribute("href", english ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(titleLinks.nth(2)).toHaveAttribute("href", english ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
     await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
     await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/la-ola-art-gallery/" : "/web-site/production/la-ola-art-gallery/");
     await expect(titleLinks.nth(5)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
-    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(3);
+    await expect(titleLinks.nth(6)).toHaveAttribute("href", english ? "/web-site/en/production/fincas-victoria/" : "/web-site/production/fincas-victoria/");
+    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(4);
     await expect(evidence.locator("a[href='#'], a[href='']")).toHaveCount(0);
     await expect(evidence.locator("a a, article a article")).toHaveCount(0);
 
@@ -361,7 +363,7 @@ test("keeps Work and Production carousel navigation bounded and independent", as
    await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
    await expect(nextWork).toBeEnabled();
    await expect(previousWork).toBeEnabled();
-   await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
+   await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 04");
     await nextWork.click();
     await expect.poll(() => workTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 2) <= 1)).toBe(true);
    await expect(work.locator("[data-evidence-position]")).toHaveText("03 / 03");
@@ -374,14 +376,19 @@ test("keeps Work and Production carousel navigation bounded and independent", as
 
   await nextProduction.click();
   await expect.poll(() => productionTrack.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 04");
   await expect(nextProduction).toBeEnabled();
   await expect(previousProduction).toBeEnabled();
   await nextProduction.click();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("03 / 03");
+  await expect(production.locator("[data-evidence-position]")).toHaveText("03 / 04");
+  await expect.poll(() => productionTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 2) <= 1)).toBe(true);
+  await nextProduction.click();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("04 / 04");
+  await expect.poll(() => productionTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 3) <= 1)).toBe(true);
   await expect(nextProduction).toBeDisabled();
   await previousProduction.click();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
+  await previousProduction.click();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 04");
    await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
 });
 
@@ -422,9 +429,9 @@ test("does not autoplay either selected-work carousel", async ({ page }) => {
   await page.goto("/web-site/");
 
   const positions = page.locator("[data-evidence-position]");
-   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
+   await expect(positions).toHaveText(["01 / 03", "01 / 04"]);
    await page.waitForTimeout(500);
-   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
+   await expect(positions).toHaveText(["01 / 03", "01 / 04"]);
 });
 
 test("keeps Production controls in its footer after its dossier body", async ({ page }) => {
@@ -434,7 +441,7 @@ test("keeps Production controls in its footer after its dossier body", async ({ 
   const production = page.locator('[data-evidence-category="production"]');
   const footer = production.locator("[data-evidence-footer]");
   const lastDossier = production.locator('[data-surface="dossier"]').last();
-  await expect(footer).toContainText("01 / 03");
+  await expect(footer).toContainText("01 / 04");
   expect(await footer.evaluate((element) => element.compareDocumentPosition(element.closest("[data-evidence-carousel]")!.querySelector('[data-surface="dossier"]:last-child')!) & Node.DOCUMENT_POSITION_PRECEDING)).toBeTruthy();
   expect(await footer.evaluate((element) => {
     const control = element.querySelector("button");
@@ -497,7 +504,7 @@ test("stabilizes desktop carousel stages while preserving natural mobile content
     await page.locator('[data-evidence-category="work"] [data-evidence-next]').click();
     await expect(page.locator('[data-evidence-category="work"] [data-evidence-position]')).toHaveText("02 / 03");
     await expect(page.locator('[data-evidence-category="work"] [data-evidence-next]')).toBeEnabled();
-    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 03");
+    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 04");
     await page.locator('[data-evidence-category="production"] [data-evidence-next]').click();
     const after = await geometry();
     expect(Math.abs(after[0].footerTop - after[1].footerTop)).toBeLessThanOrEqual(2);

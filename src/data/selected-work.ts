@@ -1,6 +1,7 @@
 import type { ImageMetadata } from "astro";
 import aguilasImage from "../assets/projects/aguilasfc.png";
 import cosechaImage from "../assets/projects/cosecha-en-cope.png";
+import fincasVictoriaImage from "../assets/projects/fincas-victoria.png";
 import gleaNexoImage from "../assets/projects/glea-nexo.png";
 import importadorDbImage from "../assets/projects/importador-db_old.png";
 import laOlaImage from "../assets/projects/la-ola-art-gallery.png";
@@ -36,8 +37,8 @@ type WorkItem = {
 };
 
 type ProductionItem = {
-  id: "prod001" | "prod002" | "prod003";
-  title: "Águilas FC" | "La Ola Art Gallery" | "Quinta Bella";
+  id: "prod001" | "prod002" | "prod003" | "prod004";
+  title: "Águilas FC" | "La Ola Art Gallery" | "Quinta Bella" | "Fincas Victoria";
   summary: string;
   techHighlights: string;
   media: EvidenceMedia;
@@ -145,6 +146,20 @@ export const selectedWork: Record<SelectedWorkLocale, {
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
       action: { href: "production/quinta-bella/", label: "Ver Quinta Bella →" },
+    }, {
+      id: "prod004",
+      title: "Fincas Victoria",
+      summary: "Web de una inmobiliaria de Águilas (Murcia) que muestra sus inmuebles en venta y alquiler. El catálogo se actualiza a partir de un archivo externo, sin copiar los anuncios a mano.",
+      techHighlights: "PHP 8.3 · MariaDB · XML Kyero",
+      media: {
+        image: fincasVictoriaImage,
+        alt: {
+          es: "Captura del catálogo de inmuebles de Fincas Victoria.",
+          en: "Screenshot of the Fincas Victoria property catalog.",
+        },
+        caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
+      },
+      action: { href: "production/fincas-victoria/", label: "Ver Fincas Victoria →" },
     }],
   },
   en: {
@@ -244,6 +259,20 @@ export const selectedWork: Record<SelectedWorkLocale, {
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
       action: { href: "en/production/quinta-bella/", label: "View Quinta Bella →" },
+    }, {
+      id: "prod004",
+      title: "Fincas Victoria",
+      summary: "Website for a real estate agency in Águilas (Murcia) showing its properties for sale and rent. The catalog updates from an external file, with no listings copied by hand.",
+      techHighlights: "PHP 8.3 · MariaDB · XML Kyero",
+      media: {
+        image: fincasVictoriaImage,
+        alt: {
+          es: "Captura del catálogo de inmuebles de Fincas Victoria.",
+          en: "Screenshot of the Fincas Victoria property catalog.",
+        },
+        caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
+      },
+      action: { href: "en/production/fincas-victoria/", label: "View Fincas Victoria →" },
     }],
   },
 };

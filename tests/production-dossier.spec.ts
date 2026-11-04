@@ -95,6 +95,25 @@ test("states La Ola Art Gallery facts with its live site action", async ({ page 
   }
 });
 
+test("presents Fincas Victoria as a production case without a CMS or code claim", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/production/fincas-victoria/", headings: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"], live: "Visitar Fincas Victoria ↗", role: "Desarrollé toda la web, incluida la importación de inmuebles." },
+    { path: "/web-site/en/production/fincas-victoria/", headings: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"], live: "Visit Fincas Victoria ↗", role: "I developed the whole website, including the property import." },
+  ]) {
+    await page.goto(route.path);
+    const dossier = page.locator('[data-production-case="fincas-victoria"][data-surface="dossier"]');
+    expect(await dossier.locator("h2").allTextContents()).toEqual(route.headings);
+    await expect(dossier).toContainText("RLP / PROD / 004");
+    await expect(dossier).toContainText("PHP 8.3 · MariaDB · XML Kyero");
+    await expect(dossier).toContainText(route.role);
+    await expect(dossier).not.toContainText(/CMS|Laravel|gestor de contenidos|content manager/);
+    const live = dossier.getByRole("link", { name: route.live, exact: true });
+    await expect(live).toHaveAttribute("href", "https://www.victoriafincas.es/");
+    await expect(live).toHaveAttribute("target", "_blank");
+    await expect(dossier.locator("a[href*='github.com']")).toHaveCount(0);
+  }
+});
+
 test("states that Quinta Bella does not charge online yet", async ({ page }) => {
   await page.goto("/web-site/production/quinta-bella/");
   await expect(page.locator('[data-production-case="quinta-bella"]')).toContainText("El cobro online todavía no está activo.");

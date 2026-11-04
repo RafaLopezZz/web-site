@@ -1,0 +1,13 @@
+---
+import ProductionCase from "./ProductionCase.astro";
+import { fincasVictoriaCase } from "../data/fincas-victoria-case";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+---
+
+<ProductionCase
+  locale={locale}
+  caseId="fincas-victoria"
+  copy={fincasVictoriaCase[locale]}
+  publicSiteHref="https://www.victoriafincas.es/"
+/>
