@@ -132,8 +132,6 @@ test("keeps Home evidence product-first and compact while retaining approved sou
   }
 
   const selectedWorkSource = await readFile("src/data/selected-work.ts", "utf8");
-  expect(selectedWorkSource).toContain("Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
-  expect(selectedWorkSource).toContain("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
   expect(selectedWorkSource).not.toContain("HeroSlideResolverTest");
   expect(selectedWorkSource).not.toContain("lockForUpdate");
   expect(selectedWorkSource).not.toContain("callbacks");

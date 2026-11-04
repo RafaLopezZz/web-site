@@ -192,7 +192,7 @@ const { workItems, productionItems } = selectedWork[locale];
                           aria-hidden="true"
                         />
                       ))}
-                    {item.action && !item.action.external ? (
+                    {item.action ? (
                       <a
                         class="selected-work__title-link"
                         href={`${base}${item.action.href}`}
@@ -260,7 +260,7 @@ const { workItems, productionItems } = selectedWork[locale];
                         aria-hidden="true"
                       />
                     )}
-                    {item.action && !item.action.external ? (
+                    {item.action ? (
                       <a
                         class="selected-work__title-link"
                         href={`${base}${item.action.href}`}
@@ -275,19 +275,7 @@ const { workItems, productionItems } = selectedWork[locale];
                       {item.techHighlights}
                     </p>
                     {item.action && (
-                      <ActionLink
-                        href={
-                          item.action.external
-                            ? item.action.href
-                            : `${base}${item.action.href}`
-                        }
-                        target={item.action.external ? "_blank" : undefined}
-                        rel={
-                          item.action.external
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                      >
+                      <ActionLink href={`${base}${item.action.href}`}>
                         {item.action.label}
                       </ActionLink>
                     )}

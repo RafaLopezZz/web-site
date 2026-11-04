@@ -78,12 +78,12 @@ Branch: `content/project-copy-normalization`. Delivery: local work-unit commits,
 
 ## Tasks
 
-- [ ] T1 S2 inline: actions and links.
-- [ ] T2 S4-S11 inline: cards and career correction.
-- [ ] T3 S3-S6 inline: Work cases.
-- [ ] T4 S3 S7-S9 inline: Production cases and La Ola page.
-- [ ] T5 S3 S10 inline: Fincas Victoria.
-- [ ] T6 S13 inline: cleanup and verification.
+- [x] T1 S2 inline: actions and links. Commit 6e19a56.
+- [x] T2 S4-S11 inline: cards and career correction. Commit 5060ccb.
+- [x] T3 S3-S6 inline: Work cases. Commit 9fcd92f.
+- [x] T4 S3 S7-S9 inline: Production cases and La Ola page. Commit c05250d.
+- [x] T5 S3 S10 inline: Fincas Victoria. Commit 0fa6d05.
+- [x] T6 S13 inline: cleanup and verification. Commit: refactor(cases): remove unused project fields.
 
 Route evidence: one sequential content change with shared tests, so no Writer trigger applies.
 
@@ -93,3 +93,5 @@ Route evidence: one sequential content change with shared tests, so no Writer tr
 - L2, 2026-11-04: "Fincas Victoria no tiene gestor de contenidos, es el único proyecto que no lo tiene."
 - L3, 2026-11-04: Quinta Bella "Aún no cobra".
 - L4, 2026-11-04, implementation request: "Aprobado, comienza con la implementación".
+- L5, 2026-11-04, verification: `npm run verify:green -- tests/project-actions.spec.ts` passed (2, 23, and 129 Playwright tests). Status, overflow, and console checks passed on 22 routes at 320, 390, 768, and 1024 px. `npm run test:unit` found no unit test files. Screenshots were reviewed for the Production index and the Fincas Victoria case.
+- L6, 2026-11-04, advisory: rapid clicks on the Home carousel can lose a step at 390 px because scroll events reset its index. `EvidenceCarousel.astro` is unchanged in this feature.

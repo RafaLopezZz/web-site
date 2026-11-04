@@ -20,7 +20,6 @@ type EvidenceMedia = {
 type Action = {
   href: string;
   label: string;
-  external?: boolean;
 };
 
 type WorkItem = {
@@ -30,7 +29,6 @@ type WorkItem = {
   title: "ImportadorDB" | "Cosecha en Cope" | "Glea-Nexo";
   summary: string;
   techHighlights: string;
-  facts?: string;
   showMediaSlot: boolean;
   media?: EvidenceMedia;
   action: Action;
@@ -57,7 +55,6 @@ export const selectedWork: Record<SelectedWorkLocale, {
       title: "ImportadorDB",
       summary: "Programa de escritorio que pasa datos de Excel a una base de datos. Antes de cargarlos, permite revisarlos y decidir dónde va cada columna.",
       techHighlights: "Java 21 · JavaFX · JDBC",
-       facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
        showMediaSlot: true,
        media: {
          image: importadorDbImage,
@@ -75,7 +72,6 @@ export const selectedWork: Record<SelectedWorkLocale, {
       title: "Cosecha en Cope",
       summary: "Mi proyecto final de DAM: una tienda online donde productores agrícolas publican sus productos y los clientes hacen pedidos. Es un prototipo académico.",
       techHighlights: "Java · Angular · PostgreSQL",
-      facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
       showMediaSlot: true,
       media: {
         image: cosechaImage,
@@ -170,7 +166,6 @@ export const selectedWork: Record<SelectedWorkLocale, {
       title: "ImportadorDB",
       summary: "Desktop program that moves Excel data into a database. Before loading it, you can review the data and decide where each column goes.",
       techHighlights: "Java 21 · JavaFX · JDBC",
-       facts: "Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird",
        showMediaSlot: true,
        media: {
          image: importadorDbImage,
@@ -188,7 +183,6 @@ export const selectedWork: Record<SelectedWorkLocale, {
       title: "Cosecha en Cope",
       summary: "My final DAM project: an online shop where farm producers publish their products and customers place orders. It is an academic prototype.",
       techHighlights: "Java · Angular · PostgreSQL",
-      facts: "Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger",
       showMediaSlot: true,
       media: {
         image: cosechaImage,
