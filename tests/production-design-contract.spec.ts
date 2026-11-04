@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  { path: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella ↗", aguilasAction: "Ver Águilas FC ↗", casePath: "/web-site/production/quinta-bella/", aguilasCasePath: "/web-site/production/aguilas-fc/" },
-  { path: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella ↗", aguilasAction: "View Águilas FC ↗", casePath: "/web-site/en/production/quinta-bella/", aguilasCasePath: "/web-site/en/production/aguilas-fc/" },
+  { path: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella →", aguilasAction: "Ver Águilas FC →", casePath: "/web-site/production/quinta-bella/", aguilasCasePath: "/web-site/production/aguilas-fc/" },
+  { path: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella →", aguilasAction: "View Águilas FC →", casePath: "/web-site/en/production/quinta-bella/", aguilasCasePath: "/web-site/en/production/aguilas-fc/" },
 ] as const;
 
 const unsupported = ["HeroSlideResolverTest", "lockForUpdate", "callbacks", "RLP / PROD / 004"];

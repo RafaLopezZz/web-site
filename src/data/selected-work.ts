@@ -66,7 +66,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
          },
          caption: { es: "Captura documental de la interfaz con datos de demostración no sensibles.", en: "Documentary interface screenshot with non-sensitive demonstration data." },
        },
-       action: { href: "work/importador-db/", label: "Ver caso →" },
+       action: { href: "work/importador-db/", label: "Ver ImportadorDB →" },
     }, {
       id: "work002",
       category: "work",
@@ -84,7 +84,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Portada del proyecto.", en: "Project cover." },
       },
-      action: { href: "work/cosecha-en-cope/", label: "Ver caso →" },
+      action: { href: "work/cosecha-en-cope/", label: "Ver Cosecha en Cope →" },
     }, {
       id: "lab001",
       category: "lab",
@@ -101,7 +101,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
          },
          caption: { es: "Flujo técnico documentado del laboratorio.", en: "Documented technical flow from the lab." },
        },
-       action: { href: "work/glea-nexo/", label: "Ver caso →" },
+       action: { href: "work/glea-nexo/", label: "Ver Glea-Nexo →" },
     }],
     productionItems: [{
       id: "prod001",
@@ -116,7 +116,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "production/aguilas-fc/", label: "Ver Águilas FC ↗" },
+      action: { href: "production/aguilas-fc/", label: "Ver Águilas FC →" },
      }, {
       id: "prod002",
       title: "La Ola Art Gallery",
@@ -130,7 +130,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "https://www.laolaart.com/", label: "Ver La Ola Art Gallery ↗", external: true },
+      action: { href: "https://www.laolaart.com/", label: "Visitar La Ola Art Gallery ↗", external: true },
      }, {
       id: "prod003",
       title: "Quinta Bella",
@@ -144,7 +144,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "production/quinta-bella/", label: "Ver Quinta Bella ↗" },
+      action: { href: "production/quinta-bella/", label: "Ver Quinta Bella →" },
     }],
   },
   en: {
@@ -165,7 +165,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
          },
          caption: { es: "Captura documental de la interfaz con datos de demostración no sensibles.", en: "Documentary interface screenshot with non-sensitive demonstration data." },
        },
-       action: { href: "en/work/importador-db/", label: "View case →" },
+       action: { href: "en/work/importador-db/", label: "View ImportadorDB →" },
     }, {
       id: "work002",
       category: "work",
@@ -183,7 +183,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Portada del proyecto.", en: "Project cover." },
       },
-      action: { href: "en/work/cosecha-en-cope/", label: "View case →" },
+      action: { href: "en/work/cosecha-en-cope/", label: "View Cosecha en Cope →" },
     }, {
       id: "lab001",
       category: "lab",
@@ -200,7 +200,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
          },
          caption: { es: "Flujo técnico documentado del laboratorio.", en: "Documented technical flow from the lab." },
        },
-       action: { href: "en/work/glea-nexo/", label: "View case →" },
+       action: { href: "en/work/glea-nexo/", label: "View Glea-Nexo →" },
     }],
     productionItems: [{
       id: "prod001",
@@ -215,7 +215,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "en/production/aguilas-fc/", label: "View Águilas FC ↗" },
+      action: { href: "en/production/aguilas-fc/", label: "View Águilas FC →" },
      }, {
       id: "prod002",
       title: "La Ola Art Gallery",
@@ -229,7 +229,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "https://www.laolaart.com/", label: "View La Ola Art Gallery ↗", external: true },
+      action: { href: "https://www.laolaart.com/", label: "Visit La Ola Art Gallery ↗", external: true },
      }, {
       id: "prod003",
       title: "Quinta Bella",
@@ -243,7 +243,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "en/production/quinta-bella/", label: "View Quinta Bella ↗" },
+      action: { href: "en/production/quinta-bella/", label: "View Quinta Bella →" },
     }],
   },
 };

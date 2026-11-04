@@ -16,8 +16,8 @@ const locales = [
     orders: "órdenes específicas por productor",
     s3: "AWS S3",
     manualS3: ["validé manualmente", "operaciones reales", "subida", "borrado"],
-    articleLink: "Artículo técnico · ES →",
-    articleCaseLink: "Ver el caso de Cosecha en Cope →",
+    articleLink: "Leer artículo →",
+    articleCaseLink: "Ver Cosecha en Cope →",
     altCover: "Portada del proyecto Cosecha en Cope, un marketplace agrícola",
     altArchitecture: "Arquitectura híbrida de Cosecha en Cope",
   },
@@ -30,8 +30,8 @@ const locales = [
     orders: "producer-specific sales orders",
     s3: "AWS S3",
     manualS3: ["manually validated", "real upload", "delete"],
-    articleLink: "Technical article · ES →",
-    articleCaseLink: "Ver el caso de Cosecha en Cope →",
+    articleLink: "Read article (Spanish) →",
+    articleCaseLink: "Ver Cosecha en Cope →",
     altCover: "Cosecha en Cope project cover, an agricultural marketplace",
     altArchitecture: "Cosecha en Cope hybrid architecture",
   },
@@ -78,7 +78,7 @@ test("keeps both Cosecha records on the bilingual Work indexes", async ({ page }
     const record = index.locator(".territory-index__record", { hasText: "Cosecha en Cope" });
 
     await expect(record.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
-    await expect(record.getByRole("link", { name: /caso|case/ })).toHaveAttribute("href", locale.casePath);
+    await expect(record.locator("a.action")).toHaveAttribute("href", locale.casePath);
     await expectApprovedSurface(record);
   }
 });

@@ -68,6 +68,6 @@ ImportadorDB me dejó varias lecciones prácticas:
 
 Es una herramienta centrada en un flujo reconocible: convertir una hoja revisada por una persona en una carga relacional controlada, con sus decisiones y límites visibles.
 
-<a href="/web-site/work/importador-db/" class="action action--text">Ver el caso de ImportadorDB →</a>
+<a href="/web-site/work/importador-db/" class="action action--text">Ver ImportadorDB →</a>
 
 [Ver en GitHub](https://github.com/RafaLopezZz/importador-db)

@@ -15,8 +15,8 @@ export const experience: TimelineItemExperience[] = [
     ],
     webs: [
       "https://www.aguilasfc.es/",
-      "https://www.laolaart.com",
-      "https://www.quintabella.com",
+      "https://www.laolaart.com/",
+      "https://www.quintabella.com/",
       "https://www.victoriafincas.es/",
     ],
   },

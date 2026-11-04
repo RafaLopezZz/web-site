@@ -16,7 +16,7 @@ export const gleaNexoIndex: Record<GleaLocale, {
     title: "Glea-Nexo",
     summary: "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.",
     techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
-    action: { href: "work/glea-nexo/", label: "Ver caso →" },
+    action: { href: "work/glea-nexo/", label: "Ver Glea-Nexo →" },
   },
   en: {
     id: "lab001",
@@ -25,7 +25,7 @@ export const gleaNexoIndex: Record<GleaLocale, {
     title: "Glea-Nexo",
     summary: "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries.",
     techHighlights: "Python · MQTT · Node-RED · SQLite · Spring Boot · PostgreSQL",
-    action: { href: "en/work/glea-nexo/", label: "View case →" },
+    action: { href: "en/work/glea-nexo/", label: "View Glea-Nexo →" },
   },
 };
 
@@ -44,11 +44,11 @@ export const gleaNexoCase = {
       ["Límites y preguntas abiertas", "Trabajo actual: FAILED→retry→SENT, DEAD_LETTER, los fallos amplios de reprocesado y el reprocesado concurrente con nueva telemetría siguen sin validar. Límite / pregunta abierta: no presento seguridad completa, escala medida ni un conjunto de datos representativo; la evidencia está acotada al laboratorio."],
       ["Evidencia y enlaces", "Planificado: la IA/Big Data es una dirección futura central; no hay una capacidad IA/Big Data implementada hoy. Mi intención es evolucionar esta base hacia el proyecto final del curso de especialización FP en Inteligencia Artificial y Big Data, pero esa dirección todavía no ha sido aprobada, presentada ni completada. La evidencia pública se limita al repositorio y a PRs concretas: PR #4 para el recorrido extremo a extremo controlado, PR #5 para outbox/reprocesado y PR #7 para deduplicación por clave."],
     ] as const,
-    source: "Ver repositorio ↗",
-    blog: "PR #4 · recorrido extremo a extremo controlado ↗",
+    source: "Ver código ↗",
+    blog: "Ver prueba: recorrido completo ↗",
     relatedLinks: [
-        { href: "https://github.com/RafaLopezZz/glea-nexo/pull/5", label: "PR #5 · outbox/reprocesado ↗" },
-      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/7", label: "PR #7 · deduplicación ↗" },
+        { href: "https://github.com/RafaLopezZz/glea-nexo/pull/5", label: "Ver prueba: reenvío sin conexión ↗" },
+      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/7", label: "Ver prueba: duplicados ↗" },
     ],
   },
   en: {
@@ -65,11 +65,11 @@ export const gleaNexoCase = {
       ["Limits / open questions", "Current work: FAILED→retry→SENT, DEAD_LETTER, broader replay failures, and concurrent replay and new telemetry remain unvalidated. Limit / open question: I do not present complete security, measured scale, or a representative dataset; the evidence is bounded to the lab."],
       ["Evidence / links", "Planned: AI/Big Data is a central future direction; no AI/Big Data capability is implemented today. I intend to evolve this foundation into the final project for the FP specialization course in Artificial Intelligence and Big Data, but that direction is not yet approved, submitted, or completed. Public evidence is limited to the repository and selected PRs: PR #4 for the controlled E2E path, PR #5 for outbox/replay, and PR #7 for key-based deduplication."],
     ] as const,
-    source: "View repository ↗",
-    blog: "PR #4 · controlled E2E ↗",
+    source: "View code ↗",
+    blog: "View proof: full journey ↗",
     relatedLinks: [
-      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/5", label: "PR #5 · outbox/replay ↗" },
-      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/7", label: "PR #7 · deduplication ↗" },
+      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/5", label: "View proof: offline resend ↗" },
+      { href: "https://github.com/RafaLopezZz/glea-nexo/pull/7", label: "View proof: duplicates ↗" },
     ],
   },
 } as const;

@@ -127,10 +127,10 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
       </div>
 
       <nav class="case__actions" aria-label={locale === "es" ? "Fuentes del caso" : "Case sources"}>
-        <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noreferrer">{copy.source}</ActionLink>
-        <ActionLink href={blogHref} target={blogExternal ? "_blank" : undefined} rel={blogExternal ? "noreferrer" : undefined}>{copy.blog}</ActionLink>
+        <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noopener noreferrer">{copy.source}</ActionLink>
+        <ActionLink href={blogHref} target={blogExternal ? "_blank" : undefined} rel={blogExternal ? "noopener noreferrer" : undefined}>{copy.blog}</ActionLink>
         {relatedLinks.map((link) => (
-          <ActionLink href={link.href} target="_blank" rel="noreferrer">{link.label}</ActionLink>
+          <ActionLink href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</ActionLink>
         ))}
       </nav>
     </Surface>

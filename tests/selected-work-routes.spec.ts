@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const workRoutes = [
-  { route: "/web-site/work/", title: "Trabajo", workLabel: "Trabajo", action: "Ver caso →" },
-  { route: "/web-site/en/work/", title: "Work", workLabel: "Work", action: "View case →" },
+  { route: "/web-site/work/", title: "Trabajo", workLabel: "Trabajo", actions: ["Ver ImportadorDB →", "Ver Cosecha en Cope →", "Ver Glea-Nexo →"] },
+  { route: "/web-site/en/work/", title: "Work", workLabel: "Work", actions: ["View ImportadorDB →", "View Cosecha en Cope →", "View Glea-Nexo →"] },
 ];
 
 test("renders a bilingual Work index with two work records, one LAB record, and only established actions", async ({ page }) => {
@@ -18,9 +18,9 @@ test("renders a bilingual Work index with two work records, one LAB record, and 
     await expect(index.getByRole("heading", { name: "Glea-Nexo", exact: true })).toBeVisible();
     await expect(index.getByText("RLP / LAB / 001", { exact: true })).toBeVisible();
     await expect(index.locator("[data-lab-record]")).toContainText(entry.title === "Work" ? "Current work" : "Trabajo actual");
-    await expect(index.getByRole("link", { name: entry.action, exact: true }).first()).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
-    await expect(index.getByRole("link", { name: entry.action, exact: true })).toHaveCount(3);
-    await expect(index.getByRole("link", { name: entry.action, exact: true }).nth(1)).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
+    await expect(index.getByRole("link", { name: entry.actions[0], exact: true })).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
+    await expect(index.locator("a.action")).toHaveText(entry.actions);
+    await expect(index.getByRole("link", { name: entry.actions[1], exact: true })).toHaveAttribute("href", entry.title === "Work" ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
 
     await expect(index.locator(".territory-index__facts")).toHaveCount(0);
     await expect(index).toContainText("Java 21 · JavaFX · JDBC");
@@ -53,8 +53,8 @@ test("keeps the Work index free of horizontal overflow across themes and canonic
 
 test("keeps Production public indexes within the approved factual boundary", async ({ page }) => {
   for (const entry of [
-    { route: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella ↗", aguilasAction: "Ver Águilas FC ↗", aguilasRoute: "/web-site/production/aguilas-fc/", caseRoute: "/web-site/production/quinta-bella/" },
-    { route: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella ↗", aguilasAction: "View Águilas FC ↗", aguilasRoute: "/web-site/en/production/aguilas-fc/", caseRoute: "/web-site/en/production/quinta-bella/" },
+    { route: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella →", aguilasAction: "Ver Águilas FC →", aguilasRoute: "/web-site/production/aguilas-fc/", caseRoute: "/web-site/production/quinta-bella/" },
+    { route: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella →", aguilasAction: "View Águilas FC →", aguilasRoute: "/web-site/en/production/aguilas-fc/", caseRoute: "/web-site/en/production/quinta-bella/" },
   ]) {
     await page.goto(entry.route);
     const index = page.locator('main [data-territory-index="production"]');
@@ -89,7 +89,7 @@ test("renders the bilingual ImportadorDB case with its professional Java 21 cont
     await expect(caseStudy).toContainText("Java 21 · JavaFX · JDBC");
     await expect(caseStudy).not.toContainText("Java 25");
     await expect(caseStudy.locator("figure img")).toHaveCount(1);
-    await expect(caseStudy.getByRole("link", { name: /repositorio|repository/i })).toHaveAttribute("href", "https://github.com/RafaLopezZz/importador-db");
+    await expect(caseStudy.getByRole("link", { name: /código|code/i })).toHaveAttribute("href", "https://github.com/RafaLopezZz/importador-db");
   }
 });
 

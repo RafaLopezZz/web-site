@@ -23,8 +23,8 @@ export const cosechaCase = {
     evidence: [],
     outcomeTitle: "Resultado",
     outcome: "Caso académico presentado y aprobado, con decisiones de arquitectura y límites técnicos explícitos.",
-    source: "Ver repositorio ↗",
-    blog: "Artículo técnico · ES →",
+    source: "Ver código ↗",
+    blog: "Leer artículo →",
   },
   en: {
     title: "Cosecha en Cope",
@@ -50,7 +50,7 @@ export const cosechaCase = {
     evidence: [],
     outcomeTitle: "Outcome",
     outcome: "A formally presented and approved academic case with explicit architectural decisions and technical limits.",
-    source: "View repository ↗",
-    blog: "Technical article · ES →",
+    source: "View code ↗",
+    blog: "Read article (Spanish) →",
   },
 } as const;

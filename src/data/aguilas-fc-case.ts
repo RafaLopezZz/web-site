@@ -38,7 +38,7 @@ export const aguilasFcCase: Record<"es" | "en", ProductionCaseCopy> = {
       },
     ],
     sourcesTitle: "Fuentes del caso",
-    publicSite: "Abrir Águilas FC ↗",
+    publicSite: "Visitar Águilas FC ↗",
   },
   en: {
     title: "Águilas FC",
@@ -77,6 +77,6 @@ export const aguilasFcCase: Record<"es" | "en", ProductionCaseCopy> = {
       },
     ],
     sourcesTitle: "Case sources",
-    publicSite: "Open Águilas FC ↗",
+    publicSite: "Visit Águilas FC ↗",
   },
 };

@@ -117,8 +117,8 @@ test("emits both route documents with LAB identity and accessible section headin
     expect(html).toContain('aria-label="');
     expect(html).toContain("Raspberry Pi 3");
     expect(html).toContain(route.locale === "en" ? "synthetic" : "sintética");
-    expect(html).toContain("PR #5");
-    expect(html).toContain("PR #7");
+    expect(html).toContain("glea-nexo/pull/5");
+    expect(html).toContain("glea-nexo/pull/7");
 
     if (route.locale === "es") {
       for (const forbidden of ["Implemented", "Validated", "Current work", "Planned", "Limit / open question", "trade-offs", "offline", "replay", "at-least-once", "runtimes"]) {

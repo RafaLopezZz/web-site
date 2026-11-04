@@ -19,7 +19,6 @@ const copy = locale === "en"
       heading: focus === "experience" ? "Experience" : "Education",
        intro: "A shared chronological story of work, study, and qualifications. The periods show where professional and academic life overlap.",
       storyLabel: "Career chronology",
-       linkLabel: "Open project reference ↗",
       labels: { experience: "EXPERIENCE", education: "EDUCATION", certification: "CERTIFICATION", project: "PROJECT" },
     }
   : {
@@ -29,7 +28,6 @@ const copy = locale === "en"
       heading: focus === "experience" ? "Experiencia" : "Formación",
        intro: "Una historia cronológica compartida de trabajo, estudios y cualificaciones. Los periodos muestran dónde coinciden la vida profesional y académica.",
       storyLabel: "Cronología profesional",
-       linkLabel: "Abrir referencia del proyecto ↗",
       labels: { experience: "EXPERIENCIA", education: "FORMACIÓN", certification: "CERTIFICACIÓN", project: "PROYECTO" },
     };
 
@@ -100,7 +98,7 @@ const linkHref = (href: string) => href.startsWith("http") ? href : `${base}${hr
                     </ul>
                   )}
                   {record.certificate && (
-                    <a class="career-record__certificate" href={`${base}${record.certificate.file}`} target="_blank" rel="noreferrer">
+                    <a class="career-record__certificate" href={`${base}${record.certificate.file}`} target="_blank" rel="noopener noreferrer">
                       {record.certificate.label} ↗
                     </a>
                   )}

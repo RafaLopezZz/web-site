@@ -5,15 +5,15 @@ const routes = [
     path: "/web-site/production/quinta-bella/",
     title: "Quinta Bella",
     headings: ["Contexto", "Reto", "Ingeniería", "Resultado", "Aprendizaje", "Hablemos", "Evidencia"],
-    source: "Sitio público ↗",
-    href: "https://quintabella.com/",
+    source: "Visitar Quinta Bella ↗",
+    href: "https://www.quintabella.com/",
   },
   {
     path: "/web-site/en/production/quinta-bella/",
     title: "Quinta Bella",
     headings: ["Context", "Challenge", "Engineering", "Outcome", "Learning", "Discuss", "Evidence"],
-    source: "Public site ↗",
-    href: "https://quintabella.com/",
+    source: "Visit Quinta Bella ↗",
+    href: "https://www.quintabella.com/",
   },
 ] as const;
 
@@ -42,13 +42,13 @@ test("documents the Águilas FC HeroSlideResolver case without unsupported claim
     {
       path: "/web-site/production/aguilas-fc/",
       headings: ["Contexto", "Problema real", "Decisión técnica", "Implementación y resultado", "Pruebas", "Trade-off de ingeniería", "Evidencia pública"],
-      liveLabel: "Abrir Águilas FC ↗",
+      liveLabel: "Visitar Águilas FC ↗",
       authorship: "Diseñé e implementé",
     },
     {
       path: "/web-site/en/production/aguilas-fc/",
       headings: ["Context", "Real problem", "Technical decision", "Implementation and result", "Tests", "Engineering trade-off", "Public evidence"],
-      liveLabel: "Open Águilas FC ↗",
+      liveLabel: "Visit Águilas FC ↗",
       authorship: "I designed and implemented",
     },
   ] as const;
@@ -64,7 +64,7 @@ test("documents the Águilas FC HeroSlideResolver case without unsupported claim
     await expect(dossier).toContainText(route.authorship);
 
     const liveLink = dossier.getByRole("link", { name: route.liveLabel, exact: true });
-    await expect(liveLink).toHaveAttribute("href", "https://aguilasfc.es/");
+    await expect(liveLink).toHaveAttribute("href", "https://www.aguilasfc.es/");
     await expect(liveLink).toHaveAttribute("target", "_blank");
     await expect(liveLink).toHaveAttribute("rel", "noopener noreferrer");
     await expect(dossier.locator(".production-case__actions a")).toHaveCount(1);

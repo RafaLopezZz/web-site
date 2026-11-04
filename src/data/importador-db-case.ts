@@ -23,8 +23,8 @@ export const importadorDbCase = {
     evidence: [],
     outcomeTitle: "Resultado",
     outcome: "",
-    source: "Ver repositorio ↗",
-    blog: "Artículo técnico · ES →",
+    source: "Ver código ↗",
+    blog: "Leer artículo →",
   },
   en: {
     title: "ImportadorDB",
@@ -50,7 +50,7 @@ export const importadorDbCase = {
     evidence: [],
     outcomeTitle: "Outcome",
     outcome: "",
-    source: "View repository ↗",
-    blog: "Technical article · ES →",
+    source: "View code ↗",
+    blog: "Read article (Spanish) →",
   },
 } as const;

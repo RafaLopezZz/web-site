@@ -28,7 +28,7 @@ export const quintaBellaCase: Record<ProductionCaseLocale, ProductionCaseCopy> =
       { title: "Evidencia", body: "Repositorio público, pruebas de flujo y sitio publicado. No se muestran administración, datos reales ni checkout." },
     ],
     sourcesTitle: "Fuentes del caso",
-    publicSite: "Sitio público ↗",
+    publicSite: "Visitar Quinta Bella ↗",
   },
   en: {
     title: "Quinta Bella",
@@ -46,6 +46,6 @@ export const quintaBellaCase: Record<ProductionCaseLocale, ProductionCaseCopy> =
       { title: "Evidence", body: "Public repository, flow tests, and live site. No administration, real data, or checkout is shown." },
     ],
     sourcesTitle: "Case sources",
-    publicSite: "Public site ↗",
+    publicSite: "Visit Quinta Bella ↗",
   },
 };
