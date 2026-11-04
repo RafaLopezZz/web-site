@@ -68,9 +68,9 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(aguilas).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
     await expect(aguilas).not.toHaveAttribute("target");
     await expect(aguilas).not.toHaveAttribute("rel");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("target", "_blank");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noopener noreferrer");
+    const laOla = production.locator("a.action", { hasText: /La Ola Art Gallery.*→/ });
+    await expect(laOla).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/production/la-ola-art-gallery/" : "/web-site/production/la-ola-art-gallery/");
+    await expect(laOla).not.toHaveAttribute("target");
     await expect(production.getByRole("link", { name: home.endsWith("/en/") ? "View Quinta Bella →" : "Ver Quinta Bella →", exact: true })).not.toHaveAttribute("target");
     const previous = production.getByRole("button", { name: home.endsWith("/en/") ? "Previous" : "Caso anterior" });
     const next = production.getByRole("button", { name: home.endsWith("/en/") ? "Next" : "Caso siguiente" });
@@ -238,7 +238,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
     });
 
     const titleLinks = page.locator("#featured-evidence .selected-work__title-link");
-    await expect(titleLinks).toHaveCount(5);
+    await expect(titleLinks).toHaveCount(6);
     for (const title of await titleLinks.all()) {
       await title.focus();
       await expect(title).toBeFocused();
@@ -268,20 +268,16 @@ test("links only routable Home project titles without fake or nested anchors", a
     const titleLinks = evidence.locator(".selected-work__title-link");
     const english = home.endsWith("/en/");
 
-    await expect(titleLinks).toHaveCount(5);
+    await expect(titleLinks).toHaveCount(6);
     await expect(titleLinks.nth(0)).toHaveAttribute("href", english ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
     await expect(titleLinks.nth(1)).toHaveAttribute("href", english ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(titleLinks.nth(2)).toHaveAttribute("href", english ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
     await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
-    await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
-    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(2);
+    await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/la-ola-art-gallery/" : "/web-site/production/la-ola-art-gallery/");
+    await expect(titleLinks.nth(5)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
+    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(3);
     await expect(evidence.locator("a[href='#'], a[href='']")).toHaveCount(0);
     await expect(evidence.locator("a a, article a article")).toHaveCount(0);
-
-    for (const title of ["La Ola Art Gallery"]) {
-      const heading = evidence.getByRole("heading", { name: title, exact: true });
-      expect(await heading.evaluate((element) => element.closest("a") === null)).toBe(true);
-    }
 
     await titleLinks.first().focus();
     await expect(titleLinks.first()).toBeFocused();

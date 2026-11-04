@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  { path: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella →", aguilasAction: "Ver Águilas FC →", casePath: "/web-site/production/quinta-bella/", aguilasCasePath: "/web-site/production/aguilas-fc/" },
-  { path: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella →", aguilasAction: "View Águilas FC →", casePath: "/web-site/en/production/quinta-bella/", aguilasCasePath: "/web-site/en/production/aguilas-fc/" },
+  { path: "/web-site/production/", heading: "Producción", action: "Ver Quinta Bella →", aguilasAction: "Ver Águilas FC →", casePath: "/web-site/production/quinta-bella/", laOlaCasePath: "/web-site/production/la-ola-art-gallery/", aguilasCasePath: "/web-site/production/aguilas-fc/" },
+  { path: "/web-site/en/production/", heading: "Production", action: "View Quinta Bella →", aguilasAction: "View Águilas FC →", casePath: "/web-site/en/production/quinta-bella/", laOlaCasePath: "/web-site/en/production/la-ola-art-gallery/", aguilasCasePath: "/web-site/en/production/aguilas-fc/" },
 ] as const;
 
 const unsupported = ["HeroSlideResolverTest", "lockForUpdate", "callbacks", "RLP / PROD / 004"];
@@ -45,9 +45,9 @@ test("renders only approved equal-level Production dossiers", async ({ page }) =
         await expect(aguilas).toHaveAttribute("href", route.aguilasCasePath);
         await expect(aguilas).not.toHaveAttribute("target");
         await expect(aguilas).not.toHaveAttribute("rel");
-        const laOla = index.getByRole("link", { name: /La Ola Art Gallery.*↗/ });
-        await expect(laOla).toHaveAttribute("target", "_blank");
-        await expect(laOla).toHaveAttribute("rel", "noopener noreferrer");
+        const laOla = index.locator("a.action", { hasText: /La Ola Art Gallery.*→/ });
+        await expect(laOla).toHaveAttribute("href", route.laOlaCasePath);
+        await expect(laOla).not.toHaveAttribute("target");
         const quinta = index.getByRole("link", { name: route.action, exact: true });
         await expect(quinta).not.toHaveAttribute("target");
         await expect(index.locator("a[href*='fincas'], a[href*='victoriafincas']")).toHaveCount(0);

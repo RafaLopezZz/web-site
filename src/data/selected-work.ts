@@ -130,7 +130,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "https://www.laolaart.com/", label: "Visitar La Ola Art Gallery ↗", external: true },
+      action: { href: "production/la-ola-art-gallery/", label: "Ver La Ola Art Gallery →" },
      }, {
       id: "prod003",
       title: "Quinta Bella",
@@ -229,7 +229,7 @@ export const selectedWork: Record<SelectedWorkLocale, {
         },
         caption: { es: "Captura del sitio público.", en: "Public site screenshot." },
       },
-      action: { href: "https://www.laolaart.com/", label: "Visit La Ola Art Gallery ↗", external: true },
+      action: { href: "en/production/la-ola-art-gallery/", label: "View La Ola Art Gallery →" },
      }, {
       id: "prod003",
       title: "Quinta Bella",

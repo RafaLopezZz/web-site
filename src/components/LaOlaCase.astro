@@ -1,0 +1,13 @@
+---
+import ProductionCase from "./ProductionCase.astro";
+import { laOlaCase } from "../data/la-ola-case";
+
+const { locale } = Astro.props as { locale: "es" | "en" };
+---
+
+<ProductionCase
+  locale={locale}
+  caseId="la-ola-art-gallery"
+  copy={laOlaCase[locale]}
+  publicSiteHref="https://www.laolaart.com/"
+/>

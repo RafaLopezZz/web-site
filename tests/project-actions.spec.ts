@@ -15,6 +15,8 @@ const pages = [
   "/web-site/en/work/glea-nexo/",
   "/web-site/production/aguilas-fc/",
   "/web-site/en/production/aguilas-fc/",
+  "/web-site/production/la-ola-art-gallery/",
+  "/web-site/en/production/la-ola-art-gallery/",
   "/web-site/production/quinta-bella/",
   "/web-site/en/production/quinta-bella/",
   "/web-site/experience/",
