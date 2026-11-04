@@ -11,13 +11,13 @@ const locales = [
     casePath: `${root}/work/cosecha-en-cope/`,
     indexPath: `${root}/work/`,
     context: "Qué es",
-    role: "Diseñé y desarrollé Cosecha en Cope desde cero.",
-    hybrid: ["Thymeleaf", "páginas públicas", "/app"],
-    orders: "órdenes específicas por productor",
+    role: "Lo diseñé y desarrollé desde cero",
+    hybrid: ["Thymeleaf", "páginas públicas"],
+    orders: "pedidos divididos por productor",
     s3: "AWS S3",
-    manualS3: ["validé manualmente", "operaciones reales", "subida", "borrado"],
-    articleLink: "Artículo técnico · ES →",
-    articleCaseLink: "Ver el caso de Cosecha en Cope →",
+    manualS3: ["subirlas y borrarlas se validó manualmente"],
+    articleLink: "Leer artículo →",
+    articleCaseLink: "Ver Cosecha en Cope →",
     altCover: "Portada del proyecto Cosecha en Cope, un marketplace agrícola",
     altArchitecture: "Arquitectura híbrida de Cosecha en Cope",
   },
@@ -25,13 +25,13 @@ const locales = [
     casePath: `${root}/en/work/cosecha-en-cope/`,
     indexPath: `${root}/en/work/`,
     context: "What it is",
-    role: "I designed and developed Cosecha en Cope from scratch.",
-    hybrid: ["Thymeleaf", "public pages", "/app"],
-    orders: "producer-specific sales orders",
+    role: "I designed and developed it from scratch",
+    hybrid: ["Thymeleaf", "public pages"],
+    orders: "orders split by producer",
     s3: "AWS S3",
-    manualS3: ["manually validated", "real upload", "delete"],
-    articleLink: "Technical article · ES →",
-    articleCaseLink: "Ver el caso de Cosecha en Cope →",
+    manualS3: ["uploading and deleting them was validated manually"],
+    articleLink: "Read article (Spanish) →",
+    articleCaseLink: "Ver Cosecha en Cope →",
     altCover: "Cosecha en Cope project cover, an agricultural marketplace",
     altArchitecture: "Cosecha en Cope hybrid architecture",
   },
@@ -78,7 +78,7 @@ test("keeps both Cosecha records on the bilingual Work indexes", async ({ page }
     const record = index.locator(".territory-index__record", { hasText: "Cosecha en Cope" });
 
     await expect(record.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toBeVisible();
-    await expect(record.getByRole("link", { name: /caso|case/ })).toHaveAttribute("href", locale.casePath);
+    await expect(record.locator("a.action")).toHaveAttribute("href", locale.casePath);
     await expectApprovedSurface(record);
   }
 });
@@ -100,7 +100,6 @@ test("renders the approved first-person Cosecha meaning in ES and EN", async ({ 
     await expect(caseStudy).toContainText(locale.orders);
     await expect(caseStudy).toContainText(locale.s3);
     for (const concept of locale.manualS3) await expect(caseStudy).toContainText(concept);
-    await expect(caseStudy).toContainText("JWT");
     await expectApprovedSurface(caseStudy);
   }
 });

@@ -408,7 +408,7 @@ test("renders four evidence-led peer Skills domains with bilingual Applied AI bo
       domains: ["Backend", "Data", "Systems", "IA aplicada"],
       evidence: "36 rutas explícitas",
       routing: "enrutamiento de proveedores/modelos 7/7",
-      link: "Ver repositorio ↗",
+      link: "Ver código ↗",
       copy: "Flujos de ingeniería asistidos por agentes",
     },
     {
@@ -424,7 +424,7 @@ test("renders four evidence-led peer Skills domains with bilingual Applied AI bo
       domains: ["Backend", "Data", "Systems", "Applied AI"],
       evidence: "36 explicit routes",
       routing: "7/7 provider/model routing",
-      link: "View repository ↗",
+      link: "View code ↗",
       copy: "Agent-assisted engineering workflows",
     },
   ] as const) {

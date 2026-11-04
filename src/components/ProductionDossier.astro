@@ -16,7 +16,7 @@ interface Props {
       alt: { es: string; en: string };
       caption: { es: string; en: string };
     };
-    action?: { href: string; label: string; external?: boolean };
+    action?: { href: string; label: string };
   };
   eyebrow: string;
 }
@@ -44,12 +44,6 @@ const { locale, item, eyebrow } = Astro.props;
   <p class="territory-index__summary">{item.summary}</p>
   <p class="territory-index__tech">{item.techHighlights}</p>
   {item.action && (
-    <ActionLink
-      href={item.action.href}
-      target={item.action.external ? "_blank" : undefined}
-      rel={item.action.external ? "noopener noreferrer" : undefined}
-    >
-      {item.action.label}
-    </ActionLink>
+    <ActionLink href={item.action.href}>{item.action.label}</ActionLink>
   )}
 </Surface>

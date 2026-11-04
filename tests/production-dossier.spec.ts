@@ -4,20 +4,20 @@ const routes = [
   {
     path: "/web-site/production/quinta-bella/",
     title: "Quinta Bella",
-    headings: ["Contexto", "Reto", "Ingeniería", "Resultado", "Aprendizaje", "Hablemos", "Evidencia"],
-    source: "Sitio público ↗",
-    href: "https://quintabella.com/",
+    headings: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"],
+    source: "Visitar Quinta Bella ↗",
+    href: "https://www.quintabella.com/",
   },
   {
     path: "/web-site/en/production/quinta-bella/",
     title: "Quinta Bella",
-    headings: ["Context", "Challenge", "Engineering", "Outcome", "Learning", "Discuss", "Evidence"],
-    source: "Public site ↗",
-    href: "https://quintabella.com/",
+    headings: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"],
+    source: "Visit Quinta Bella ↗",
+    href: "https://www.quintabella.com/",
   },
 ] as const;
 
-const prohibited = ["customers", "client data", "Redsys", "revenue", "conversion", "HeroSlideResolverTest"];
+const prohibited = ["customers", "client data", "revenue", "conversion", "HeroSlideResolverTest", "Repositorio público", "Public repository", "Livewire"];
 
 test("documents Quinta Bella with verified sources and the required reading order", async ({ page }) => {
   for (const route of routes) {
@@ -41,15 +41,15 @@ test("documents the Águilas FC HeroSlideResolver case without unsupported claim
   const routes = [
     {
       path: "/web-site/production/aguilas-fc/",
-      headings: ["Contexto", "Problema real", "Decisión técnica", "Implementación y resultado", "Pruebas", "Trade-off de ingeniería", "Evidencia pública"],
-      liveLabel: "Abrir Águilas FC ↗",
-      authorship: "Diseñé e implementé",
+      headings: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"],
+      liveLabel: "Visitar Águilas FC ↗",
+      authorship: "Desarrollé la nueva web.",
     },
     {
       path: "/web-site/en/production/aguilas-fc/",
-      headings: ["Context", "Real problem", "Technical decision", "Implementation and result", "Tests", "Engineering trade-off", "Public evidence"],
-      liveLabel: "Open Águilas FC ↗",
-      authorship: "I designed and implemented",
+      headings: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"],
+      liveLabel: "Visit Águilas FC ↗",
+      authorship: "I developed the new website.",
     },
   ] as const;
 
@@ -64,7 +64,7 @@ test("documents the Águilas FC HeroSlideResolver case without unsupported claim
     await expect(dossier).toContainText(route.authorship);
 
     const liveLink = dossier.getByRole("link", { name: route.liveLabel, exact: true });
-    await expect(liveLink).toHaveAttribute("href", "https://aguilasfc.es/");
+    await expect(liveLink).toHaveAttribute("href", "https://www.aguilasfc.es/");
     await expect(liveLink).toHaveAttribute("target", "_blank");
     await expect(liveLink).toHaveAttribute("rel", "noopener noreferrer");
     await expect(dossier.locator(".production-case__actions a")).toHaveCount(1);
@@ -75,6 +75,50 @@ test("documents the Águilas FC HeroSlideResolver case without unsupported claim
     }
     await expect(dossier).not.toContainText(/\b\d+(?:\.\d+)?\s?(?:ms|%)\b/i);
   }
+});
+
+test("states La Ola Art Gallery facts with its live site action", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/production/la-ola-art-gallery/", headings: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"], live: "Visitar La Ola Art Gallery ↗", role: "Desarrollé la web, la tienda, las reservas y el pago." },
+    { path: "/web-site/en/production/la-ola-art-gallery/", headings: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"], live: "Visit La Ola Art Gallery ↗", role: "I developed the website, shop, bookings, and payment." },
+  ]) {
+    await page.goto(route.path);
+    const dossier = page.locator('[data-production-case="la-ola-art-gallery"][data-surface="dossier"]');
+    expect(await dossier.locator("h2").allTextContents()).toEqual(route.headings);
+    await expect(dossier.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
+    await expect(dossier).toContainText("RLP / PROD / 002");
+    await expect(dossier).toContainText(route.role);
+    const live = dossier.getByRole("link", { name: route.live, exact: true });
+    await expect(live).toHaveAttribute("href", "https://www.laolaart.com/");
+    await expect(live).toHaveAttribute("target", "_blank");
+    await expect(dossier.locator("a[href*='github.com']")).toHaveCount(0);
+  }
+});
+
+test("presents Fincas Victoria as a production case without a CMS or code claim", async ({ page }) => {
+  for (const route of [
+    { path: "/web-site/production/fincas-victoria/", headings: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"], live: "Visitar Fincas Victoria ↗", role: "Desarrollé toda la web, incluida la importación de inmuebles." },
+    { path: "/web-site/en/production/fincas-victoria/", headings: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"], live: "Visit Fincas Victoria ↗", role: "I developed the whole website, including the property import." },
+  ]) {
+    await page.goto(route.path);
+    const dossier = page.locator('[data-production-case="fincas-victoria"][data-surface="dossier"]');
+    expect(await dossier.locator("h2").allTextContents()).toEqual(route.headings);
+    await expect(dossier).toContainText("RLP / PROD / 004");
+    await expect(dossier).toContainText("PHP 8.3 · MariaDB · XML Kyero");
+    await expect(dossier).toContainText(route.role);
+    await expect(dossier).not.toContainText(/CMS|Laravel|gestor de contenidos|content manager/);
+    const live = dossier.getByRole("link", { name: route.live, exact: true });
+    await expect(live).toHaveAttribute("href", "https://www.victoriafincas.es/");
+    await expect(live).toHaveAttribute("target", "_blank");
+    await expect(dossier.locator("a[href*='github.com']")).toHaveCount(0);
+  }
+});
+
+test("states that Quinta Bella does not charge online yet", async ({ page }) => {
+  await page.goto("/web-site/production/quinta-bella/");
+  await expect(page.locator('[data-production-case="quinta-bella"]')).toContainText("El cobro online todavía no está activo.");
+  await page.goto("/web-site/en/production/quinta-bella/");
+  await expect(page.locator('[data-production-case="quinta-bella"]')).toContainText("Online payment is not active yet.");
 });
 
 test("keeps source actions responsive, themed, and keyboard reachable", async ({ page }) => {

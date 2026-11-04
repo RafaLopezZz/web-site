@@ -14,15 +14,7 @@ type CaseCopy = {
   eyebrow: string;
   subtitle: string;
   stack: string;
-  contextTitle?: string;
-  context?: string;
-  engineeringTitle?: string;
-  decisions?: readonly (readonly [string, string])[];
-  sections?: readonly (readonly [string, string])[];
-  evidenceTitle?: string;
-  evidence?: readonly string[];
-  outcomeTitle?: string;
-  outcome?: string;
+  sections: readonly (readonly [string, string])[];
   source: string;
   blog: string;
   relatedLinks?: readonly { href: string; label: string }[];
@@ -91,46 +83,19 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
       )}
 
       <div class="case__body">
-        {copy.sections ? copy.sections.map(([title, text]) => (
+        {copy.sections.map(([title, text]) => (
           <section>
             <h2>{title}</h2>
             <p>{text}</p>
           </section>
-        )) : <>
-          <section>
-            <h2>{copy.contextTitle ?? ""}</h2>
-            <p>{copy.context ?? ""}</p>
-          </section>
-
-          <section>
-            <h2>{copy.engineeringTitle}</h2>
-            <div class="case__decisions">
-              {(copy.decisions ?? []).map(([title, text]) => (
-                <article>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2>{copy.evidenceTitle ?? ""}</h2>
-            <ul>{(copy.evidence ?? []).map((item) => <li>{item}</li>)}</ul>
-          </section>
-
-          <section>
-            <h2>{copy.outcomeTitle ?? ""}</h2>
-            <p>{copy.outcome ?? ""}</p>
-          </section>
-        </>}
+        ))}
       </div>
 
       <nav class="case__actions" aria-label={locale === "es" ? "Fuentes del caso" : "Case sources"}>
-        <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noreferrer">{copy.source}</ActionLink>
-        <ActionLink href={blogHref} target={blogExternal ? "_blank" : undefined} rel={blogExternal ? "noreferrer" : undefined}>{copy.blog}</ActionLink>
+        <ActionLink variant="primary" href={sourceHref} target="_blank" rel="noopener noreferrer">{copy.source}</ActionLink>
+        <ActionLink href={blogHref} target={blogExternal ? "_blank" : undefined} rel={blogExternal ? "noopener noreferrer" : undefined}>{copy.blog}</ActionLink>
         {relatedLinks.map((link) => (
-          <ActionLink href={link.href} target="_blank" rel="noreferrer">{link.label}</ActionLink>
+          <ActionLink href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</ActionLink>
         ))}
       </nav>
     </Surface>
@@ -143,20 +108,15 @@ const { locale, caseId, copy, sourceHref, blogHref, relatedLinks = [], blogExter
   .case-shell { color: var(--theme-text); }
   .case { display: grid; gap: var(--space-7); margin-block: var(--space-8); padding-block: var(--space-6); }
   .case__hero, .case__body section { display: grid; gap: var(--space-4); max-width: var(--reading-max); }
-  .case__hero > p, .case__body section > p, li, figcaption { margin: 0; color: var(--theme-text-muted); line-height: 1.7; }
+  .case__hero > p, .case__body section > p, figcaption { margin: 0; color: var(--theme-text-muted); line-height: 1.7; }
   .case__hero > p:first-child, .case__stack, figcaption { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; }
   .case__hero > p:first-child { color: var(--theme-accent); }
-  h1, h2, h3 { margin: 0; font-family: var(--font-sans); line-height: 1.1; }
+  h1, h2 { margin: 0; font-family: var(--font-sans); line-height: 1.1; }
   h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-  h3 { font-size: 1.1rem; }
   .case__media, .case__body { display: grid; gap: var(--space-7); }
   .case__media figure { display: grid; gap: var(--space-2); margin: 0; }
   .case__media img { display: block; width: 100%; height: auto; border: 1px solid var(--theme-line); }
-  .case__decisions { display: grid; gap: var(--space-4); }
-  .case__decisions article { border-left: 2px solid var(--theme-accent); padding-left: var(--space-4); }
-  .case__decisions p { margin: 0.5rem 0 0; color: var(--theme-text-muted); line-height: 1.6; }
-  ul { display: grid; gap: var(--space-3); margin: 0; padding-left: 1.2rem; }
   .case__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
 
   @media (min-width: 1024px) {

@@ -24,7 +24,7 @@ gallery:
 
 Cosecha en Cope fue mi proyecto final de DAM, presentado y aprobado. Lo diseñé y desarrollé desde cero como un prototipo académico full-stack de marketplace agrícola. En este artículo conservo el recorrido técnico con el foco puesto en tres decisiones: separar el renderizado público de la aplicación, representar un pedido para varios productores y distinguir la autenticación de la autorización.
 
-[Ver el caso de Cosecha en Cope →](/web-site/work/cosecha-en-cope/)
+[Ver Cosecha en Cope →](/web-site/work/cosecha-en-cope/)
 
 ## El punto de partida
 

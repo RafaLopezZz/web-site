@@ -88,7 +88,7 @@ test("keeps the ImportadorDB article connected to its case route without oversta
   await page.goto("/web-site/blog/desarrollo-importador-db/");
 
   const article = page.getByRole("article");
-  await expect(article.getByRole("link", { name: "Ver el caso de ImportadorDB →", exact: true })).toHaveAttribute("href", "/web-site/work/importador-db/");
+  await expect(article.getByRole("link", { name: "Ver ImportadorDB →", exact: true })).toHaveAttribute("href", "/web-site/work/importador-db/");
   await expect(article).toContainText("Diseñé y desarrollé la aplicación desde cero.");
   await expect(article).not.toContainText("agente de IA");
   await expect(article).not.toContainText("AI agent");

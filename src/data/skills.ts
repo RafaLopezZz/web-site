@@ -181,8 +181,8 @@ const localizedDomains: readonly LocalizedSkillDomain[] = [
         ],
       },
       linkLabel: {
-        es: "Ver repositorio ↗",
-        en: "View repository ↗",
+        es: "Ver código ↗",
+        en: "View code ↗",
       },
     },
   },

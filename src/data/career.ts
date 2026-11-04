@@ -55,13 +55,13 @@ export const careerChronology: readonly CareerRecord[] = [
         "Desarrollo aplicaciones y mejoras internas con PHP, Laravel, MySQL, Java y scripts en Bash y PowerShell.",
         "Implanto y configuro ERP y software de gestión, intentando dejar procesos más claros, repetibles y fáciles de mantener.",
         "Mantengo entornos Windows y Linux y resuelvo incidencias teniendo en cuenta tanto el sistema como el impacto sobre el trabajo del cliente.",
-        "Algunos ejemplos de mi trabajo profesional con PHP/Laravel y MySQL:",
+        "Algunos ejemplos de mi trabajo profesional en desarrollo web con PHP:",
       ],
       links: [
-        { label: "Águilas FC", href: "https://www.aguilasfc.es/" },
-        { label: "La Ola Art Gallery", href: "https://www.laolaart.com" },
-        { label: "Quinta Bella", href: "https://www.quintabella.com" },
-        { label: "Fincas Victoria", href: "https://www.victoriafincas.es/" },
+        { label: "Visitar Águilas FC ↗", href: "https://www.aguilasfc.es/" },
+        { label: "Visitar La Ola Art Gallery ↗", href: "https://www.laolaart.com/" },
+        { label: "Visitar Quinta Bella ↗", href: "https://www.quintabella.com/" },
+        { label: "Visitar Fincas Victoria ↗", href: "https://www.victoriafincas.es/" },
       ],
     },
     en: {
@@ -75,13 +75,13 @@ export const careerChronology: readonly CareerRecord[] = [
         "I develop applications and internal improvements with PHP, Laravel, MySQL, Java, and Bash and PowerShell scripts.",
         "I deploy and configure ERP and business management software, aiming to make processes clearer, more repeatable, and easier to maintain.",
         "I maintain Windows and Linux environments and resolve incidents while considering both the technical system and the impact on the client's day-to-day work.",
-        "Some examples of my professional work with PHP/Laravel and MySQL:",
+        "Some examples of my professional web development work with PHP:",
       ],
       links: [
-        { label: "Águilas FC", href: "https://www.aguilasfc.es/" },
-        { label: "La Ola Art Gallery", href: "https://www.laolaart.com" },
-        { label: "Quinta Bella", href: "https://www.quintabella.com" },
-        { label: "Fincas Victoria", href: "https://www.victoriafincas.es/" },
+        { label: "Visit Águilas FC ↗", href: "https://www.aguilasfc.es/" },
+        { label: "Visit La Ola Art Gallery ↗", href: "https://www.laolaart.com/" },
+        { label: "Visit Quinta Bella ↗", href: "https://www.quintabella.com/" },
+        { label: "Visit Fincas Victoria ↗", href: "https://www.victoriafincas.es/" },
       ],
     },
   },
@@ -379,7 +379,7 @@ export const careerChronology: readonly CareerRecord[] = [
         "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.",
       ],
       links: [
-        { label: "Ver caso de ImportadorDB ↗", href: "work/importador-db/" },
+        { label: "Ver ImportadorDB →", href: "work/importador-db/" },
       ],
     },
     en: {
@@ -391,7 +391,7 @@ export const careerChronology: readonly CareerRecord[] = [
         "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow.",
       ],
       links: [
-        { label: "View ImportadorDB case ↗", href: "en/work/importador-db/" },
+        { label: "View ImportadorDB →", href: "en/work/importador-db/" },
       ],
     },
   },
@@ -411,7 +411,7 @@ export const careerChronology: readonly CareerRecord[] = [
       ],
       links: [
         {
-          label: "Ver caso de Cosecha en Cope ↗",
+          label: "Ver Cosecha en Cope →",
           href: "work/cosecha-en-cope/",
         },
       ],
@@ -426,7 +426,7 @@ export const careerChronology: readonly CareerRecord[] = [
       ],
       links: [
         {
-          label: "View Cosecha en Cope case ↗",
+          label: "View Cosecha en Cope →",
           href: "en/work/cosecha-en-cope/",
         },
       ],
@@ -447,7 +447,7 @@ export const careerChronology: readonly CareerRecord[] = [
       details: [
         "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.",
       ],
-      links: [{ label: "Ver caso de Glea-Nexo ↗", href: "work/glea-nexo/" }],
+      links: [{ label: "Ver Glea-Nexo →", href: "work/glea-nexo/" }],
     },
     en: {
       title: "Glea-Nexo",
@@ -457,7 +457,7 @@ export const careerChronology: readonly CareerRecord[] = [
       details: [
         "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries.",
       ],
-      links: [{ label: "View Glea-Nexo case ↗", href: "en/work/glea-nexo/" }],
+      links: [{ label: "View Glea-Nexo →", href: "en/work/glea-nexo/" }],
     },
   },
 ] as const;

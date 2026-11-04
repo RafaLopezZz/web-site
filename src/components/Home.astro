@@ -21,12 +21,12 @@ const copy =
         description:
           "I build software to solve real-world problems, with a particular interest in backend, data, automation and connected systems.",
         territory: "Backend · Data · Systems",
-        work: "View work",
+        work: "View personal work",
         cv: "Download CV",
         evidenceTitle: "Selected Work",
         workCategory: "Selected work",
         productionCategory: "Production",
-        previousWork: "Previous selected work",
+        previousWork: "Previous personal work",
         nextWork: "Next selected work",
         previousProduction: "Previous",
         nextProduction: "Next",
@@ -53,13 +53,13 @@ const copy =
         evidenceTitle: "Trabajo seleccionado",
         workCategory: "Trabajo seleccionado",
         productionCategory: "Producción",
-        previousWork: "Trabajo seleccionado anterior",
-        nextWork: "Trabajo seleccionado siguiente",
+        previousWork: "Trabajo anterior",
+        nextWork: "Trabajo siguiente",
         previousProduction: "Caso anterior",
         nextProduction: "Caso siguiente",
         exploreNavigation: "Explorar",
-        exploreWork: "Ver todo el trabajo",
-        exploreProduction: "Ver casos de producción",
+        exploreWork: "Ver todo el trabajo personal",
+        exploreProduction: "Ver casos en producción",
         aboutTitle: "SOBRE MI",
         aboutProfile: "[profile.log]",
         aboutPortraitAlt: "Retrato de Rafael López",
@@ -192,7 +192,7 @@ const { workItems, productionItems } = selectedWork[locale];
                           aria-hidden="true"
                         />
                       ))}
-                    {item.action && !item.action.external ? (
+                    {item.action ? (
                       <a
                         class="selected-work__title-link"
                         href={`${base}${item.action.href}`}
@@ -260,7 +260,7 @@ const { workItems, productionItems } = selectedWork[locale];
                         aria-hidden="true"
                       />
                     )}
-                    {item.action && !item.action.external ? (
+                    {item.action ? (
                       <a
                         class="selected-work__title-link"
                         href={`${base}${item.action.href}`}
@@ -275,19 +275,7 @@ const { workItems, productionItems } = selectedWork[locale];
                       {item.techHighlights}
                     </p>
                     {item.action && (
-                      <ActionLink
-                        href={
-                          item.action.external
-                            ? item.action.href
-                            : `${base}${item.action.href}`
-                        }
-                        target={item.action.external ? "_blank" : undefined}
-                        rel={
-                          item.action.external
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                      >
+                      <ActionLink href={`${base}${item.action.href}`}>
                         {item.action.label}
                       </ActionLink>
                     )}

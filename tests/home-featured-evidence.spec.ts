@@ -37,11 +37,11 @@ test("presents pure selected-work category carousels with verified records", asy
      await expect(importador.locator("img")).toHaveAttribute("alt", /ImportadorDB/);
      await expect(importador.locator("img")).toHaveAttribute("src", /importador-db_old[^/]*\.webp$/);
     await expect(glea).toContainText(home.endsWith("/en/")
-      ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries."
-      : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
+      ? "Ongoing testing project on how to store and recover farm data when the connection drops. It uses simulated data for now."
+      : "Proyecto de pruebas en curso sobre cómo guardar y recuperar datos agrícolas cuando se corta la conexión. Por ahora usa datos simulados.");
      await expect(glea).not.toContainText(/AI|Big Data|Production|real agricultural sensor|real agricultural dataset/i);
-    const workActions = work.getByRole("link", { name: home.endsWith("/en/") ? "View case →" : "Ver caso →", exact: true });
-    await expect(workActions).toHaveCount(3);
+    const workActions = work.locator("a.action");
+    await expect(workActions).toHaveText(home.endsWith("/en/") ? ["View ImportadorDB →", "View Cosecha en Cope →", "View Glea-Nexo →"] : ["Ver ImportadorDB →", "Ver Cosecha en Cope →", "Ver Glea-Nexo →"]);
     await expect(workActions.nth(1)).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(workActions.nth(2)).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
     await expect(work.getByText(/RLP \/ PROD \/ 002/)).toHaveCount(0);
@@ -49,36 +49,37 @@ test("presents pure selected-work category carousels with verified records", asy
     await expect(work.locator("[data-evidence-footer]")).toHaveCount(1);
     await expect(work.locator('[data-surface="dossier"]')).toHaveCount(0);
 
-    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(3);
-    await expect(production.locator("[data-territory-media-slot]")).toHaveCount(3);
+    await expect(production.locator('[data-evidence-track] article[data-surface="dossier"]')).toHaveCount(4);
+    await expect(production.locator("[data-territory-media-slot]")).toHaveCount(4);
     await expect(production.getByRole("heading", { name: "Cosecha en Cope", exact: true })).toHaveCount(0);
     await expect(production.getByText("RLP / PROD / 001", { exact: true })).toBeVisible();
     await expect(production.getByText("RLP / PROD / 002", { exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Águilas FC", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "La Ola Art Gallery", exact: true })).toBeVisible();
     await expect(production.getByRole("heading", { name: "Quinta Bella", exact: true })).toBeVisible();
-    await expect(production.locator("img")).toHaveCount(3);
+    await expect(production.getByRole("heading", { name: "Fincas Victoria", exact: true })).toBeVisible();
+    await expect(production.locator("img")).toHaveCount(4);
     for (const image of await production.locator("img").all()) {
       await expect(image).toHaveAttribute("src", /\/_astro\/[^/]+\.webp$/);
       await expect(image).toHaveAttribute("srcset", /640w/);
       await expect(image).toHaveAttribute("srcset", /1280w/);
       await expect(image).toHaveAttribute("sizes", "(min-width: 1024px) 50vw, 100vw");
     }
-    const aguilas = production.getByRole("link", { name: /Águilas FC.*↗/ });
+    const aguilas = production.locator("a.action", { hasText: /Águilas FC.*→/ });
     await expect(aguilas).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
     await expect(aguilas).not.toHaveAttribute("target");
     await expect(aguilas).not.toHaveAttribute("rel");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("href", "https://www.laolaart.com/");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("target", "_blank");
-    await expect(production.getByRole("link", { name: /La Ola Art Gallery.*↗/ })).toHaveAttribute("rel", "noopener noreferrer");
-    await expect(production.getByRole("link", { name: home.endsWith("/en/") ? "View Quinta Bella ↗" : "Ver Quinta Bella ↗", exact: true })).not.toHaveAttribute("target");
+    const laOla = production.locator("a.action", { hasText: /La Ola Art Gallery.*→/ });
+    await expect(laOla).toHaveAttribute("href", home.endsWith("/en/") ? "/web-site/en/production/la-ola-art-gallery/" : "/web-site/production/la-ola-art-gallery/");
+    await expect(laOla).not.toHaveAttribute("target");
+    await expect(production.getByRole("link", { name: home.endsWith("/en/") ? "View Quinta Bella →" : "Ver Quinta Bella →", exact: true })).not.toHaveAttribute("target");
     const previous = production.getByRole("button", { name: home.endsWith("/en/") ? "Previous" : "Caso anterior" });
     const next = production.getByRole("button", { name: home.endsWith("/en/") ? "Next" : "Caso siguiente" });
     await expect(production.getByRole("button")).toHaveCount(2);
     await expect(previous).toHaveText("←");
     await expect(next).toHaveText("→");
     await expect(production.locator("[data-evidence-footer]")).toHaveCount(1);
-    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
+    await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 04");
     await expect(production.locator('[data-surface="artifact"]')).toHaveCount(0);
     await expect(evidence.locator('[data-surface="artifact"] [data-surface="dossier"], [data-surface="dossier"] [data-surface="artifact"]')).toHaveCount(0);
     expect(await evidence.locator("a").evaluateAll((links) => links.some((link) => link.getAttribute("href") === "#"))).toBe(false);
@@ -95,22 +96,22 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     const english = home.endsWith("/en/");
 
     await expect(work).toContainText(english
-      ? "Desktop application for importing Excel data into relational databases through a guided review, mapping, and loading workflow."
-      : "Aplicación de escritorio para importar datos desde Excel a bases de datos relacionales mediante un flujo guiado de revisión, mapeo y carga.");
+      ? "Desktop program that moves Excel data into a database. Before loading it, you can review the data and decide where each column goes."
+      : "Programa de escritorio que pasa datos de Excel a una base de datos. Antes de cargarlos, permite revisarlos y decidir dónde va cada columna.");
     await expect(work).toContainText(english
-      ? "Web application connecting catalog, authentication, purchasing, and persistence through a REST API and an Angular client."
-      : "Aplicación web que conecta catálogo, autenticación, compra y persistencia mediante una API REST y un cliente Angular.");
+      ? "My final DAM project: an online shop where farm producers publish their products and customers place orders. It is an academic prototype."
+      : "Mi proyecto final de DAM: una tienda online donde productores agrícolas publican sus productos y los clientes hacen pedidos. Es un prototipo académico.");
     await expect(work).toContainText("Java 21 · JavaFX · JDBC");
     await expect(work).toContainText("Java · Angular · PostgreSQL");
-    await expect(work).toContainText(english ? "Engineering lab for exploring agricultural telemetry, offline continuity, and reliability boundaries." : "Laboratorio de ingeniería para explorar telemetría agrícola, continuidad sin conexión y límites de fiabilidad.");
+    await expect(work).toContainText(english ? "Ongoing testing project on how to store and recover farm data when the connection drops. It uses simulated data for now." : "Proyecto de pruebas en curso sobre cómo guardar y recuperar datos agrícolas cuando se corta la conexión. Por ahora usa datos simulados.");
     await expect(work).not.toContainText("Maven · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
     await expect(work).not.toContainText("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
 
-    await expect(production).toContainText(english ? "Official Águilas FC website." : "Web oficial del Águilas FC.");
-    await expect(production).toContainText(english ? "Art and décor ecommerce." : "Ecommerce de arte y decoración.");
-    await expect(production).toContainText(english ? "Public website and booking flow for a rural campsite." : "Web pública y reservas para un camping rural.");
-    await expect(production).toContainText("PHP · Laravel · Blade");
-    await expect(production).toContainText("Laravel · Livewire · MySQL");
+    await expect(production).toContainText(english ? "The club's official website, with news, a match calendar, match reports, and sponsors. Content is published or scheduled from its own panel." : "Web oficial del club, con noticias, calendario de partidos, crónicas y patrocinadores. El contenido se publica o se programa desde un panel propio.");
+    await expect(production).toContainText(english ? "Website for an art gallery that combines an online shop with a calendar of exhibitions and workshops, including booking and payment. Everything is managed from one panel." : "Web de una galería de arte que reúne tienda online y un calendario de exposiciones y talleres con reserva y pago. Todo se gestiona desde un mismo panel.");
+    await expect(production).toContainText(english ? "Website for a campsite in Águilas (Murcia) that presents its pitches and experiences, shows its rates, and gives access to booking." : "Web de un camping en Águilas (Murcia) que presenta sus parcelas y experiencias, muestra las tarifas y da acceso a la reserva.");
+    await expect(production).toContainText("Laravel 12 · MySQL · Blade");
+    await expect(production).toContainText("Laravel 12 · MySQL · Redsys");
     await expect(production).not.toContainText(/Contexto\.|Ingeniería\.|Evidencia\.|Context\.|Engineering\.|Evidence\./);
     await expect(production).not.toContainText("HeroSlideResolverTest");
     await expect(production).not.toContainText("Resolver →");
@@ -118,7 +119,7 @@ test("keeps Home evidence product-first and compact while retaining approved sou
     await expect(production).not.toContainText("pagado_sin_stock");
 
     const identifiers = evidence.locator(".selected-work__id");
-    await expect(identifiers).toHaveCount(6);
+    await expect(identifiers).toHaveCount(7);
     expect(await identifiers.evaluateAll((nodes) => nodes.every((node) => {
       const styles = getComputedStyle(node);
       const probe = document.createElement("span");
@@ -131,8 +132,6 @@ test("keeps Home evidence product-first and compact while retaining approved sou
   }
 
   const selectedWorkSource = await readFile("src/data/selected-work.ts", "utf8");
-  expect(selectedWorkSource).toContain("Java 21 · JavaFX · JDBC · .xlsx / .xls · MySQL · PostgreSQL · MariaDB · Firebird");
-  expect(selectedWorkSource).toContain("Spring Boot · Spring Security · Hibernate · PostgreSQL · Angular · Thymeleaf · Swagger");
   expect(selectedWorkSource).not.toContain("HeroSlideResolverTest");
   expect(selectedWorkSource).not.toContain("lockForUpdate");
   expect(selectedWorkSource).not.toContain("callbacks");
@@ -155,7 +154,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
   for (const theme of ["light", "dark"]) {
     await page.addInitScript((value) => localStorage.setItem("rlp-theme", value), theme);
     await page.goto("/web-site/");
-    await expect(cards).toHaveCount(6);
+    await expect(cards).toHaveCount(7);
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
 
     const colors = await page.evaluate(() => {
@@ -238,7 +237,7 @@ test("normalizes every Home carousel card to the shared surface interaction cont
     });
 
     const titleLinks = page.locator("#featured-evidence .selected-work__title-link");
-    await expect(titleLinks).toHaveCount(5);
+    await expect(titleLinks).toHaveCount(7);
     for (const title of await titleLinks.all()) {
       await title.focus();
       await expect(title).toBeFocused();
@@ -268,20 +267,17 @@ test("links only routable Home project titles without fake or nested anchors", a
     const titleLinks = evidence.locator(".selected-work__title-link");
     const english = home.endsWith("/en/");
 
-    await expect(titleLinks).toHaveCount(5);
+    await expect(titleLinks).toHaveCount(7);
     await expect(titleLinks.nth(0)).toHaveAttribute("href", english ? "/web-site/en/work/importador-db/" : "/web-site/work/importador-db/");
     await expect(titleLinks.nth(1)).toHaveAttribute("href", english ? "/web-site/en/work/cosecha-en-cope/" : "/web-site/work/cosecha-en-cope/");
     await expect(titleLinks.nth(2)).toHaveAttribute("href", english ? "/web-site/en/work/glea-nexo/" : "/web-site/work/glea-nexo/");
     await expect(titleLinks.nth(3)).toHaveAttribute("href", english ? "/web-site/en/production/aguilas-fc/" : "/web-site/production/aguilas-fc/");
-    await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
-    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(2);
+    await expect(titleLinks.nth(4)).toHaveAttribute("href", english ? "/web-site/en/production/la-ola-art-gallery/" : "/web-site/production/la-ola-art-gallery/");
+    await expect(titleLinks.nth(5)).toHaveAttribute("href", english ? "/web-site/en/production/quinta-bella/" : "/web-site/production/quinta-bella/");
+    await expect(titleLinks.nth(6)).toHaveAttribute("href", english ? "/web-site/en/production/fincas-victoria/" : "/web-site/production/fincas-victoria/");
+    await expect(evidence.locator('[data-evidence-category="production"] .selected-work__title-link')).toHaveCount(4);
     await expect(evidence.locator("a[href='#'], a[href='']")).toHaveCount(0);
     await expect(evidence.locator("a a, article a article")).toHaveCount(0);
-
-    for (const title of ["La Ola Art Gallery"]) {
-      const heading = evidence.getByRole("heading", { name: title, exact: true });
-      expect(await heading.evaluate((element) => element.closest("a") === null)).toBe(true);
-    }
 
     await titleLinks.first().focus();
     await expect(titleLinks.first()).toBeFocused();
@@ -365,7 +361,7 @@ test("keeps Work and Production carousel navigation bounded and independent", as
    await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
    await expect(nextWork).toBeEnabled();
    await expect(previousWork).toBeEnabled();
-   await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 03");
+   await expect(production.locator("[data-evidence-position]")).toHaveText("01 / 04");
     await nextWork.click();
     await expect.poll(() => workTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 2) <= 1)).toBe(true);
    await expect(work.locator("[data-evidence-position]")).toHaveText("03 / 03");
@@ -378,14 +374,19 @@ test("keeps Work and Production carousel navigation bounded and independent", as
 
   await nextProduction.click();
   await expect.poll(() => productionTrack.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 04");
   await expect(nextProduction).toBeEnabled();
   await expect(previousProduction).toBeEnabled();
   await nextProduction.click();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("03 / 03");
+  await expect(production.locator("[data-evidence-position]")).toHaveText("03 / 04");
+  await expect.poll(() => productionTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 2) <= 1)).toBe(true);
+  await nextProduction.click();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("04 / 04");
+  await expect.poll(() => productionTrack.evaluate((element) => Math.abs(element.scrollLeft - element.clientWidth * 3) <= 1)).toBe(true);
   await expect(nextProduction).toBeDisabled();
   await previousProduction.click();
-  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 03");
+  await previousProduction.click();
+  await expect(production.locator("[data-evidence-position]")).toHaveText("02 / 04");
    await expect(work.locator("[data-evidence-position]")).toHaveText("02 / 03");
 });
 
@@ -426,9 +427,9 @@ test("does not autoplay either selected-work carousel", async ({ page }) => {
   await page.goto("/web-site/");
 
   const positions = page.locator("[data-evidence-position]");
-   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
+   await expect(positions).toHaveText(["01 / 03", "01 / 04"]);
    await page.waitForTimeout(500);
-   await expect(positions).toHaveText(["01 / 03", "01 / 03"]);
+   await expect(positions).toHaveText(["01 / 03", "01 / 04"]);
 });
 
 test("keeps Production controls in its footer after its dossier body", async ({ page }) => {
@@ -438,7 +439,7 @@ test("keeps Production controls in its footer after its dossier body", async ({ 
   const production = page.locator('[data-evidence-category="production"]');
   const footer = production.locator("[data-evidence-footer]");
   const lastDossier = production.locator('[data-surface="dossier"]').last();
-  await expect(footer).toContainText("01 / 03");
+  await expect(footer).toContainText("01 / 04");
   expect(await footer.evaluate((element) => element.compareDocumentPosition(element.closest("[data-evidence-carousel]")!.querySelector('[data-surface="dossier"]:last-child')!) & Node.DOCUMENT_POSITION_PRECEDING)).toBeTruthy();
   expect(await footer.evaluate((element) => {
     const control = element.querySelector("button");
@@ -501,7 +502,7 @@ test("stabilizes desktop carousel stages while preserving natural mobile content
     await page.locator('[data-evidence-category="work"] [data-evidence-next]').click();
     await expect(page.locator('[data-evidence-category="work"] [data-evidence-position]')).toHaveText("02 / 03");
     await expect(page.locator('[data-evidence-category="work"] [data-evidence-next]')).toBeEnabled();
-    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 03");
+    await expect(page.locator('[data-evidence-category="production"] [data-evidence-position]')).toHaveText("01 / 04");
     await page.locator('[data-evidence-category="production"] [data-evidence-next]').click();
     const after = await geometry();
     expect(Math.abs(after[0].footerTop - after[1].footerTop)).toBeLessThanOrEqual(2);
