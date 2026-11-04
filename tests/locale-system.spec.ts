@@ -14,7 +14,7 @@ test("serves the URL-driven Spanish and English Home counterparts", async ({ pag
   await expect(page.locator("#hero .home-hero__role")).toHaveText("Software Developer");
   await expect(page.locator("#hero .home-hero__territory")).toHaveText("Backend · Datos · Sistemas");
   await expect(page.getByText("Desarrollo software para resolver problemas reales, con especial interés en backend, datos, automatización y sistemas conectados.", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Ver trabajo", exact: true })).toHaveAttribute("href", "#featured-evidence");
+  await expect(page.getByRole("link", { name: "Ver trabajo personal", exact: true })).toHaveAttribute("href", "#featured-evidence");
   await expect(page.getByRole("link", { name: "Descargar CV", exact: true })).toHaveAttribute("download", "");
 
   await page.goto(enHome);
@@ -23,7 +23,7 @@ test("serves the URL-driven Spanish and English Home counterparts", async ({ pag
   await expect(page.locator("#hero .home-hero__role")).toHaveText("Software Developer");
   await expect(page.locator("#hero .home-hero__territory")).toHaveText("Backend · Data · Systems");
   await expect(page.getByText("I build software to solve real-world problems, with a particular interest in backend, data, automation and connected systems.", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "View work", exact: true })).toHaveAttribute("href", "#featured-evidence");
+  await expect(page.getByRole("link", { name: "View personal work", exact: true })).toHaveAttribute("href", "#featured-evidence");
   await expect(page.getByRole("link", { name: "Download CV", exact: true })).toHaveAttribute("download", "");
 });
 

@@ -10,7 +10,7 @@ const expectSharpIbmPlex = async (locator: Parameters<typeof expect>[0]) => {
 test("uses native anchor hierarchy for Hero navigation", async ({ page }) => {
   await page.goto(home);
 
-  const work = page.getByRole("link", { name: "Ver trabajo", exact: true });
+  const work = page.getByRole("link", { name: "Ver trabajo personal", exact: true });
   const cv = page.getByRole("link", { name: "Descargar CV", exact: true }).first();
 
   await expect(work).toHaveAttribute("href", "#featured-evidence");
@@ -25,7 +25,7 @@ test("gives framed Hero actions a visible cyan focus treatment", async ({ page }
   await page.goto(home);
 
   for (const locator of [
-    page.getByRole("link", { name: "Ver trabajo", exact: true }),
+    page.getByRole("link", { name: "Ver trabajo personal", exact: true }),
     page.getByRole("link", { name: "Descargar CV", exact: true }).first(),
   ]) {
     await locator.focus();
@@ -43,6 +43,6 @@ test("keeps Hero actions usable without horizontal overflow at target widths", a
     expect(await page.locator("html").evaluate(
       (element) => element.scrollWidth <= window.innerWidth,
     )).toBe(true);
-    await expect(page.getByRole("link", { name: "Ver trabajo", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Ver trabajo personal", exact: true })).toBeVisible();
   }
 });

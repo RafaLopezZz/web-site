@@ -57,12 +57,12 @@ test("defines a centralized restrained CSS-first interaction contract", async ()
 test("keeps actions and territory surfaces natively semantic", async ({ page }) => {
   await page.goto(`${root}/`);
 
-  await expect(page.getByRole("link", { name: "Ver trabajo", exact: true })).toHaveCSS("outline-style", "none");
+  await expect(page.getByRole("link", { name: "Ver trabajo personal", exact: true })).toHaveCSS("outline-style", "none");
   await expect(page.locator('article[data-surface="artifact"]')).toHaveCount(3);
   expect(await page.locator('article[data-surface="dossier"]').count()).toBeGreaterThan(0);
   await expect(page.locator('a[data-surface], button[data-surface]')).toHaveCount(0);
 
-  const action = page.getByRole("link", { name: "Ver trabajo", exact: true });
+  const action = page.getByRole("link", { name: "Ver trabajo personal", exact: true });
   await action.focus();
   await expect(action).toHaveCSS("outline-style", "solid");
 });

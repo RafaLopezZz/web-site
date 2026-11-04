@@ -345,8 +345,8 @@ test("keeps Work and Production carousel navigation bounded and independent", as
   const workTrack = work.locator("[data-evidence-track]");
   const productionTrack = production.locator("[data-evidence-track]");
 
-   const previousWork = work.getByRole("button", { name: "Trabajo seleccionado anterior" });
-   const nextWork = work.getByRole("button", { name: "Trabajo seleccionado siguiente" });
+   const previousWork = work.getByRole("button", { name: "Trabajo anterior" });
+   const nextWork = work.getByRole("button", { name: "Trabajo siguiente" });
   const previousProduction = production.getByRole("button", { name: "Caso anterior" });
   const nextProduction = production.getByRole("button", { name: "Caso siguiente" });
   await expect(previousWork).toBeDisabled();
@@ -397,8 +397,8 @@ test("uses bounded native English carousel controls and hides only the scrollbar
   const work = page.locator('[data-evidence-category="work"]');
   const production = page.locator('[data-evidence-category="production"]');
   const track = production.locator("[data-evidence-track]");
-   await expect(work.getByRole("button", { name: "Previous selected work" })).toBeDisabled();
-   await expect(work.getByRole("button", { name: "Next selected work" })).toBeEnabled();
+   await expect(work.getByRole("button", { name: "Previous work" })).toBeDisabled();
+   await expect(work.getByRole("button", { name: "Next work" })).toBeEnabled();
   await expect(production.getByRole("button", { name: "Previous" })).toBeDisabled();
   await expect(production.getByRole("button", { name: "Next" })).toBeEnabled();
   await expect(production.getByRole("button", { name: "Previous" })).toHaveText("←");

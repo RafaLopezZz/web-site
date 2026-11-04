@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const homes = [
   {
     route: "/web-site/",
-    labels: ["Ver todo el trabajo", "Ver casos de producción"],
+    labels: ["Ver todo el trabajo personal", "Ver casos en producción"],
     aboutTitle: "SOBRE MI",
     aboutProfile: "[profile.log]",
     portraitAlt: "Retrato de Rafael López",
@@ -11,7 +11,7 @@ const homes = [
   },
   {
     route: "/web-site/en/",
-    labels: ["View all work", "View production cases"],
+    labels: ["View all personal work", "View cases in production"],
     aboutTitle: "ABOUT ME",
     aboutProfile: "[profile.log]",
     portraitAlt: "Portrait of Rafael López",

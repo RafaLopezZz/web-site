@@ -19,7 +19,7 @@ test("presents the bounded M2.1 Home identity shell", async ({ page }) => {
   await expect(hero.getByText("Fullstack Developer", { exact: true })).toHaveCount(0);
   await expect(hero.locator("img")).toHaveCount(0);
 
-  const work = hero.getByRole("link", { name: "Ver trabajo", exact: true });
+  const work = hero.getByRole("link", { name: "Ver trabajo personal", exact: true });
   await expect(work).toHaveAttribute("href", "#featured-evidence");
   await expect(hero.getByRole("link", { name: "Descargar CV", exact: true })).toHaveAttribute("download", "");
 
