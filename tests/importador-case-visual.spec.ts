@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  { path: "/web-site/work/importador-db/", what: "Qué es", role: "Mi papel", roleText: "Diseñé y desarrollé ImportadorDB desde cero.", repository: "Ver código ↗", article: "Leer artículo →" },
-  { path: "/web-site/en/work/importador-db/", what: "What it is", role: "My role", roleText: "I designed and developed ImportadorDB from scratch.", repository: "View code ↗", article: "Read article (Spanish) →" },
+  { path: "/web-site/work/importador-db/", what: "Qué es", role: "Mi papel", roleText: "Lo diseñé y desarrollé desde cero", repository: "Ver código ↗", article: "Leer artículo →" },
+  { path: "/web-site/en/work/importador-db/", what: "What it is", role: "My role", roleText: "I designed and developed it from scratch", repository: "View code ↗", article: "Read article (Spanish) →" },
 ] as const;
 
 test("presents the U10 evidence contract for ImportadorDB in both locales", async ({ page }) => {
@@ -63,12 +63,10 @@ test("keeps ImportadorDB content in the required hiring-facing order", async ({ 
   expect(await caseStudy.getByRole("heading").allTextContents()).toEqual([
     "ImportadorDB",
     "Qué es",
+    "El reto",
     "Mi papel",
-    "Restricciones",
-    "Decisión",
-    "Trade-off",
-    "Evidencia",
     "Resultado",
-    "Aprendizajes",
+    "Lo que aprendí",
+    "Detalles técnicos",
   ]);
 });

@@ -80,7 +80,7 @@ test("keeps Production public indexes within the approved factual boundary", asy
 });
 
 test("renders the bilingual ImportadorDB case with its professional Java 21 contract", async ({ page }) => {
-  for (const entry of [{ route: "/web-site/work/importador-db/", heading: "Qué es", evidence: "Evidencia" }, { route: "/web-site/en/work/importador-db/", heading: "What it is", evidence: "Evidence" }]) {
+  for (const entry of [{ route: "/web-site/work/importador-db/", heading: "Qué es", evidence: "Detalles técnicos" }, { route: "/web-site/en/work/importador-db/", heading: "What it is", evidence: "Technical details" }]) {
     await page.goto(entry.route);
     const caseStudy = page.locator("[data-importador-case]");
     await expect(caseStudy.getByRole("heading", { name: "ImportadorDB", exact: true })).toBeVisible();

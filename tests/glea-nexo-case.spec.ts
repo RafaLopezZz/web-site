@@ -7,22 +7,8 @@ const root = resolve(import.meta.dirname, "..");
 const read = (path: string) => readFileSync(resolve(root, path), "utf8");
 
 const sectionHeadings = {
-  es: [
-    "Qué estoy probando",
-    "Sistema bajo prueba",
-    "Decisiones y compensaciones",
-    "Evidencia actual",
-    "Límites y preguntas abiertas",
-    "Evidencia y enlaces",
-  ],
-  en: [
-    "What I’m testing",
-    "System under test",
-    "Decisions / trade-offs",
-    "Current evidence",
-    "Limits / open questions",
-    "Evidence / links",
-  ],
+  es: ["Qué es", "El reto", "Mi papel", "Resultado", "Lo que aprendí", "Detalles técnicos"],
+  en: ["What it is", "The challenge", "My role", "Outcome", "What I learned", "Technical details"],
 } as const;
 
 const routeFiles = [
@@ -52,32 +38,21 @@ test("classifies Glea-Nexo as LAB in Work and selects it through Home data", () 
   expect(home).not.toContain("gleaNexoIndex");
 });
 
-test("defines the bilingual six-section LAB contract and only accepted public states", () => {
+test("defines the bilingual six-section LAB contract with bounded public claims", () => {
   const data = read("src/data/glea-nexo-case.ts");
   const component = read("src/components/GleaCase.astro");
-  const acceptedStates = ["Implemented", "Validated", "Current work", "Planned", "Limit / open question"];
 
   for (const heading of [...sectionHeadings.es, ...sectionHeadings.en]) expect(data).toContain(heading);
-  for (const state of acceptedStates) expect(data).toContain(state);
 
-  expect(data).toContain("Raspberry Pi 3");
-  expect(data).toContain("synthetic telemetry");
-  expect(data).toContain("telemetría sintética");
-  expect(data).toContain("MQTT → Node-RED → backend → PostgreSQL → API");
-  expect(data).toContain("offline accumulation and successful replay");
-  expect(data).toContain("acumulación sin conexión");
-  expect(data).toContain("reprocesado exitoso");
-  expect(data).toContain("partial key-based deduplication");
-  expect(data).toContain("deduplicación parcial por clave");
-  expect(data).toContain("event/receive/process time");
-  expect(data).toContain("tiempo de evento/recepción/procesamiento");
-  expect(data).toContain("FAILED→retry→SENT");
-  expect(data).toContain("DEAD_LETTER");
-  expect(data).toContain("concurrent replay and new telemetry");
-  expect(data).toContain("AI/Big Data is a central future direction");
-  expect(data).toContain("no AI/Big Data capability is implemented today");
-  expect(data).toContain("not yet approved, submitted, or completed");
-  expect(data).toContain("todavía no ha sido aprobada, presentada ni completada");
+  expect(data).toContain("Raspberry Pi");
+  expect(data).toContain("datos simulados");
+  expect(data).toContain("simulated data");
+  expect(data).toContain("Quedan por validar varios casos de fallo");
+  expect(data).toContain("Several failure cases remain to be validated");
+  expect(data).toContain("aún no hay nada implementado");
+  expect(data).toContain("nothing is implemented yet");
+  expect(data).toContain("deduplicación parcial");
+  expect(data).toContain("partial deduplication");
   expect(data).toContain("I designed");
   expect(data).toContain("Diseñé");
 
@@ -115,53 +90,24 @@ test("emits both route documents with LAB identity and accessible section headin
     expect((html.match(/<section\b/g) ?? []).length).toBe(6);
     expect(html).toContain('data-surface="artifact"');
     expect(html).toContain('aria-label="');
-    expect(html).toContain("Raspberry Pi 3");
-    expect(html).toContain(route.locale === "en" ? "synthetic" : "sintética");
+    expect(html).toContain("Raspberry Pi");
+    expect(html).toContain(route.locale === "en" ? "simulated" : "simulados");
     expect(html).toContain("glea-nexo/pull/5");
     expect(html).toContain("glea-nexo/pull/7");
-
-    if (route.locale === "es") {
-      for (const forbidden of ["Implemented", "Validated", "Current work", "Planned", "Limit / open question", "trade-offs", "offline", "replay", "at-least-once", "runtimes"]) {
-        expect(html).not.toContain(forbidden);
-      }
-      for (const required of ["Implementado", "Validado", "Trabajo actual", "Planificado", "Límite / pregunta abierta", "compensaciones", "entornos de ejecución", "entrega al menos una vez", "sin conexión", "reprocesado", "recorrido extremo a extremo"]) {
-        expect(html).toContain(required);
-      }
-    }
   }
 });
 
-test("uses only Spanish editorial and status vocabulary on the rendered Spanish Glea surface", async ({ page }) => {
+test("uses only Spanish editorial vocabulary on the rendered Spanish Glea surface", async ({ page }) => {
   await page.goto("/web-site/work/glea-nexo/");
   const surface = page.locator('main [data-work-case="glea-nexo"]');
   const text = await surface.innerText();
 
-  for (const forbidden of [
-    "Implemented",
-    "Validated",
-    "Current work",
-    "Planned",
-    "Limit / open question",
-    "trade-offs",
-    "offline",
-    "replay",
-    "at-least-once",
-    "runtimes",
-  ]) expect(text).not.toContain(forbidden);
-
-  for (const required of [
-    "Implementado",
-    "Validado",
-    "Trabajo actual",
-    "Planificado",
-    "Límite / pregunta abierta",
-    "compensaciones",
-    "entornos de ejecución",
-    "entrega al menos una vez",
-    "sin conexión",
-    "reprocesado",
-    "recorrido extremo a extremo",
-  ]) expect(text).toContain(required);
+  for (const forbidden of ["Implemented", "Validated", "Current work", "Planned", "trade-offs", "offline", "replay", "at-least-once", "runtimes"]) {
+    expect(text).not.toContain(forbidden);
+  }
+  for (const required of ["Qué es", "El reto", "entrega al menos una vez", "recuperar la conexión", "Ver prueba: reenvío sin conexión ↗"]) {
+    expect(text).toContain(required);
+  }
 
   const image = surface.locator(".case__media img");
   await expect(image).toHaveAttribute("src", /\/_astro\/glea-nexo[^/]+\.webp$/);
