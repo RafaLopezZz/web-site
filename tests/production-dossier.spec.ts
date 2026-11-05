@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { technicalBackgroundLayer } from "./helpers/technical-background";
 
 const routes = [
   {
@@ -151,9 +152,10 @@ test("keeps Production detail shells on the shared technical background", async 
     await page.goto(path);
     const shell = page.locator("main.production-case-shell");
     await expect(shell).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(shell).toHaveCSS("background-image", /linear-gradient/);
-    await expect(shell).toHaveCSS("background-size", /64px 64px/);
-    await expect(shell).toHaveCSS("animation-name", "technical-background-drift");
+    const layer = await technicalBackgroundLayer(shell);
+    expect(layer.backgroundImage).toMatch(/linear-gradient/);
+    expect(layer.backgroundSize).toMatch(/64px 64px/);
+    expect(layer.animationName).toBe("technical-background-drift");
   }
 });
 

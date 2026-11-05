@@ -77,7 +77,25 @@ body.bg-ink {
 .career-shell,
 .skills-shell,
 .contact-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
   background-color: transparent;
+}
+
+.home-shell::before,
+.territory-index-shell::before,
+.case-shell::before,
+.production-case-shell::before,
+.notes-shell::before,
+.career-shell::before,
+.skills-shell::before,
+.contact-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 -4rem -4rem 0;
+  z-index: -1;
+  pointer-events: none;
   background-image:
     linear-gradient(
       to right,
@@ -90,7 +108,9 @@ body.bg-ink {
       transparent 1px
     );
   background-size: 4rem 4rem;
-  animation: technical-background-drift 12s linear infinite;
+  will-change: transform;
+  /* A compositor-only layer moving 1px per step avoids repainting the grid on every frame. */
+  animation: technical-background-drift 12s steps(64) infinite;
 }
 
 ::selection {
@@ -204,8 +224,21 @@ h-captcha iframe {
   width: 0.9rem;
   border-radius: 999px;
   background: var(--color-rlp-cyan);
-  box-shadow: 0 0 0 0 rgba(5, 154, 175, 0.5);
-  animation: timeline-pulse 2.4s ease-out infinite;
+  will-change: transform;
+}
+
+.timeline-dot::after,
+.career-record__marker::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-rlp-cyan);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: timeline-pulse 2.4s steps(15) infinite;
 }
 
 .timeline-period {
@@ -417,19 +450,21 @@ a:focus-visible {
     transition-duration: 0s;
   }
 
-  .home-shell,
-  .territory-index-shell,
-  .case-shell,
-  .production-case-shell,
-  .notes-shell,
-  .career-shell,
-  .skills-shell,
-  .contact-shell {
+  .home-shell::before,
+  .territory-index-shell::before,
+  .case-shell::before,
+  .production-case-shell::before,
+  .notes-shell::before,
+  .career-shell::before,
+  .skills-shell::before,
+  .contact-shell::before {
+    will-change: auto;
     animation: none;
   }
 
-  .timeline-dot,
-  .career-record__marker {
+  .timeline-dot::after,
+  .career-record__marker::after {
+    will-change: auto;
     animation: none;
   }
 
@@ -445,15 +480,19 @@ a:focus-visible {
 
 @keyframes timeline-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(5, 154, 175, 0.45);
+    opacity: 0.45;
+    transform: scale(1);
   }
 
-  70% {
-    box-shadow: 0 0 0 0.55rem rgba(5, 154, 175, 0);
+  35% {
+    opacity: 0.144;
+    transform: scale(1.884);
   }
 
+  70%,
   100% {
-    box-shadow: 0 0 0 0 rgba(5, 154, 175, 0);
+    opacity: 0;
+    transform: scale(2.3);
   }
 }
 
@@ -471,11 +510,11 @@ a:focus-visible {
 
 @keyframes technical-background-drift {
   from {
-    background-position: 0 0;
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    background-position: -4rem -4rem;
+    transform: translate3d(-4rem, -4rem, 0);
   }
 }
 
