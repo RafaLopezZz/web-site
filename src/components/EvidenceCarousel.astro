@@ -34,6 +34,7 @@ const { id, itemCount, previousLabel, nextLabel } = Astro.props;
     const position = carousel.querySelector<HTMLElement>("[data-evidence-position]");
     const items = track.querySelectorAll<HTMLElement>(".evidence-carousel__item");
     let index = 0;
+    let targetLeft: number | null = null;
 
     const update = (nextIndex: number) => {
       index = Math.max(0, Math.min(nextIndex, items.length - 1));
@@ -44,17 +45,34 @@ const { id, itemCount, previousLabel, nextLabel } = Astro.props;
 
     const move = (offset: number) => {
       update(index + offset);
+      targetLeft = index * track.clientWidth;
       track.scrollTo({
-        left: index * track.clientWidth,
+        left: targetLeft,
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
       });
+    };
+
+    const syncWithScroll = () => {
+      if (!track.clientWidth) return;
+      update(Math.round(track.scrollLeft / track.clientWidth));
     };
 
     previous?.addEventListener("click", () => move(-1));
     next?.addEventListener("click", () => move(1));
     track.addEventListener("scroll", () => {
-      if (!track.clientWidth) return;
-      update(Math.round(track.scrollLeft / track.clientWidth));
+      // Intermediate positions of a button-driven scroll must not overwrite the requested index.
+      if (targetLeft !== null) {
+        if (Math.abs(track.scrollLeft - targetLeft) > 1) return;
+        targetLeft = null;
+      }
+      syncWithScroll();
+    });
+    track.addEventListener("scrollend", () => {
+      targetLeft = null;
+      syncWithScroll();
+    });
+    track.addEventListener("pointerdown", () => {
+      targetLeft = null;
     });
     update(0);
   });

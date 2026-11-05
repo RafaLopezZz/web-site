@@ -71,8 +71,11 @@ for (const home of homes) {
     });
     expect(portraitStyle).toEqual({ borderRadius: "0px", borderWidth: "1px", borderColor: "rgb(5, 154, 175)" });
     expect((await portrait.boundingBox())?.width).toBeGreaterThanOrEqual(240);
-    await portrait.hover();
-    await expect(portrait).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
+    // Hover again once smooth scrolling has settled, because a pointer placed mid-scroll can leave :hover stale.
+    await expect(async () => {
+      await portrait.hover();
+      await expect(portrait).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)", { timeout: 500 });
+    }).toPass();
 
     await page.setViewportSize({ width: 320, height: 900 });
     const mobile = await page.locator(".home-explore__navigation").evaluate((element) => {

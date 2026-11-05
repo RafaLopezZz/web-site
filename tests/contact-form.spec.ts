@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { technicalBackgroundLayer } from "./helpers/technical-background";
 
 const routes = [
   {
@@ -126,15 +127,16 @@ test.describe("U11 Contact", () => {
     await page.goto(routes[0].path);
 
     const contact = page.locator("main.contact-shell");
-    await expect(contact).toHaveCSS("background-size", /64px 64px/);
-    await expect(contact).toHaveCSS("animation-name", "technical-background-drift");
-    await expect(contact).toHaveCSS("animation-duration", "12s");
-    await expect(contact).toHaveCSS("animation-timing-function", "linear");
-    await expect(contact).toHaveCSS("animation-iteration-count", "infinite");
+    const layer = await technicalBackgroundLayer(contact);
+    expect(layer.backgroundSize).toMatch(/64px 64px/);
+    expect(layer.animationName).toBe("technical-background-drift");
+    expect(layer.animationDuration).toBe("12s");
+    expect(layer.animationTimingFunction).toBe("steps(64)");
+    expect(layer.animationIterationCount).toBe("infinite");
 
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.reload();
-    await expect(contact).toHaveCSS("animation-name", "none");
+    expect((await technicalBackgroundLayer(contact)).animationName).toBe("none");
   });
 
   test("reports associated validation errors, preserves values, and does not submit invalid data", async ({ page }) => {

@@ -346,10 +346,12 @@ test("keeps the career timeline readable, themed, and reduced-motion safe at can
           "background-image",
           "none",
         );
-        await expect(page.locator("[data-career-node]").first()).toHaveCSS(
-          "animation-name",
-          "none",
-        );
+        expect(
+          await page
+            .locator("[data-career-node]")
+            .first()
+            .evaluate((element) => getComputedStyle(element, "::after").animationName),
+        ).toBe("none");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
       }
     }

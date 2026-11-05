@@ -160,6 +160,8 @@ The implementation order is exactly `hovers → carousel motion → technical ba
 
 U9.3 is complete and maintainer accepted. The mandatory visual system uses the verified existing `main.home-shell` owner for Home and `main.territory-index-shell` owner for Work and Production. Both owners share exactly one CSS-only drafting/coordinate-line pattern: a `4rem` grid, existing semantic contrast roles, and a diagonal up-left `background-position` drift at `12s linear infinite`; territory-specific or responsive-specific speed variants are prohibited. `prefers-reduced-motion: reduce` applies `animation: none`. The `30s` and `24s` calibration candidates were too subtle; the maintainer selected `12s`. Each owner already paints opaque `--theme-canvas`, while `html`/`body` paint the route canvas, `BaseLayout` adds no root wrapper, and `body.bg-ink` clears background images. No DOM, wrapper, pseudo-element, stacking, z-index, transparency, or JavaScript change is required. Direct child content is transparent; bounded opaque CMD, surface, and media descendants mask the field only locally while it remains visible on surrounding route canvas. No intra-route seams are expected; Work and Production already share one owner, and cross-owner visual continuity is contractual. Canvas, WebGL, video, GIF, SVG networks, animation libraries, JavaScript loops/listeners, route-specific layers, Hero motion, and scroll reveals remain outside this completed slice. Automated final results are not claimed because tests have not run for this settlement.
 
+Rendering update (supersedes the implementation details above, not the visual decision): the same `4rem` grid and `12s` up-left drift now live on a `::before` layer of each shell, animated with `transform` at `steps(64)`. The shell stays transparent and adds `position: relative`, `isolation: isolate`, and `overflow: clip`. Animating `background-position` repainted the grid continuously; measured in Brave at 1920x1080, idle Home browser CPU dropped from 22.4% to 3.2% of one thread, against 2.2% with no animation. `prefers-reduced-motion: reduce` keeps the static grid with `animation: none`.
+
 #### U9.5 Scroll Reveals — DESIGN / PROPOSED
 
 U9.5 adds only optional route-level entry treatment. Home treats the post-hero
@@ -215,7 +217,9 @@ context subordinate to it. Labels such as `EXPERIENCIA`, `FORMACIÓN`,
 Descriptions, secondary copy, lists, and project references keep natural
 reading alignment rather than inheriting the side emphasis of a title block.
 The timeline uses current RLP tokens and motion; its accent pulse is disabled
-under `prefers-reduced-motion: reduce`. No per-record Windows/card treatment,
+under `prefers-reduced-motion: reduce`. The pulse is a `::after` layer of each
+marker animated with `transform` and `opacity` at `steps(15)`, because animating
+`box-shadow` repainted all 13 markers every frame. No per-record Windows/card treatment,
 accordion, ribbon, or forced card equality is allowed.
 
 Only maintainer-authorized project milestones appear in the chronology as small

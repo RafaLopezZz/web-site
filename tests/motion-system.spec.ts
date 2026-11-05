@@ -1,5 +1,6 @@
 import { expect, test, type Locator } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { technicalBackgroundLayer } from "./helpers/technical-background";
 
 const root = "/web-site";
 const terminalLines = ["C:\\RLP> whoami", "rlp-sys-admin", "C:\\RLP> █"];
@@ -206,28 +207,32 @@ test("shares an active technical background across Home, Work, Production, and N
     expect(await page.locator("html").evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
 
     const before = await owner.evaluate((element) => {
-      const style = getComputedStyle(element);
+      const layer = getComputedStyle(element, "::before");
       return {
-        backgroundImage: style.backgroundImage,
-        backgroundPosition: style.backgroundPosition,
-        backgroundSize: style.backgroundSize,
-        animationDuration: style.animationDuration,
-        animationTimingFunction: style.animationTimingFunction,
-        backgroundColor: style.backgroundColor,
-        hasActiveAnimation: element.getAnimations().some((animation) => animation.playState === "running"),
-        hasNonZeroDuration: style.animationDuration.split(",").some((duration) => Number.parseFloat(duration) > 0),
+        backgroundImage: layer.backgroundImage,
+        transform: layer.transform,
+        backgroundSize: layer.backgroundSize,
+        animationDuration: layer.animationDuration,
+        animationTimingFunction: layer.animationTimingFunction,
+        backgroundColor: getComputedStyle(element).backgroundColor,
+        hasActiveAnimation: element.getAnimations({ subtree: true }).some((animation) => {
+          const effect = animation.effect as KeyframeEffect | null;
+          return effect?.target === element && effect.pseudoElement === "::before" && animation.playState === "running";
+        }),
+        hasNonZeroDuration: layer.animationDuration.split(",").some((duration) => Number.parseFloat(duration) > 0),
       };
     });
-    await page.waitForTimeout(100);
-    const afterPosition = await owner.evaluate((element) => getComputedStyle(element).backgroundPosition);
+    // Each of the 64 steps in the 12s cycle lasts 187.5ms.
+    await page.waitForTimeout(250);
+    const afterTransform = await owner.evaluate((element) => getComputedStyle(element, "::before").transform);
 
     expect(before.backgroundImage).not.toBe("none");
     expect(before.backgroundColor).toBe("rgba(0, 0, 0, 0)");
     expect(before.hasActiveAnimation).toBe(true);
     expect(before.hasNonZeroDuration).toBe(true);
-    expect(afterPosition).not.toBe(before.backgroundPosition);
+    expect(afterTransform).not.toBe(before.transform);
 
-    const { backgroundImage: _backgroundImage, backgroundPosition: _backgroundPosition, hasActiveAnimation: _hasActiveAnimation, hasNonZeroDuration: _hasNonZeroDuration, ...geometry } = before;
+    const { backgroundImage: _backgroundImage, transform: _transform, hasActiveAnimation: _hasActiveAnimation, hasNonZeroDuration: _hasNonZeroDuration, ...geometry } = before;
     if (sharedContract) expect(geometry).toEqual(sharedContract);
     else sharedContract = geometry;
   }
@@ -248,7 +253,7 @@ test("keeps shared shell ownership transparent across light, dark, and system th
       await page.goto(route);
       const shell = page.locator("main");
       await expect(shell).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-      await expect(shell).toHaveCSS("background-image", /linear-gradient/);
+      expect((await technicalBackgroundLayer(shell)).backgroundImage).toMatch(/linear-gradient/);
       await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
     }
   }
@@ -259,7 +264,7 @@ test("keeps shared shell ownership transparent across light, dark, and system th
   await expect(page.locator("html")).toHaveAttribute("data-theme-preference", "system");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("main")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-  await expect(page.locator("main")).toHaveCSS("background-image", /linear-gradient/);
+  expect((await technicalBackgroundLayer(page.locator("main"))).backgroundImage).toMatch(/linear-gradient/);
 });
 
 test("keeps Notes on the shared background owner without Notes-specific motion", async ({ page }) => {
@@ -270,9 +275,10 @@ test("keeps Notes on the shared background owner without Notes-specific motion",
     await page.goto(route);
     const notes = page.locator("main.notes-shell");
     await expect(notes).toBeVisible();
-    await expect(notes).toHaveCSS("background-size", /64px 64px/);
-    await expect(notes).toHaveCSS("animation-name", "technical-background-drift");
-    await expect(notes).toHaveCSS("animation-duration", "12s");
+    const layer = await technicalBackgroundLayer(notes);
+    expect(layer.backgroundSize).toMatch(/64px 64px/);
+    expect(layer.animationName).toBe("technical-background-drift");
+    expect(layer.animationDuration).toBe("12s");
   }
 });
 
@@ -297,7 +303,7 @@ test("keeps page-size shells transparent while semantic content surfaces remain 
   ]) {
     await page.goto(route);
     await expect(page.locator(shell)).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(page.locator(shell)).toHaveCSS("background-image", /linear-gradient/);
+    expect((await technicalBackgroundLayer(page.locator(shell))).backgroundImage).toMatch(/linear-gradient/);
     await expect(page.locator(surface).first()).toBeVisible();
     await expect(page.locator(surface).first()).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   }
@@ -315,12 +321,11 @@ test("keeps technical backgrounds inactive and stable for reduced motion", async
     { route: `${root}/work/importador-db/`, shell: "main.case-shell" },
   ]) {
     await page.goto(route);
-    const owner = page.locator(shell);
-    const beforePosition = await owner.evaluate((element) => getComputedStyle(element).backgroundPosition);
-    await page.waitForTimeout(100);
+    const layer = await technicalBackgroundLayer(page.locator(shell));
 
-    expect(await owner.evaluate((element) => element.getAnimations().some((animation) => animation.playState === "running"))).toBe(false);
-    await expect(owner).toHaveCSS("background-position", beforePosition);
+    expect(layer.backgroundImage).toMatch(/linear-gradient/);
+    expect(layer.animationName).toBe("none");
+    expect(layer.transform).toBe("none");
   }
 });
 
@@ -408,4 +413,28 @@ test("resolves the CMD identity immediately without terminal animation for reduc
       }
     }
   }
+});
+
+test("animates the career pulse on a compositor layer without repainting the marker", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/web-site/experience/");
+
+  const pulse = await page.locator("[data-career-node]").first().evaluate((element) => {
+    const layer = getComputedStyle(element, "::after");
+    const animation = element.getAnimations({ subtree: true }).find(({ effect }) => (effect as KeyframeEffect).pseudoElement === "::after");
+    const animatedProperties = (animation?.effect as KeyframeEffect).getKeyframes().flatMap((frame) => Object.keys(frame));
+    return {
+      markerAnimation: getComputedStyle(element).animationName,
+      layerAnimation: layer.animationName,
+      layerTiming: layer.animationTimingFunction,
+      animatedProperties: [...new Set(animatedProperties)].filter((name) => !["offset", "computedOffset", "easing", "composite"].includes(name)).sort(),
+    };
+  });
+
+  expect(pulse).toEqual({
+    markerAnimation: "none",
+    layerAnimation: "timeline-pulse",
+    layerTiming: "steps(15)",
+    animatedProperties: ["opacity", "transform"],
+  });
 });
