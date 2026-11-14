@@ -114,7 +114,7 @@ const { workItems, productionItems } = selectedWork[locale];
             <span class="cmd-identity__controls" aria-hidden="true">_ □ ×</span>
           </div>
           <p class="cmd-identity__accessible">
-            C:\RLP&gt; whoami<br />rlp-sys-admin<br />C:\RLP&gt;
+            C:\RLP&gt; whoami<br />rafael-lopez<br />C:\RLP&gt;
           </p>
           <div
             class="cmd-identity__terminal"
@@ -396,14 +396,14 @@ const { workItems, productionItems } = selectedWork[locale];
   if (terminal && commandRow && outputRow && promptRow) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       commandRow.textContent = "C:\\RLP> whoami";
-      outputRow.textContent = "rlp-sys-admin";
+      outputRow.textContent = "rafael-lopez";
       promptRow.textContent = "C:\\RLP> ";
       terminal.dataset.cmdStage = "complete";
     } else {
       typeCharacters("C:\\RLP> whoami", commandRow, 70, () => {
         window.setTimeout(() => {
           terminal.dataset.cmdStage = "output";
-          typeCharacters("rlp-sys-admin", outputRow, 55, () => {
+          typeCharacters("rafael-lopez", outputRow, 55, () => {
             window.setTimeout(() => {
               terminal.dataset.cmdStage = "final";
               typeCharacters("C:\\RLP> ", promptRow, 60, () => {

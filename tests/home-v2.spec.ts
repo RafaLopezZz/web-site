@@ -25,7 +25,7 @@ test("presents the bounded M2.1 Home identity shell", async ({ page }) => {
 
   await expect(cmd).toContainText("C:\\RLP\\identity.exe");
   await expect(cmd).toContainText("C:\\RLP> whoami");
-  await expect(cmd).toContainText("rlp-sys-admin");
+  await expect(cmd).toContainText("rafael-lopez");
   await expect(cmd).toContainText("C:\\RLP> █");
   await expect(cmd).not.toContainText(/status|initializ|build|network|log/i);
 

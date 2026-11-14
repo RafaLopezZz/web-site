@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { technicalBackgroundLayer } from "./helpers/technical-background";
 
 const root = "/web-site";
-const terminalLines = ["C:\\RLP> whoami", "rlp-sys-admin", "C:\\RLP> █"];
+const terminalLines = ["C:\\RLP> whoami", "rafael-lopez", "C:\\RLP> █"];
 const terminalBody = terminalLines.join("\n");
 
 const terminalHasNoOverflow = (element: HTMLElement) => element.scrollWidth <= element.clientWidth;
