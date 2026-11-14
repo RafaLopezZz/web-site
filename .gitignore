@@ -27,9 +27,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-.atl/.skill-registry.cache.json
+.atl/
 
 # Playwright
 test-results/
 playwright-report/
 blob-report/
+
+# Local agent task tracking
+odd/tasks/
