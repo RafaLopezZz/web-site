@@ -83,6 +83,12 @@ body.bg-ink {
   background-color: transparent;
 }
 
+/* Contains the case card margins so they do not collapse through the shell and leave bands without the grid. */
+.case-shell,
+.production-case-shell {
+  display: flow-root;
+}
+
 .home-shell::before,
 .territory-index-shell::before,
 .case-shell::before,
