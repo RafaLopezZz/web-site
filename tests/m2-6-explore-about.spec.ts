@@ -7,6 +7,7 @@ const homes = [
     aboutTitle: "SOBRE MI",
     aboutProfile: "[profile.log]",
     portraitAlt: "Retrato de Rafael López",
+    role: "Desarrollador de Software",
     territory: "Backend · Datos · Sistemas",
   },
   {
@@ -15,6 +16,7 @@ const homes = [
     aboutTitle: "ABOUT ME",
     aboutProfile: "[profile.log]",
     portraitAlt: "Portrait of Rafael López",
+    role: "Software Developer",
     territory: "Backend · Data · Systems",
   },
 ];
@@ -64,7 +66,7 @@ for (const home of homes) {
     await expect(portraitImage).toHaveAttribute("src", /\/_astro\/foto-perfil4\.[^/]+\.webp$/);
     await expect(portraitImage).toHaveAttribute("srcset", /foto-perfil4\.[^,]+\.webp/);
     const identity = page.locator(".home-about__identity > p");
-    await expect(identity).toHaveText(["Rafael López", "Software Developer", home.territory]);
+    await expect(identity).toHaveText(["Rafael López", home.role, home.territory]);
     const portraitStyle = await portrait.evaluate((element) => {
       const styles = getComputedStyle(element);
       return { borderRadius: styles.borderRadius, borderWidth: styles.borderTopWidth, borderColor: styles.borderTopColor };
