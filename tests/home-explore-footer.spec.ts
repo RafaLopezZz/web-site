@@ -7,6 +7,7 @@ const homes = [
     hrefs: ["/web-site/work/", "/web-site/production/"],
     aboutTitle: "SOBRE MI",
     portraitAlt: "Retrato de Rafael López",
+    role: "Desarrollador de Software",
     territory: "Backend · Datos · Sistemas",
   },
   {
@@ -15,6 +16,7 @@ const homes = [
     hrefs: ["/web-site/en/work/", "/web-site/en/production/"],
     aboutTitle: "ABOUT ME",
     portraitAlt: "Portrait of Rafael López",
+    role: "Software Developer",
     territory: "Backend · Data · Systems",
   },
 ];
@@ -40,7 +42,7 @@ test("replaces Home Explore with two bilingual destination links and follows it 
     await expect(portrait).toHaveAttribute("alt", home.portraitAlt);
     await expect(portrait).toHaveAttribute("src", /\/_astro\/foto-perfil4\.[^/]+\.webp$/);
     await expect(about.getByText("Rafael López", { exact: true })).toBeVisible();
-    await expect(about.getByText("Software Developer", { exact: true })).toBeVisible();
+    await expect(about.getByText(home.role, { exact: true })).toBeVisible();
     await expect(about.getByText(home.territory, { exact: true })).toBeVisible();
     await expect(about.locator(".home-about__copy > p")).toHaveCount(2);
     await expect(about.locator("img")).toHaveCount(1);
